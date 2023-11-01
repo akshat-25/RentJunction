@@ -12,31 +12,32 @@ namespace RentJunction.Views
         CustomerController custCtrl = new CustomerController();
         public void LoginCustomerMenu(Customer cust)
         {
-            MenuOptions.customerMenu();
+            Console.WriteLine(Message.custMenu);
+            Console.WriteLine(Message.design);
 
-            int input = Commonn.IsValidInput();
+            CustomerMenu input = (CustomerMenu)CheckValidity.IsValidInput();
             
             Console.WriteLine();
 
             switch (input)
             {
-                case (int)CustomerMenu.BrowseProducts:
+                case CustomerMenu.BrowseProducts:
                     BrowseProducts(cust);
                     Console.WriteLine();
                     LoginCustomerMenu(cust);
                     break;
-                case (int)CustomerMenu.View_rented_products:
+                case CustomerMenu.View_rented_products:
                     ViewRentedProducts(cust);
                     Message.Design();
                     LoginCustomerMenu(cust);
                     break;
-                case (int)CustomerMenu.Extend_rent_period:
+                case CustomerMenu.Extend_rent_period:
                     ExtendRentPeriod(cust);
                     Console.WriteLine();
                     LoginCustomerMenu(cust);
                     break;
-                case (int)CustomerMenu.logout:
-                    Console.WriteLine("Logout Successful!!!");
+                case CustomerMenu.logout:
+                    Console.WriteLine(Message.logoutSucc);
                     cust = null;
                     Console.WriteLine();
                     UI.StartMenu();
@@ -50,15 +51,14 @@ namespace RentJunction.Views
         }
         public void BrowseProducts(Customer cust)
         {
-            Console.WriteLine("Enter the city you want to search for products -");
-            string address = Commonn.IsValidAddress();
+            Console.WriteLine(Message.entCity);
+            string address = CheckValidity.IsValidAddress();
            
-            Console.WriteLine("Please choose product category -");
+            Console.WriteLine(Message.chooseCate);
 
             custCtrl.chooseCategory();
 
-            int input = Commonn.IsValidInput();
-           
+            int input = CheckValidity.IsValidInput();
             
             List<Product> res = custCtrl.getProducts(input, address);
 
@@ -66,14 +66,14 @@ namespace RentJunction.Views
             {
                 Message.Design();
                 start:
-                Console.WriteLine("To rent a product, enter Product ID");
+                Console.WriteLine(Message.prodIdEnt);
                 int prodID;
                 try
                 {
                     bool flag = int.TryParse(Console.ReadLine() , out prodID);
                     if (!flag)
                     {
-                        Message.InvalidInput();
+                        Console.WriteLine(Message.invalid);
                         goto start;
                     }
                     else {
@@ -95,20 +95,20 @@ namespace RentJunction.Views
                 }
                 catch
                 {
-                    Message.InvalidInput();
+                    Console.WriteLine(Message.invalid);
                     goto start;
                 }
                                       
                 Console.WriteLine();
-                Console.WriteLine("-------------------------------------------");
+                Console.WriteLine(Message.design);
                 RentAProd(res, prodID, cust.rentedProducts, cust);
-                Console.WriteLine("Thank You for Renting!!!!");
+                Console.WriteLine(Message.thanksRent);
                 LoginCustomerMenu(cust);
             }
 
             else
             {
-                Console.WriteLine("Sorry! No products available in this category");
+                Console.WriteLine(Message.noProdAva);
                
             }
         }
@@ -118,7 +118,7 @@ namespace RentJunction.Views
             {
                 foreach (var product in cust.rentedProducts)
                 {
-                    Console.WriteLine("-------------------------------------------");
+                    Console.WriteLine(Message.design);
                     Console.WriteLine("Product ID          - " + product.ProductId);
                     Console.WriteLine("Product Name        - " + product.ProductName);
                     Console.WriteLine("Product Description - " + product.Description);
@@ -128,7 +128,7 @@ namespace RentJunction.Views
                     Console.WriteLine("End Date            - " + product.endDate);
                 }
 
-            }catch{ Console.WriteLine("No Rented Product..."); }
+            }catch{ Console.WriteLine(Message.noRented); }
 
          
         }
@@ -141,7 +141,7 @@ namespace RentJunction.Views
             }
             Console.WriteLine();
             start1:
-            Console.WriteLine("Enter the Product ID for extention of rent period.");
+            Console.WriteLine(Message.entProdId);
 
             int prodID;
 
@@ -151,7 +151,7 @@ namespace RentJunction.Views
                 bool flag = int.TryParse(Console.ReadLine(), out prodID);
                 if (!flag)
                 {
-                    Console.WriteLine("Invalid Id. Please try again");
+                    Console.WriteLine(Message.invalid);
                     goto start1;
                 }
                 else
@@ -167,7 +167,7 @@ namespace RentJunction.Views
                     }
                     if (!flag2)
                     {
-                        Console.WriteLine("Enter valid product ID");
+                        Console.WriteLine(Message.validId);
                         goto start1;
                     }
                 }
@@ -175,7 +175,7 @@ namespace RentJunction.Views
             }
             catch
             {
-                Console.WriteLine("Enter valid product ID");
+                Console.WriteLine(Message.validId);
                 goto start1;
             }
 
@@ -190,19 +190,19 @@ namespace RentJunction.Views
                     var isValidPrevEndDate = DateTime.TryParse(rentprod.endDate, out prevEndDate);
 
                     start:
-                    Console.WriteLine("Enter new End Date (MM/DD/YYYY)");
+                    Console.WriteLine(Message.enternewEndDate);
                     rentprod.endDate = Console.ReadLine();                
                     var isValidEndDate = DateTime.TryParse(rentprod.endDate, out newEndDate);
 
                     if(prevEndDate == newEndDate)
                     {
-                        Console.WriteLine("Previous and new end dates are same. Please enter a higher end date");
+                        Console.WriteLine(Message.prevDateSame);
                         Console.WriteLine();
                         goto start;
                     }
                     else if(newEndDate < prevEndDate)
                     {
-                        Console.WriteLine("New end Date should be greater than previous end date");
+                        Console.WriteLine(Message.NewDateGreater);
                         Console.WriteLine();
                         goto start;
                     }
@@ -217,7 +217,7 @@ namespace RentJunction.Views
                     }
                     else
                     {
-                        Console.WriteLine("Invalid format of date!!!");
+                        Console.WriteLine(Message.invalidDate);
                     }
 
                     Console.WriteLine("The remaining amount be be paid is : Rs. " + differenceDays * rentprod.Price);
@@ -232,13 +232,13 @@ namespace RentJunction.Views
                 
                 DateTime sdt;
                 start:
-                Console.WriteLine("Enter Start Date (MM/DD/YYYY)");
+                Console.WriteLine(Message.enterStartDate);
                 rentprod.startDate = Console.ReadLine();
                 Console.WriteLine();
                 var isValidStartDate = DateTime.TryParse(rentprod.startDate, out sdt);
                 if (sdt < DateTime.Today)
                 {
-                    Console.WriteLine("Enter valid date");
+                    Console.WriteLine(Message.enterValidDate);
                     Console.WriteLine();
                     Console.WriteLine();
                 goto start;
@@ -246,18 +246,18 @@ namespace RentJunction.Views
          
             DateTime edt;
             start2:
-            Console.WriteLine("Enter End Date (MM/DD/YYYY)");
+            Console.WriteLine(Message.enterEndDate);
             rentprod.endDate = Console.ReadLine();
             Console.WriteLine();
             var isValidEndDate = DateTime.TryParse(rentprod.endDate, out edt);
 
             if(sdt == edt) {
-                Console.WriteLine("End date and Start Date cannot be same.");
+                Console.WriteLine(Message.startEndDateSame);
                 goto start2;
             }
             else if (edt < sdt)
             {
-                Console.WriteLine("Please enter valid End Date");
+                Console.WriteLine(Message.enterValidDate);
                 goto start2;
             }
 
@@ -273,7 +273,7 @@ namespace RentJunction.Views
 
             else
             {
-                Console.WriteLine("Invalid format of date!!!");
+                Console.WriteLine(Message.invalidDate);
             }
             foreach (var product in Masterlist)
             {
@@ -291,7 +291,6 @@ namespace RentJunction.Views
                     rentprod.Description = product.Description;
                     rentprod.OwnerName = product.OwnerName;
                     rentprod.OwnerNum = product.OwnerNum;
-
 
                     cust.rentedProducts.Add(rentprod);
                     custCtrl.updateDBCust(listcust);

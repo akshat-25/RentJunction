@@ -2,19 +2,70 @@
   {
     "ListedProducts": [
       {
-        "ProductId": 1256241785,
+        "ProductId": 1083068148,
         "ProductName": "Washing Machine",
-        "Description": "It is a samsung top load 7kg washing machine",
-        "Price": 20.0,
+        "Description": "Good washing machine",
+        "Price": 30.0,
         "ProductCategory": 2,
         "OwnerName": "Harsh",
-        "OwnerNum": 9787878787,
+        "OwnerNum": 8989898989,
         "City": "jaipur"
-      }
+      },
+      {
+        "ProductId": 1,
+        "ProductName": "Smartphone",
+        "Description": "Latest Android smartphone with high-resolution camera",
+        "Price": 600.0,
+        "ProductCategory": 2,
+        "OwnerName": "Harsh",
+        "OwnerNum": 8989898989,
+        "City": "jaipur"
+      },
+      {
+        "ProductId": 2,
+        "ProductName": "Smart TV",
+        "Description": "55-inch 4K Ultra HD Smart TV with built-in streaming apps",
+        "Price": 800.0,
+        "ProductCategory": 2,
+        "OwnerName": "Harsh",
+        "OwnerNum": 8989898989,
+        "City": "noida"
+      },
+      {
+        "ProductId": 3,
+        "ProductName": "Refrigerator",
+        "Description": "Energy-efficient refrigerator with ample storage space",
+        "Price": 450.0,
+        "ProductCategory": 2,
+        "OwnerName": "Harsh",
+        "OwnerNum": 8989898989,
+        "City": "jaipur"
+      },
+      {
+        "ProductId": 4,
+        "ProductName": "Digital Camera",
+        "Description": "Professional DSLR camera with multiple lenses",
+        "Price": 1200.0,
+        "ProductCategory": 2,
+        "OwnerName": "Harsh",
+        "OwnerNum": 8989898989,
+        "City": "noida"
+      },
+      {
+        "ProductId": 5,
+        "ProductName": "Coffee Maker",
+        "Description": "Espresso machine for brewing delicious coffee",
+        "Price": 150.0,
+        "ProductCategory": 2,
+        "OwnerName": "Harsh",
+        "OwnerNum": 8989898989,
+        "City": "jaipur"
+      },
+
     ],
     "FullName": "Harsh",
     "Address": "jaipur",
-    "PhoneNumber": 9787878787,
+    "PhoneNumber": 8989898989,
     "Username": "harsh123",
     "Email": "harsh@gmail.com",
     "Password": "Harsh@123",
@@ -23,53 +74,103 @@
   {
     "ListedProducts": [
       {
-        "ProductId": 639116869,
-        "ProductName": "Sofa Set",
-        "Description": "Brown colored sofa set for rent",
-        "Price": 15.0,
+        "ProductId": 1869402629,
+        "ProductName": "Activa 5G ",
+        "Description": "Good condition activa at good rate",
+        "Price": 250.0,
+        "ProductCategory": 9,
+        "OwnerName": "Abhay",
+        "OwnerNum": 8938492349,
+        "City": "jaipur"
+      },
+      {
+        "ProductId": 378704659,
+        "ProductName": "Dining Table ",
+        "Description": "Good dining table for your home",
+        "Price": 120.0,
         "ProductCategory": 11,
-        "OwnerName": "Navpreet",
-        "OwnerNum": 8989898989,
-        "City": "noida"
+        "OwnerName": "Abhay",
+        "OwnerNum": 8938492349,
+        "City": "jaipur"
       }
     ],
-    "FullName": "Navpreet",
-    "Address": "noida",
-    "PhoneNumber": 8989898989,
-    "Username": "navpreet123",
-    "Email": "navpreet@gmail.com",
-    "Password": "Navpreet@123",
+    "FullName": "Abhay",
+    "Address": "jaipur",
+    "PhoneNumber": 8938492349,
+    "Username": "abhay123",
+    "Email": "abhay@gmail.com",
+    "Password": "Abhay@123",
     "role": 2
   },
   {
     "ListedProducts": [
       {
-        "ProductId": 1467631584,
-        "ProductName": "Bluetooth Speakers",
-        "Description": "Boat 20 Watt powerful speakers",
-        "Price": 12.0,
+        "ProductId": 533513776,
+        "ProductName": "Gaming Console",
+        "Description": "2018 model PS with 5 preinstalled games",
+        "Price": 90.0,
         "ProductCategory": 8,
-        "OwnerName": "Vaishali",
-        "OwnerNum": 7898989897,
+        "OwnerName": "Navpreet",
+        "OwnerNum": 7993893999,
         "City": "noida"
       },
       {
-        "ProductId": 1661458804,
-        "ProductName": "Gaming Console",
-        "Description": "2015 model PS5 with 5 preinstalled games",
-        "Price": 35.0,
-        "ProductCategory": 8,
-        "OwnerName": "Vaishali",
-        "OwnerNum": 7898989897,
+        "ProductId": 26,
+        "ProductName": "Smartphone",
+        "Description": "Latest Android smartphone with high-resolution camera",
+        "Price": 600.0,
+        "ProductCategory": 2,
+        "OwnerName": "Navpreet",
+        "OwnerNum": 7993893999,
+        "City": "noida"
+      },
+      {
+        "ProductId": 27,
+        "ProductName": "Smart TV",
+        "Description": "55-inch 4K Ultra HD Smart TV with built-in streaming apps",
+        "Price": 800.0,
+        "ProductCategory": 2,
+        "OwnerName": "Navpreet",
+        "OwnerNum": 7993893999,
+        "City": "jaipur"
+      },
+      {
+        "ProductId": 28,
+        "ProductName": "Refrigerator",
+        "Description": "Energy-efficient refrigerator with ample storage space",
+        "Price": 450.0,
+        "ProductCategory": 2,
+        "OwnerName": "Navpreet",
+        "OwnerNum": 7993893999,
+        "City": "noida"
+      },
+      {
+        "ProductId": 29,
+        "ProductName": "Digital Camera",
+        "Description": "Professional DSLR camera with multiple lenses",
+        "Price": 1200.0,
+        "ProductCategory": 2,
+        "OwnerName": "Navpreet",
+        "OwnerNum": 7993893999,
+        "City": "jaipur"
+      },
+      {
+        "ProductId": 30,
+        "ProductName": "Coffee Maker",
+        "Description": "Espresso machine for brewing delicious coffee",
+        "Price": 150.0,
+        "ProductCategory": 2,
+        "OwnerName": "Navpreet",
+        "OwnerNum": 7993893999,
         "City": "noida"
       }
     ],
-    "FullName": "Vaishali",
+    "FullName": "Navpreet",
     "Address": "noida",
-    "PhoneNumber": 7898989897,
-    "Username": "vaishali123",
-    "Email": "vaishali@gmail.com",
-    "Password": "Vaishali@123",
+    "PhoneNumber": 7993893999,
+    "Username": "navpreet123",
+    "Email": "navpreet@gmail.com",
+    "Password": "Navpreet@123",
     "role": 2
   }
 ]

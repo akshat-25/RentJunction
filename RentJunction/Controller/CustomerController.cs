@@ -1,6 +1,4 @@
-﻿using MenuOpt;
-using RentJunction.Controller;
-
+﻿using RentJunction.Controller;
 
 namespace RentJunction.Models
 {
@@ -20,14 +18,14 @@ namespace RentJunction.Models
 
             foreach (var product in DbHandler.Instance.GetProducts(input, city))
             {
-                Console.WriteLine("-------------------------------------------");
-                Console.WriteLine("Product ID          - " + product.ProductId);
-                Console.WriteLine("Product Name        - " + product.ProductName);
-                Console.WriteLine("Product Description - " + product.Description);
-                Console.WriteLine("Product Price       - " + "Rs." + product.Price + " per day");
-                Console.WriteLine("Product Category    - " + Enum.Parse<Category>(product.ProductCategory.ToString()));
-                Console.WriteLine("Owner   Name        - " + product.OwnerName);
-                Console.WriteLine("Owner   Number      - " + product.OwnerNum);
+                Console.WriteLine(Message.design);
+                Console.WriteLine(Message.disProdId    + product.ProductId);
+                Console.WriteLine(Message.disProdName  + product.ProductName);
+                Console.WriteLine(Message.disProdDesc  + product.Description);
+                Console.WriteLine(Message.disProdPrice + "Rs." + product.Price + " per day");
+                Console.WriteLine(Message.disProdCate  + Enum.Parse<Category>(product.ProductCategory.ToString()));
+                Console.WriteLine(Message.disProdOwnName + product.OwnerName);
+                Console.WriteLine(Message.disProdOwnNum + product.OwnerNum);
             }
             return DbHandler.Instance.GetProducts(input, city);
         }
@@ -47,5 +45,6 @@ namespace RentJunction.Models
         {
             DbHandler.Instance.UpdateDB(list);
         }
+        
     }
 }

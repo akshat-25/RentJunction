@@ -1,8 +1,7 @@
 ﻿using Newtonsoft.Json;
 using RentJunction.Controller;
 using RentJunction.Models;
-
-public sealed class DbHandler
+public sealed class DbHandler : DatabaseLayer
 {
       public List<Customer> _customerList;
       public List<Owner> _ownerList;
@@ -32,7 +31,7 @@ public sealed class DbHandler
         }
         catch
         {
-            Message.ErrorOcc();
+            Console.WriteLine(Message.error);
             UI.StartMenu();
         }
     }
@@ -67,7 +66,7 @@ public sealed class DbHandler
         {
             Customer customer = (Customer)entity;
             if (IsExists(customer.Username)) {
-                Message.UsernameExist();
+                Console.WriteLine(Message.usernameExist);
                 return false;
             }
 
@@ -77,8 +76,8 @@ public sealed class DbHandler
                     {
                         if (customerEntity.Email == customer.Email)
                         {
-                            Message.EmailExist();
-                            return false;
+                        Console.WriteLine(Message.emailExist);
+                        return false;
                         }
                     }
                     _customerList.Add(customer);
@@ -94,7 +93,7 @@ public sealed class DbHandler
             Owner owner = (Owner)entity;
             if (IsExists(owner.Username))
             {
-                Message.UsernameExist();
+                Console.WriteLine(Message.usernameExist);
                 return false;
             }
             if (_ownerList != null)
@@ -103,7 +102,7 @@ public sealed class DbHandler
                 {
                     if (ownerEntity.Email == owner.Email)
                     {
-                        Message.EmailExist();
+                        Console.WriteLine(Message.emailExist);
                         return false;
                     }
                 }
@@ -119,7 +118,7 @@ public sealed class DbHandler
     public  bool DbRegisterAdmin(Admin admin)
     {
         if (IsExists(admin.Username)) {
-            Message.UsernameExist();
+            Console.WriteLine(Message.usernameExist);
             return false; }
 
         if (_adminList != null)
@@ -128,7 +127,7 @@ public sealed class DbHandler
             {
                 if (adminEntity.Username == admin.Username)
                 {
-                    Message.AdminExist();
+                    Console.WriteLine(Message.usernameExist);
                     return false;
                 }
                 
@@ -147,10 +146,8 @@ public sealed class DbHandler
       if(list is List<Customer>)
       {
             var customerJson = JsonConvert.SerializeObject(list);
-            File.WriteAllText(_customerPath, customerJson);
-           
+            File.WriteAllText(_customerPath, customerJson);           
       }
-
       else if(list is List<Owner>)
       {
             var ownerJson = JsonConvert.SerializeObject(list);

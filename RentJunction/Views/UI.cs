@@ -3,31 +3,28 @@ using MenuOpt;
 using RentJunction.Controller;
 using RentJunction.Models;
 using RentJunction.Views;
-
-
 public class UI
 {
     public static void StartMenu()
     {
-
         while (true)
         {
             MenuOptions.startMenu();
-            int input = Commonn.IsValidInput();
+            Menu input = (Menu)CheckValidity.IsValidInput();
 
             switch (input)
                 {
-                    case (int)Menu.create_account:
+                    case Menu.create_account:
                         Register();
                         break;
-                    case (int)Menu.login:
+                    case Menu.login:
                         Login();
                         break;
-                    case (int)Menu.exit:
+                    case Menu.exit:
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine("Invalid Option");
+                        Console.WriteLine(Message.invalid);
                         break;
                 }
         }
@@ -40,34 +37,36 @@ public class UI
             bool flag = AuthManager.Instance.Register(user);
             if (flag)
             {
-            Console.WriteLine("Registered Successfully!!");
+            Console.WriteLine(Message.regsuccess);
             Message.Design();
-            Console.WriteLine("Enter credentials to Log in to the Application");
+            Console.WriteLine(Message.enterCred);
             Login();
             }
             else
             {
-            Console.WriteLine("Something went wrong....");
+            Console.WriteLine(Message.wrong);
             Message.Design();
             Register();
         }
      }
     public static void Login()
     {
-        Console.WriteLine("Enter your username ->");
+        Console.WriteLine(Message.enterUserName);
         string username = Console.ReadLine();
 
-        while (!Commonn.checkNull(username))
+        while (!CheckValidity.checkNull(username))
         {
-            Console.WriteLine("Username cannot be empty. Please try again...");
+            Console.WriteLine(Message.userNameNotEmpty);
             username = Console.ReadLine();
         }
 
-        Console.WriteLine("Enter Password ->");
-        string password = Console.ReadLine();
-        while (!Commonn.checkNull(password))
+        Console.WriteLine(Message.pswd);
+        string password = CheckValidity.HideCharacter();
+        Console.WriteLine();
+        Message.Design();
+        while (!CheckValidity.checkNull(password))
         {
-            Console.WriteLine("Password cannot be empty. Please try again...");
+            Console.WriteLine(Message.passwordNameNotEmpty);
             password = Console.ReadLine();
         }
 
@@ -107,7 +106,7 @@ public class UI
             }
             else
             {
-                Console.WriteLine("Login failed. Please check your credentials.");
+                Console.WriteLine(Message.loginFailed);
                 Message.Design();
             }
 
@@ -115,7 +114,7 @@ public class UI
         }
         catch(Exception ex)
         {
-            Console.WriteLine("An error occured...." + ex);
+            Console.WriteLine(Message.error + ex);
             Message.Design();
         }
        Message.Design();

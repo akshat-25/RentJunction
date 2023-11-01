@@ -2,47 +2,46 @@
 using MenuOpt;
 using RentJunction.Controller;
 
-
 public class AdminUI
 {
     AdminController admCtrl = new AdminController();
     public void LoginAdminMenu(Admin admin)
     {
         MenuOptions.adminMenu();
-        int input = Commonn.IsValidInput();
+        Options input = (Options)CheckValidity.IsValidInput();
         
         Console.WriteLine();
 
         switch (input)
         {
-            case (int)Options.view_customer:
+            case Options.view_customer:
                 ViewAllCustomers(admin);
                 LoginAdminMenu(admin);
                 break;
-            case (int)Options.view_owners:
+            case Options.view_owners:
                 ViewAllOwners(admin);
-                Console.WriteLine("-------------------------------------------");
+                Console.WriteLine(Message.design);
                 LoginAdminMenu(admin);
                 break;
-            case (int)Options.delete_customer:
+            case Options.delete_customer:
                 DeleteCustomer(admin);
                 LoginAdminMenu(admin);
                 break;
-            case (int)Options.delete_owner:
+            case Options.delete_owner:
                 DeleteOwner(admin);
                 LoginAdminMenu(admin);
                 break; 
-            case (int)Options.add_admin:
+            case Options.add_admin:
                 AddNewAdmin();
                 LoginAdminMenu(admin);
                 break;
-            case (int)Options.logout:
-                Console.WriteLine("Logout Successful!!!");
+            case Options.logout:
+                Console.WriteLine(Message.logoutSuccc);
                 Console.WriteLine();
                 UI.StartMenu();
                 break;
             default:
-                Console.WriteLine("Invalid Option");
+                Console.WriteLine(Message.invalid);
                 LoginAdminMenu(admin);
                 break;
         }
@@ -62,12 +61,11 @@ public class AdminUI
     }
     public void ViewAllOwners(Admin admin)
     {
-
         List<Owner> owners = admCtrl.getOwners();
-        Console.WriteLine("The owners list is as follows ->");
+        Console.WriteLine(Message.custList);
         foreach (var owner in owners)
         {
-            Console.WriteLine("-------------------------------------------");
+            Console.WriteLine(Message.design);
             Console.WriteLine($"Name         -   {owner.FullName}");
             Console.WriteLine($"Address      -   {owner.Address}");
             Console.WriteLine($"Phone        -   {owner.PhoneNumber}");
@@ -76,12 +74,12 @@ public class AdminUI
     }
     public void DeleteCustomer(Admin admin) {
         ViewAllCustomers(admin);
-        Console.WriteLine("Enter the Email of the customer you want to delete from the list -");
+        Console.WriteLine(Message.custEmail);
         string input = Console.ReadLine();
 
-        while (!Commonn.IsValidEmail(input) || !Commonn.checkNull(input))
+        while (!CheckValidity.IsValidEmail(input) || !CheckValidity.checkNull(input))
         {
-            Console.WriteLine("Please enter a valid email address");
+            Console.WriteLine(Message.invalid);
             input = Console.ReadLine().Trim();
         }
         Console.WriteLine();
@@ -102,7 +100,7 @@ public class AdminUI
                 }
                 else
                 {
-                    Console.WriteLine("Cannot delete the customer as he has rented some products.");
+                    Console.WriteLine(Message.cannotDeleteCust);
                 }
             }
         }
@@ -112,11 +110,11 @@ public class AdminUI
     }
     public void DeleteOwner(Admin admin) {
         ViewAllOwners(admin);
-        Console.WriteLine("Enter the Email of the owner you want to delete from the list -");
+        Console.WriteLine(Message.OwnEmail);
         var input = Console.ReadLine();
-        while (!Commonn.IsValidEmail(input) || !Commonn.checkNull(input))
+        while (!CheckValidity.IsValidEmail(input) || !CheckValidity.checkNull(input))
         {
-            Console.WriteLine("Please enter a valid email address");
+            Console.WriteLine(Message.invalid);
             input = Console.ReadLine().Trim();
         }
         Console.WriteLine();
@@ -141,25 +139,26 @@ public class AdminUI
         }   
     public void AddNewAdmin()
     {
-        Console.WriteLine("Enter username of new admin -");
-        string input = Commonn.IsValidUsername();
+        Console.WriteLine(Message.username);
+        string input = CheckValidity.IsValidUsername();
         
         Console.WriteLine();
 
-        Console.WriteLine("Enter password of new admin -");
-        string pass = Commonn.IsValidPassword();
+        Console.WriteLine(Message.adminpswd);
+        string pass = CheckValidity.IsValidPassword();
      
         if (AuthManager.Instance.AddAdmin(input, pass))
         {
-            Console.WriteLine("Admin added successfully..");
+            Console.WriteLine(Message.adminSucc);
         }
         else
         {
-            Console.WriteLine("Something went wrong");
+            Console.WriteLine(Message.somethingWrong);
         }
         Console.WriteLine();
 
     }
+
 }
 
 
