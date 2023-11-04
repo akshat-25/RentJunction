@@ -60,8 +60,7 @@
         "OwnerName": "Harsh",
         "OwnerNum": 8989898989,
         "City": "jaipur"
-      },
-
+      }
     ],
     "FullName": "Harsh",
     "Address": "jaipur",
@@ -171,6 +170,37 @@
     "Username": "navpreet123",
     "Email": "navpreet@gmail.com",
     "Password": "Navpreet@123",
+    "role": 2
+  },
+  {
+    "ListedProducts": null,
+    "FullName": "jhkjdfsdh",
+    "Address": "sdfhsfhkdh",
+    "PhoneNumber": 8473328432,
+    "Username": "sdijflsdkfj",
+    "Email": "kjhskajdfhk@gmail.com",
+    "Password": "Akshat@123",
+    "role": 2
+  },
+  {
+    "ListedProducts": [
+      {
+        "ProductId": 1324366273,
+        "ProductName": "CCTV",
+        "Description": "CCTV Cameras",
+        "Price": 300.0,
+        "ProductCategory": 5,
+        "OwnerName": "Mudit",
+        "OwnerNum": 6350182500,
+        "City": "bhopal"
+      }
+    ],
+    "FullName": "Mudit",
+    "Address": "bhopal",
+    "PhoneNumber": 6350182500,
+    "Username": "mudit123",
+    "Email": "mudit@gmail.com",
+    "Password": "Mudit@123",
     "role": 2
   }
 ]

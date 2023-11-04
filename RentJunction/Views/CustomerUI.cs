@@ -10,6 +10,7 @@ namespace RentJunction.Views
     public class CustomerUI
     {
         CustomerController custCtrl = new CustomerController();
+        ProductController  prodCtrl = new ProductController();
         public void LoginCustomerMenu(Customer cust)
         {
             Console.WriteLine(Message.custMenu);
@@ -60,7 +61,7 @@ namespace RentJunction.Views
 
             int input = CheckValidity.IsValidInput();
             
-            List<Product> res = custCtrl.getProducts(input, address);
+            List<Product> res = prodCtrl.getProducts(input, address);
 
             if (res.Count > 0)
             {
@@ -112,23 +113,14 @@ namespace RentJunction.Views
                
             }
         }
-        public static void ViewRentedProducts(Customer cust)
+        public void ViewRentedProducts(Customer cust)
         {
             try
             {
-                foreach (var product in cust.rentedProducts)
-                {
-                    Console.WriteLine(Message.design);
-                    Console.WriteLine("Product ID          - " + product.ProductId);
-                    Console.WriteLine("Product Name        - " + product.ProductName);
-                    Console.WriteLine("Product Description - " + product.Description);
-                    Console.WriteLine("Product Price       - " + product.Price + "per day");
-                    Console.WriteLine("Product Category    - " + Enum.Parse<Category>(product.ProductCategory.ToString()));
-                    Console.WriteLine("Start Date          - " + product.startDate);
-                    Console.WriteLine("End Date            - " + product.endDate);
-                }
+                prodCtrl.viewRentedProd(cust);
 
-            }catch{ Console.WriteLine(Message.noRented); }
+            }
+            catch{ Console.WriteLine(Message.noRented); }
 
          
         }
@@ -267,7 +259,7 @@ namespace RentJunction.Views
             if (isValidEndDate && isValidStartDate)
             {
 
-                Console.WriteLine("Total days of rent are " + days);
+                Console.WriteLine(Message.rentDays + days);
 
             }
 
@@ -294,9 +286,9 @@ namespace RentJunction.Views
 
                     cust.rentedProducts.Add(rentprod);
                     custCtrl.updateDBCust(listcust);
-                    List<Product> list = custCtrl.getProductsMasterList();
+                    List<Product> list = prodCtrl.getProductsMasterList();
                     list.Remove(product);
-                    custCtrl.updateDBProds(list);
+                    prodCtrl.updateDBProds(list);
                     Console.WriteLine($"Total amount for {days} is Rs.{days * product.Price}");
                 }
             }

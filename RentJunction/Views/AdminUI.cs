@@ -1,5 +1,4 @@
-﻿using commonData;
-using MenuOpt;
+﻿using MenuOpt;
 using RentJunction.Controller;
 
 public class AdminUI
@@ -146,8 +145,14 @@ public class AdminUI
 
         Console.WriteLine(Message.adminpswd);
         string pass = CheckValidity.IsValidPassword();
-     
-        if (AuthManager.Instance.AddAdmin(input, pass))
+        Console.WriteLine();
+        Admin admin = new Admin
+        {
+            Username = input,
+            Password = pass,
+        };
+
+        if (AuthManager.Instance.Register(admin))
         {
             Console.WriteLine(Message.adminSucc);
         }
@@ -156,6 +161,7 @@ public class AdminUI
             Console.WriteLine(Message.somethingWrong);
         }
         Console.WriteLine();
+        Console.WriteLine(Message.design);
 
     }
 

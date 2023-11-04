@@ -13,12 +13,12 @@ public class CheckValidity
     static CheckValidity()
     {
         hasOnlyAlphaNumeric = @"^[a-zA-Z][a-zA-Z0-9]*$";
-                  hasNumber = @"[0-9]+";
-               hasUpperChar = @"[A-Z]+";
-               hasLowerChar = @"[a-z]+";
-               hasMiniChars = @".{8,}";
-                 hasSymbols = @"[!@#$%^&*()_+=\[{\]};:<>|./?,-]";
-                   hasEmail = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
+        hasNumber = @"[0-9]+";
+        hasUpperChar = @"[A-Z]+";
+        hasLowerChar = @"[a-z]+";
+        hasMiniChars = @".{8,}";
+        hasSymbols = @"[!@#$%^&*()_+=\[{\]};:<>|./?,-]";
+        hasEmail = @"^[^@\s]+@[^@\s]+\.(com|net|org|gov)$";
     }
     public static string IsValidUsername()
     {
@@ -26,7 +26,7 @@ public class CheckValidity
         string username = Console.ReadLine().Trim();
         while (isValidUsername == false)
         {
-            if (!checkNull(username) || !Regex.IsMatch(username,hasOnlyAlphaNumeric) || username.Length < 5)
+            if (!checkNull(username) || !Regex.IsMatch(username, hasOnlyAlphaNumeric) || username.Length < 5)
             {
                 Console.WriteLine("Username should be alphanumeric ," +
                     " should not be empty and have length should be greater than 5");
@@ -201,14 +201,14 @@ public class CheckValidity
     {
         string password = HideCharacter();
 
-        
+
         while (IsValidPasswordReg(password) == false || !checkNull(password))
         {
             Console.WriteLine("Password should not be less 8 characters and should contain a \n UpperCase , Special Character and at least one Number");
             password = Console.ReadLine().Trim();
         }
         return password;
-        
+
     }
     public static int IsValidRole()
     {
@@ -230,7 +230,6 @@ public class CheckValidity
             Console.WriteLine("Please choose a valid role");
             goto start1;
         }
+
     }
-
-
 }

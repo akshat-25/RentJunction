@@ -1,1 +1,67 @@
-[{"rentedProducts":[{"startDate":"10/31/2023","endDate":"11/30/2023","ProductId":1869402629,"ProductName":"Activa 5G ","Description":"Good condition activa at good rate","Price":250.0,"ProductCategory":9,"OwnerName":"Abhay","OwnerNum":8938492349,"City":null}],"FullName":"Akshat","Address":"noida","PhoneNumber":9784918600,"Username":"akshat123","Email":"akahat@gmail.com","Password":"Akshat@123","role":1},{"rentedProducts":null,"FullName":"Shreyansh","Address":"chennai","PhoneNumber":9878909879,"Username":"shreya123","Email":"shreya@gmail.com","Password":"Shreya@123","role":1},{"rentedProducts":null,"FullName":"Ayush","Address":"kota","PhoneNumber":4747474747,"Username":"ayush123","Email":"ayush@gmail.com","Password":"Ayush@123","role":1}]
+[
+  {
+    "rentedProducts": [
+      {
+        "startDate": "10/31/2023",
+        "endDate": "11/30/2023",
+        "ProductId": 1869402629,
+        "ProductName": "Activa 5G ",
+        "Description": "Good condition activa at good rate",
+        "Price": 250.0,
+        "ProductCategory": 9,
+        "OwnerName": "Abhay",
+        "OwnerNum": 8938492349,
+        "City": null
+      },
+      {
+        "startDate": "11/03/2023",
+        "endDate": "11/23/2023",
+        "ProductId": 27,
+        "ProductName": "Smart TV",
+        "Description": "55-inch 4K Ultra HD Smart TV with built-in streaming apps",
+        "Price": 800.0,
+        "ProductCategory": 2,
+        "OwnerName": "Navpreet",
+        "OwnerNum": 7993893999,
+        "City": null
+      }
+    ],
+    "FullName": "Akshat",
+    "Address": "noida",
+    "PhoneNumber": 9784918600,
+    "Username": "akshat123",
+    "Email": "akahat@gmail.com",
+    "Password": "Akshat@123",
+    "role": 1
+  },
+  {
+    "rentedProducts": null,
+    "FullName": "Shreyansh",
+    "Address": "chennai",
+    "PhoneNumber": 9878909879,
+    "Username": "shreya123",
+    "Email": "shreya@gmail.com",
+    "Password": "Shreya@123",
+    "role": 1
+  },
+  {
+    "rentedProducts": null,
+    "FullName": "Ayush",
+    "Address": "kota",
+    "PhoneNumber": 4747474747,
+    "Username": "ayush123",
+    "Email": "ayush@gmail.com",
+    "Password": "Ayush@123",
+    "role": 1
+  },
+  {
+    "rentedProducts": null,
+    "FullName": "Mitika",
+    "Address": "bhilwara",
+    "PhoneNumber": 7014755220,
+    "Username": "mitika123",
+    "Email": "mitika@gmail.com",
+    "Password": "Mitika@123",
+    "role": 1
+  }
+]

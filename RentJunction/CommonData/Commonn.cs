@@ -1,23 +1,24 @@
-﻿using RentJunction.Models;
+﻿using RentJunction.Controller;
+using RentJunction.Models;
 
 namespace commonData
 {
     public class Commonn
     {
-        
+
         public static User Details()
         {
             Console.WriteLine(Message.reg);
             string name = CheckValidity.IsValidName();
 
-            Console.WriteLine(); 
+            Console.WriteLine();
 
             Console.WriteLine(Message.city);
 
             string address = CheckValidity.IsValidAddress();
 
             Console.WriteLine();
- 
+
             Console.WriteLine(Message.username);
 
             string username = CheckValidity.IsValidUsername();
@@ -35,24 +36,42 @@ namespace commonData
             Console.WriteLine(Message.pswd);
 
             string password = CheckValidity.IsValidPassword();
-           
+
             Console.WriteLine();
             int roletaken = CheckValidity.IsValidRole();
-            
+
             Console.WriteLine();
 
-            User user = new User()
+            if(roletaken == (int)Role.Customer)
             {
-                FullName = name,
-                Address = address,
-                PhoneNumber = phoneNumber,
-                Email = email,
-                Password = password,
-                role = (Role)roletaken,
-                Username = username
-            };
+                Customer cust = new Customer
+                {
+                    FullName = name,
+                    Address = address,
+                    PhoneNumber = phoneNumber,
+                    Email = email,
+                    Password = password,
+                    role = (Role)roletaken,
+                    Username = username
+                };
 
-            return user;
+                return cust;
+            }
+            else
+            {
+                Owner owner = new Owner
+                {
+                    FullName = name,
+                    Address = address,
+                    PhoneNumber = phoneNumber,
+                    Email = email,
+                    Password = password,
+                    role = (Role)roletaken,
+                    Username = username
+                };
+
+                return owner;
+            }
 
         }
     }

@@ -100,16 +100,6 @@
     "City": "noida"
   },
   {
-    "ProductId": 27,
-    "ProductName": "Smart TV",
-    "Description": "55-inch 4K Ultra HD Smart TV with built-in streaming apps",
-    "Price": 800.0,
-    "ProductCategory": 2,
-    "OwnerName": "Navpreet",
-    "OwnerNum": 7993893999,
-    "City": "jaipur"
-  },
-  {
     "ProductId": 28,
     "ProductName": "Refrigerator",
     "Description": "Energy-efficient refrigerator with ample storage space",
@@ -148,5 +138,15 @@
     "OwnerName": "Abhay",
     "OwnerNum": 8938492349,
     "City": "jaipur"
+  },
+  {
+    "ProductId": 1324366273,
+    "ProductName": "CCTV",
+    "Description": "CCTV Cameras",
+    "Price": 300.0,
+    "ProductCategory": 5,
+    "OwnerName": "Mudit",
+    "OwnerNum": 6350182500,
+    "City": "bhopal"
   }
 ]

@@ -31,9 +31,9 @@ public class UI
     }
     public static void Register()
     {
-        User user = Commonn.Details();
+           object user = Commonn.Details();
 
-        Console.WriteLine(user.FullName);
+        //Console.WriteLine(user.FullName);
             bool flag = AuthManager.Instance.Register(user);
             if (flag)
             {
@@ -83,17 +83,15 @@ public class UI
                     Console.WriteLine($"{customer.FullName} logged in successfully as Customer");
                     Message.Design();
                     custUIObj.LoginCustomerMenu(customer);
-
                 }
                 else if (entity is Owner)
                 {
                     OwnerUI oui = new OwnerUI();
-                    RentJunction.Controller.Owner owner = (Owner)entity;
+                    Owner owner = (Owner)entity;
                     Console.WriteLine($"{owner.FullName} logged in successfully as Owner");
                     Message.Design();
                     oui.LoginOwnerMenu(owner);
                 }
-
                 else if(entity is Admin) 
                 {
                     AdminUI adm = new AdminUI();

@@ -1,21 +1,23 @@
 ﻿using RentJunction.Controller;
 public class AdminController
 {
+    
+    //public Admin 
     public List<Customer> getCustomer()
     {
-        return DbHandler.Instance._customerList;
+        return DBCustomer.Instance._customerList;
     }
     public List<Owner> getOwners()
     {
-        return DbHandler.Instance._ownerList;
+        return DBOwner.Instance._ownerList;
     }
     public void updateDBCust(List<Customer> list)
     {
-        DbHandler.Instance.UpdateDB(list);
+        DBCustomer.Instance.UpdateDB(Message.customerPath,list);
     }
     public void UPdateDbOwner(List<Owner> list)
     {
-        DbHandler.Instance.UpdateDB(list);
+        DBOwner.Instance.UpdateDB(Message.ownerPath, list);
     }
 
 }

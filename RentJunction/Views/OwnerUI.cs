@@ -15,7 +15,6 @@ namespace RentJunction.Views
 
             OwnerMenu input = (OwnerMenu)CheckValidity.IsValidInput();
             
-
             switch (input)
             {
                 case OwnerMenu.add_product:
@@ -54,7 +53,7 @@ namespace RentJunction.Views
         }
         public void AddProduct(Owner owner)
         {
-            List<string> categories = DbHandler.Instance.chooseCategory();
+            List<string> categories = DBProduct.Instance.chooseCategory();
             foreach (var category in categories)
             {
                 Console.WriteLine(category);
@@ -180,8 +179,8 @@ namespace RentJunction.Views
                     owner.ListedProducts.Add(product);
                 }
 
-                int index= DbHandler.Instance._ownerList.FindIndex((obj)=>obj.Username==owner.Username);
-                DbHandler.Instance._ownerList[index] = owner;
+                int index= DBOwner.Instance._ownerList.FindIndex((obj)=>obj.Username==owner.Username);
+                DBOwner.Instance._ownerList[index] = owner;
                 ownerCtrl.updateDBOwner(listowner);
                 return true;
             }

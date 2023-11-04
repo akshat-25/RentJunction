@@ -83,7 +83,13 @@ public class Message
     public static string descError = "Description cannot be less than 10 characters" ;
     public static string nameError = "Name cannot be empty. Please try again";
     public static string custMenu = "Choose an option:\n 1. Browse Products \n 2. View Rented Products\n 3. Extend Rent Period\n 4. Logout \n";
-
+    public static string startDate = "Start Date          - ";
+    public static string endDate = "End Date            - ";
+    public static string rentDays = "Total days of rent are ";
+    public static string customerPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\CustomerMasterList.json";
+    public static string ownerPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\OwnerMasterList.json";
+    public static string productsPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\ProductMasterList.json";
+    public static string adminPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\AdminList.json";
 
 
 
