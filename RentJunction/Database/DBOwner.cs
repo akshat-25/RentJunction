@@ -28,8 +28,9 @@ public sealed class DBOwner : DBHandler
         {
             _ownerList = JsonConvert.DeserializeObject<List<Owner>>(File.ReadAllText(Message.ownerPath));
         }
-        catch
+        catch(Exception ex)
         {
+            File.AppendAllText(Message.errorLoggerPath, ex.ToString());
             Console.WriteLine(Message.error);
             UI.StartMenu();
         }

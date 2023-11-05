@@ -22,7 +22,7 @@ namespace commonData
             Console.WriteLine(Message.username);
 
             string username = CheckValidity.IsValidUsername();
-
+            Console.WriteLine();
             long phoneNumber = CheckValidity.IsValidPhoneNum();
 
             Console.WriteLine();
@@ -36,13 +36,14 @@ namespace commonData
             Console.WriteLine(Message.pswd);
 
             string password = CheckValidity.IsValidPassword();
-
+           
             Console.WriteLine();
+
             int roletaken = CheckValidity.IsValidRole();
 
             Console.WriteLine();
 
-            if(roletaken == (int)Role.Customer)
+            if (roletaken == (int)Role.Customer)
             {
                 Customer cust = new Customer
                 {
@@ -72,6 +73,8 @@ namespace commonData
 
                 return owner;
             }
+
+          
 
         }
     }

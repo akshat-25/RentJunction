@@ -31,9 +31,10 @@ public sealed class DBProduct : DBHandler
         {
             _productList = JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText(Message.productsPath));
         }
-        catch
+        catch(Exception ex)
         {
             Console.WriteLine(Message.error);
+            File.AppendAllText(Message.errorLoggerPath, ex.ToString());
             UI.StartMenu();
         }
 
@@ -45,23 +46,23 @@ public sealed class DBProduct : DBHandler
         && (product.City == city));
         return filteredProd;
     }
+
     public List<string> chooseCategory()
     {
         if (_productCategoryList.Count == 0)
         {
-
-            _productCategoryList.Add("1.  Property");
-            _productCategoryList.Add("2.  Electronics");
-            _productCategoryList.Add("3.  Computer_Accessories");
-            _productCategoryList.Add("4.  Audio_Visual");
-            _productCategoryList.Add("5.  Security_Systems");
-            _productCategoryList.Add("6.  Clothes_Jewellery");
-            _productCategoryList.Add("7.  Generator ");
-            _productCategoryList.Add("8.  Media_Entertainment_Equipment");
-            _productCategoryList.Add("9.  Vehicle");
-            _productCategoryList.Add("10. Health_Supplements");
-            _productCategoryList.Add("11. Furniture");
-            _productCategoryList.Add("12. Miscellaneous");
+            _productCategoryList.Add(Message.cate1);
+            _productCategoryList.Add(Message.cate2);
+            _productCategoryList.Add(Message.cate3);
+            _productCategoryList.Add(Message.cate4);
+            _productCategoryList.Add(Message.cate5);
+            _productCategoryList.Add(Message.cate6);
+            _productCategoryList.Add(Message.cate7);
+            _productCategoryList.Add(Message.cate8);
+            _productCategoryList.Add(Message.cate9);
+            _productCategoryList.Add(Message.cate10);
+            _productCategoryList.Add(Message.cate11);
+            _productCategoryList.Add(Message.cate12);
 
         }
 

@@ -27,8 +27,9 @@ public sealed class DBCustomer : DBHandler
         {
             _customerList = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText(Message.customerPath));
         }
-        catch
+        catch(Exception ex)
         {
+            File.AppendAllText(Message.errorLoggerPath, ex.ToString());
             Console.WriteLine(Message.error);
             UI.StartMenu();
         }

@@ -1,6 +1,4 @@
-﻿using commonData;
-using MenuOpt;
-using RentJunction.Controller;
+﻿using RentJunction.Controller;
 using RentJunction.Models;
 using System.Security.Cryptography;
 
@@ -11,7 +9,7 @@ namespace RentJunction.Views
         OwnerController ownerCtrl = new OwnerController();
         public void LoginOwnerMenu(Owner owner)
         {
-            MenuOptions.ownerMenu();
+            Console.WriteLine(Message.ownerMenu);
 
             OwnerMenu input = (OwnerMenu)CheckValidity.IsValidInput();
             
@@ -209,13 +207,16 @@ namespace RentJunction.Views
         public  void UpdateListedProducts(Owner owner)
         {
             ViewListedProducts(owner);
+
             if(owner.ListedProducts  == null ) {
      
                 return;
             }
+            Console.WriteLine(Message.design);
+            Console.WriteLine();
             start:
             Console.WriteLine(Message.prodIdUpdate);
-            
+            Console.WriteLine();
             int input;
             try
             {
@@ -249,9 +250,10 @@ namespace RentJunction.Views
                 Console.WriteLine(Message.validId);
                 goto start;
             }
+
             List<Product> MasterListProducts = ownerCtrl.GetProductList();
-            List<Controller.Owner> list = new List<Controller.Owner>();
-            List<Controller.Customer> CustomerList = ownerCtrl.GetCustomerList();
+            List<Owner> list = ownerCtrl.getOwnerList();
+            List<Customer> CustomerList = ownerCtrl.GetCustomerList();
 
             bool isRented = CustomerList.Any((cust) => cust.rentedProducts != null && cust.rentedProducts.Any((prod)
                 => prod.ProductId == input));
@@ -268,7 +270,7 @@ namespace RentJunction.Views
                 if (product.ProductId.Equals(input))
                 {
                     start2:
-                    MenuOptions.updateListedProdMenuOptions();
+                    Console.WriteLine(Message.updateListedProdMenuOptions);
                     int opt;
                     try
                     {
@@ -283,7 +285,7 @@ namespace RentJunction.Views
                             switch (opt)
                             {
                                 case (int)UpdateProductMenu.product_name:
-                                    Console.WriteLine("Enter new name");
+                                    Console.WriteLine(Message.prodUpdateName);
                                     string name = Console.ReadLine();
                                     while (!CheckValidity.checkNull(name))
                                     {
@@ -362,13 +364,14 @@ namespace RentJunction.Views
                                     break;
                             }
                             ownerCtrl.updateDBProducts(MasterListProducts);
-                            ownerCtrl.UpdateCustList(product, owner);
+                            ownerCtrl.UpdateOwnerList(product, owner);
                             ownerCtrl.updateDBOwner(list);
                         }
 
                     }
-                    catch
+                    catch(Exception ex)
                     {
+                        File.AppendAllText(Message.errorLoggerPath, ex.ToString());
                         Console.WriteLine(Message.invalid);
                         goto start2;
                     }
@@ -378,7 +381,7 @@ namespace RentJunction.Views
         }
         public void DeleteListedProducts(Owner owner)
         {
-            List<Owner> list = new List<Owner>();
+            List<Owner> list = ownerCtrl.getOwnerList();
             
             ViewListedProducts(owner);
             if (owner.ListedProducts == null)
@@ -386,14 +389,14 @@ namespace RentJunction.Views
                 return;
             }
         start:
-            Console.WriteLine("Enter the product ID to delete the product");
+            Console.WriteLine(Message.prodDelID);
             int input;
             try
             {
                 bool flag = int.TryParse(Console.ReadLine(), out input);
                 if (!flag)
                 {
-                    Console.WriteLine("Invalid Id. Please try again");
+                    Console.WriteLine(Message.invalid);
                     goto start;
                 }
                 else
@@ -409,15 +412,16 @@ namespace RentJunction.Views
                     }
                     if (!flag2)
                     {
-                        Console.WriteLine("Enter valid product ID");
+                        Console.WriteLine(Message.invalid);
                         goto start;
                     }
                 }
 
             }
-            catch
+            catch(Exception ex)
             {
-                Console.WriteLine("Enter valid product ID");
+                File.AppendAllText(Message.errorLoggerPath, ex.ToString());
+                Console.WriteLine(Message.invalid);
                 goto start;
             }
             List<Controller.Customer> CustomerList = ownerCtrl.GetCustomerList();
@@ -426,7 +430,7 @@ namespace RentJunction.Views
 
             if (isRented)
             {
-                Console.WriteLine("You cannot delete this product as it is already rented.");
+                Console.WriteLine(Message.prodDelDenied);
                 Console.WriteLine();
                 ViewListedProducts(owner);
 
@@ -452,7 +456,7 @@ namespace RentJunction.Views
             }
             ownerCtrl.updateDBOwner(list);
             ownerCtrl.updateDBProducts(MasterListProducts);
-
+            Console.WriteLine(Message.prodDelSucc);
         }
     }
 }

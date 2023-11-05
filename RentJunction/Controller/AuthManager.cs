@@ -24,11 +24,18 @@ public sealed class AuthManager
     }
 
     
-     public bool Register(object entity)
+     public bool Register(Object entity)
     {
+
        if(entity is Customer)
         {
-           Customer customer = (Customer)entity;
+            Customer customer = (Customer)entity;
+            if (DBAuth.Instance.IsExists(customer.Username))
+            {
+                Console.WriteLine(Message.usernameExist);
+                return false;
+            }
+
             if (DBAuth.Instance.DbRegister(customer))
             {
                 return true;
@@ -39,7 +46,12 @@ public sealed class AuthManager
        else if(entity is Owner)
         {
             Owner owner = (Owner)entity;
-            if(DBAuth.Instance.DbRegister(owner))
+            if (DBAuth.Instance.IsExists(owner.Username))
+            {
+                Console.WriteLine(Message.usernameExist);
+                return false;
+            }
+            if (DBAuth.Instance.DbRegister(owner))
             {
                 return true;
             }

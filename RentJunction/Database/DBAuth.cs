@@ -26,7 +26,7 @@ public class DBAuth
             Customer customer = (Customer)entity;
             if (IsExists(customer.Username))
             {
-                Console.WriteLine(Message.usernameExist);
+               
                 return false;
             }
 
@@ -51,11 +51,7 @@ public class DBAuth
         else if(entity is Owner)
         {
             Owner owner = (Owner)entity;
-            if (IsExists(owner.Username))
-            {
-                Console.WriteLine(Message.usernameExist);
-                return false;
-            }
+           
             if (DBOwner.Instance._ownerList != null)
             {
                 foreach (var ownerEntity in DBOwner.Instance._ownerList)
@@ -93,7 +89,6 @@ public class DBAuth
                         Console.WriteLine(Message.usernameExist);
                         return false;
                     }
-
                 }
                 DBAdmin.Instance._adminList.Add(admin);
                 DBAdmin.Instance.UpdateDB(Message.adminPath, DBAdmin.Instance._adminList);

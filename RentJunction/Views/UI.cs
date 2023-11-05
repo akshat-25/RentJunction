@@ -1,7 +1,5 @@
 ﻿using commonData;
-using MenuOpt;
 using RentJunction.Controller;
-using RentJunction.Models;
 using RentJunction.Views;
 public class UI
 {
@@ -9,7 +7,7 @@ public class UI
     {
         while (true)
         {
-            MenuOptions.startMenu();
+            Console.WriteLine(Message.startMenu);
             Menu input = (Menu)CheckValidity.IsValidInput();
 
             switch (input)
@@ -31,9 +29,8 @@ public class UI
     }
     public static void Register()
     {
-           object user = Commonn.Details();
-
-        //Console.WriteLine(user.FullName);
+            object user = Commonn.Details();
+       
             bool flag = AuthManager.Instance.Register(user);
             if (flag)
             {

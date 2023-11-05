@@ -3,7 +3,7 @@ using RentJunction.Models;
 
 namespace RentJunction.Controller
 {
-    public class Customer : User , IUser
+    public class Customer : User 
     {
         public List<RentedProduct> rentedProducts;
 

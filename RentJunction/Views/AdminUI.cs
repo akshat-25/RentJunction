@@ -1,4 +1,4 @@
-﻿using MenuOpt;
+﻿
 using RentJunction.Controller;
 
 public class AdminUI
@@ -6,7 +6,8 @@ public class AdminUI
     AdminController admCtrl = new AdminController();
     public void LoginAdminMenu(Admin admin)
     {
-        MenuOptions.adminMenu();
+        Console.WriteLine(Message.adminMenu);
+        Console.WriteLine(Message.design);
         Options input = (Options)CheckValidity.IsValidInput();
         
         Console.WriteLine();

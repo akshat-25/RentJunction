@@ -1,5 +1,4 @@
-﻿using RentJunction.Models;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 public class CheckValidity
 {
@@ -28,8 +27,7 @@ public class CheckValidity
         {
             if (!checkNull(username) || !Regex.IsMatch(username, hasOnlyAlphaNumeric) || username.Length < 5)
             {
-                Console.WriteLine("Username should be alphanumeric ," +
-                    " should not be empty and have length should be greater than 5");
+                Console.WriteLine(Message.userNameErr);
                 username = Console.ReadLine().Trim();
             }
             else
@@ -108,22 +106,22 @@ public class CheckValidity
 
             if (!checkNull(address))
             {
-                Console.WriteLine("Address cannot be empty");
+                Console.WriteLine(Message.addressEmpty);
                 address = Console.ReadLine().ToLower().Trim();
             }
             else if (flag)
             {
-                Console.WriteLine("Integers are not allowed in City name -");
+                Console.WriteLine(Message.cityIntError);
                 address = Console.ReadLine().ToLower().Trim();
             }
             else if (!Regex.IsMatch(address, @"^[a-zA-Z]+$"))
             {
-                Console.WriteLine("Only alphabetic characters are allowed");
+                Console.WriteLine(Message.onlyAlphabetsallowed);
                 address = Console.ReadLine().ToLower().Trim();
             }
             else if (!flag && address.Length < 3)
             {
-                Console.WriteLine("Length of city must be greater than equal to 3 characters.");
+                Console.WriteLine(Message.cityLength);
                 address = Console.ReadLine().ToLower().Trim();
             }
             else
@@ -143,17 +141,17 @@ public class CheckValidity
         {
             if (name.Length < 3 || !checkNull(name))
             {
-                Console.WriteLine("Name should be greater than 3 characters.Please try again !");
+                Console.WriteLine(Message.nameLength);
                 name = Console.ReadLine().Trim();
             }
             else if (int.TryParse(name, out int res))
             {
-                Console.WriteLine("Integers are not allowed in name.");
+                Console.WriteLine(Message.nameIntError);
                 name = Console.ReadLine().Trim();
             }
             else if (!Regex.IsMatch(name, @"^[a-zA-Z]+$"))
             {
-                Console.WriteLine("Only alphabetic characters are allowed");
+                Console.WriteLine(Message.onlyAlphabetsallowed);
                 name = Console.ReadLine().Trim();
             }
             else
@@ -168,7 +166,7 @@ public class CheckValidity
     public static long IsValidPhoneNum()
     {
     start:
-        Console.WriteLine("Enter Phone Number -> +91 ");
+        Console.WriteLine(Message.enterPhNo);
         long phoneNumber;
         try
         {
@@ -176,14 +174,14 @@ public class CheckValidity
             string phNo = phoneNumber.ToString();
             if (phNo.Length != 10)
             {
-                Console.WriteLine("Phone number should be of 10 digits and alphabetic chara ters are not allowed.");
+                Console.WriteLine(Message.PhNoLenError);
                 goto start;
             }
             return phoneNumber;
         }
         catch
         {
-            Console.WriteLine("Phone number should be of 10 digits");
+            Console.WriteLine(Message.PhNoLenError2);
             goto start;
         }
     }
@@ -192,7 +190,7 @@ public class CheckValidity
         string email = Console.ReadLine();
         while (!IsValidEmail(email) || !checkNull(email))
         {
-            Console.WriteLine("Please enter a valid email address");
+            Console.WriteLine(Message.validEmail);
             email = Console.ReadLine().Trim();
         }
         return email;
@@ -204,7 +202,8 @@ public class CheckValidity
 
         while (IsValidPasswordReg(password) == false || !checkNull(password))
         {
-            Console.WriteLine("Password should not be less 8 characters and should contain a \n UpperCase , Special Character and at least one Number");
+            Console.WriteLine(Message.pswdConditions);
+            Console.WriteLine();
             password = Console.ReadLine().Trim();
         }
         return password;
@@ -213,21 +212,21 @@ public class CheckValidity
     public static int IsValidRole()
     {
     start1:
-        Console.WriteLine("Enter Role type (1. Customer    2. Owner) ->");
+        Console.WriteLine(Message.chooseRole);
         int roletaken;
         try
         {
             roletaken = Convert.ToInt32(Console.ReadLine());
             if (roletaken != (int)Role.Customer && roletaken != (int)Role.Owner)
             {
-                Console.WriteLine("Please choose a valid role");
+                Console.WriteLine(Message.validRole);
                 goto start1;
             }
             return roletaken;
         }
         catch
         {
-            Console.WriteLine("Please choose a valid role");
+            Console.WriteLine(Message.validRole);
             goto start1;
         }
 

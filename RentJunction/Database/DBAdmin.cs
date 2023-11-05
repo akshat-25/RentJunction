@@ -30,8 +30,9 @@ public sealed class DBAdmin : DBHandler
         {
             _adminList = JsonConvert.DeserializeObject<List<Admin>>(File.ReadAllText(Message.adminPath));
         }
-        catch
+        catch(Exception ex) 
         {
+            File.AppendAllText(Message.errorLoggerPath, ex.ToString());
             Console.WriteLine(Message.error);
             UI.StartMenu();
         }

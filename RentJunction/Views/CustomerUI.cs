@@ -1,7 +1,4 @@
-﻿using System.Text.RegularExpressions;
-using commonData;
-using MenuOpt;
-using RentJunction.Controller;
+﻿using RentJunction.Controller;
 using RentJunction.Models;
 
 
@@ -54,7 +51,7 @@ namespace RentJunction.Views
         {
             Console.WriteLine(Message.entCity);
             string address = CheckValidity.IsValidAddress();
-           
+            Console.WriteLine(Message.design);
             Console.WriteLine(Message.chooseCate);
 
             custCtrl.chooseCategory();
@@ -103,7 +100,10 @@ namespace RentJunction.Views
                 Console.WriteLine();
                 Console.WriteLine(Message.design);
                 RentAProd(res, prodID, cust.rentedProducts, cust);
+                Console.WriteLine();
                 Console.WriteLine(Message.thanksRent);
+                Console.WriteLine();
+                Console.WriteLine(Message.design);
                 LoginCustomerMenu(cust);
             }
 
@@ -204,7 +204,7 @@ namespace RentJunction.Views
                     if (isValidEndDate && isValidPrevEndDate)
                     {
 
-                        Console.WriteLine("Days of rent are " + differenceDays);
+                        Console.WriteLine(Message.daysOfRent + differenceDays);
 
                     }
                     else
@@ -212,7 +212,7 @@ namespace RentJunction.Views
                         Console.WriteLine(Message.invalidDate);
                     }
 
-                    Console.WriteLine("The remaining amount be be paid is : Rs. " + differenceDays * rentprod.Price);
+                    Console.WriteLine(Message.remainingAmt + differenceDays * rentprod.Price);
                     custCtrl.updateDBCust(list);
                 }
             }
@@ -289,7 +289,8 @@ namespace RentJunction.Views
                     List<Product> list = prodCtrl.getProductsMasterList();
                     list.Remove(product);
                     prodCtrl.updateDBProds(list);
-                    Console.WriteLine($"Total amount for {days} is Rs.{days * product.Price}");
+                    Console.WriteLine();
+                    Console.WriteLine(Message.design);
                 }
             }
             return rentedlist;

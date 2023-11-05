@@ -15,7 +15,7 @@
       },
       {
         "startDate": "11/03/2023",
-        "endDate": "11/23/2023",
+        "endDate": "11/25/2023",
         "ProductId": 27,
         "ProductName": "Smart TV",
         "Description": "55-inch 4K Ultra HD Smart TV with built-in streaming apps",
@@ -24,44 +24,69 @@
         "OwnerName": "Navpreet",
         "OwnerNum": 7993893999,
         "City": null
+      },
+      {
+        "startDate": "11/06/2023",
+        "endDate": "11/23/2023",
+        "ProductId": 5,
+        "ProductName": "Coffee Maker",
+        "Description": "Espresso machine for brewing delicious coffee",
+        "Price": 150.0,
+        "ProductCategory": 2,
+        "OwnerName": "Harsh",
+        "OwnerNum": 8989898989,
+        "City": null
       }
     ],
+    "Username": "akshat123",
+    "Password": "Akshat@123",
     "FullName": "Akshat",
     "Address": "noida",
     "PhoneNumber": 9784918600,
-    "Username": "akshat123",
     "Email": "akahat@gmail.com",
-    "Password": "Akshat@123",
     "role": 1
   },
   {
     "rentedProducts": null,
+    "Username": "shreya123",
+    "Password": "Shreya@123",
     "FullName": "Shreyansh",
     "Address": "chennai",
     "PhoneNumber": 9878909879,
-    "Username": "shreya123",
     "Email": "shreya@gmail.com",
-    "Password": "Shreya@123",
     "role": 1
   },
   {
     "rentedProducts": null,
+    "Username": "ayush123",
+    "Password": "Ayush@123",
     "FullName": "Ayush",
     "Address": "kota",
     "PhoneNumber": 4747474747,
-    "Username": "ayush123",
     "Email": "ayush@gmail.com",
-    "Password": "Ayush@123",
     "role": 1
   },
   {
-    "rentedProducts": null,
-    "FullName": "Mitika",
+    "rentedProducts": [
+      {
+        "startDate": "11/07/2023",
+        "endDate": "11/15/2023",
+        "ProductId": 30,
+        "ProductName": "Coffee Maker",
+        "Description": "Espresso machine for brewing delicious coffee",
+        "Price": 150.0,
+        "ProductCategory": 2,
+        "OwnerName": "Navpreet",
+        "OwnerNum": 7993893999,
+        "City": null
+      }
+    ],
+    "Username": "advik123",
+    "Password": "Advik@123",
+    "FullName": "advik",
     "Address": "bhilwara",
-    "PhoneNumber": 7014755220,
-    "Username": "mitika123",
-    "Email": "mitika@gmail.com",
-    "Password": "Mitika@123",
+    "PhoneNumber": 9413356417,
+    "Email": "advik@gmail.com",
     "role": 1
   }
 ]

@@ -33,7 +33,7 @@
       },
       {
         "ProductId": 3,
-        "ProductName": "Refrigerator",
+        "ProductName": "Samsunng Refrigerator",
         "Description": "Energy-efficient refrigerator with ample storage space",
         "Price": 450.0,
         "ProductCategory": 2,
@@ -52,22 +52,22 @@
         "City": "noida"
       },
       {
-        "ProductId": 5,
-        "ProductName": "Coffee Maker",
-        "Description": "Espresso machine for brewing delicious coffee",
-        "Price": 150.0,
+        "ProductId": 1903963712,
+        "ProductName": "Electric Induction",
+        "Description": "It is a prestige product",
+        "Price": 45.0,
         "ProductCategory": 2,
         "OwnerName": "Harsh",
         "OwnerNum": 8989898989,
         "City": "jaipur"
       }
     ],
+    "Username": "harsh123",
+    "Password": "Harsh@123",
     "FullName": "Harsh",
     "Address": "jaipur",
     "PhoneNumber": 8989898989,
-    "Username": "harsh123",
     "Email": "harsh@gmail.com",
-    "Password": "Harsh@123",
     "role": 2
   },
   {
@@ -93,12 +93,12 @@
         "City": "jaipur"
       }
     ],
+    "Username": "abhay123",
+    "Password": "Abhay@123",
     "FullName": "Abhay",
     "Address": "jaipur",
     "PhoneNumber": 8938492349,
-    "Username": "abhay123",
     "Email": "abhay@gmail.com",
-    "Password": "Abhay@123",
     "role": 2
   },
   {
@@ -145,41 +145,21 @@
       },
       {
         "ProductId": 29,
-        "ProductName": "Digital Camera",
+        "ProductName": "Nikon Digital Camera",
         "Description": "Professional DSLR camera with multiple lenses",
         "Price": 1200.0,
         "ProductCategory": 2,
         "OwnerName": "Navpreet",
         "OwnerNum": 7993893999,
         "City": "jaipur"
-      },
-      {
-        "ProductId": 30,
-        "ProductName": "Coffee Maker",
-        "Description": "Espresso machine for brewing delicious coffee",
-        "Price": 150.0,
-        "ProductCategory": 2,
-        "OwnerName": "Navpreet",
-        "OwnerNum": 7993893999,
-        "City": "noida"
       }
     ],
+    "Username": "navpreet123",
+    "Password": "Navpreet@123",
     "FullName": "Navpreet",
     "Address": "noida",
     "PhoneNumber": 7993893999,
-    "Username": "navpreet123",
     "Email": "navpreet@gmail.com",
-    "Password": "Navpreet@123",
-    "role": 2
-  },
-  {
-    "ListedProducts": null,
-    "FullName": "jhkjdfsdh",
-    "Address": "sdfhsfhkdh",
-    "PhoneNumber": 8473328432,
-    "Username": "sdijflsdkfj",
-    "Email": "kjhskajdfhk@gmail.com",
-    "Password": "Akshat@123",
     "role": 2
   },
   {
@@ -195,12 +175,12 @@
         "City": "bhopal"
       }
     ],
+    "Username": "mudit123",
+    "Password": "Mudit@123",
     "FullName": "Mudit",
     "Address": "bhopal",
     "PhoneNumber": 6350182500,
-    "Username": "mudit123",
     "Email": "mudit@gmail.com",
-    "Password": "Mudit@123",
     "role": 2
   }
 ]

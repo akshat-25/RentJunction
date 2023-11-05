@@ -4,7 +4,7 @@ namespace RentJunction.Models
 {
     public class OwnerController
     {
-        public void UpdateCustList(Product product, Owner owner)
+        public void UpdateOwnerList(Product product, Owner owner)
         {
             foreach (var productUpdate in owner.ListedProducts)
             {

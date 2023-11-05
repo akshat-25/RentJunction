@@ -1,7 +1,4 @@
-﻿using RentJunction.Models;
-using System.Diagnostics.Metrics;
-
-public class Message
+﻿public class Message
 {
     public static void Design()
     {
@@ -50,6 +47,7 @@ public class Message
     public static string custEmail = "Enter the Email of the customer you want to delete from the list -";
     public static string OwnEmail = "Enter the Email of the owner you want to delete from the list -";
     public static string cannotDeleteCust = "Cannot delete the customer as he has rented some products.";
+    public static string cannotUpdateProd = "Cannot update the product as he it is rented.";
     public static string somethingWrong = "Something went wrong";
     public static string adminSucc = "Admin added successfully..";
     public static string adminpswd = "Enter password of new admin -";
@@ -83,6 +81,10 @@ public class Message
     public static string descError = "Description cannot be less than 10 characters" ;
     public static string nameError = "Name cannot be empty. Please try again";
     public static string custMenu = "Choose an option:\n 1. Browse Products \n 2. View Rented Products\n 3. Extend Rent Period\n 4. Logout \n";
+    public static string ownerMenu = "Choose an option : \n 1. Add Products for rent \n 2. View your listed Products \n 3. Update your listed Product \n 4. Delete your listed Product \n 5. Logout";
+    public static string updateListedProdMenuOptions = "Select Field number to be update \n 1. Product Name\n 2. Product Description\n 3. Product Price\n 4. Product Category";
+    public static string startMenu = "----------------Rent Junction - Renting Made Easy----------------\n\n\n Choose an option : \n 1. Create an account\n 2. Login\n 3. Exit App\n";
+    public static string adminMenu = "Choose an option : \n 1. View All Customers\n 2. View All Owners\n 3. Delete a Customer\n 4. Delete a Owner\n 5. Add new Admin\n 6. Logout\"";
     public static string startDate = "Start Date          - ";
     public static string endDate = "End Date            - ";
     public static string rentDays = "Total days of rent are ";
@@ -90,7 +92,38 @@ public class Message
     public static string ownerPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\OwnerMasterList.json";
     public static string productsPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\ProductMasterList.json";
     public static string adminPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\AdminList.json";
-
-
+    public static string errorLoggerPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\ErrorLogger.txt.txt";
+    public static string prodDelSucc = "Product Deleted Successfully...";
+    public static string prodUpdateName = "Enter new name";
+    public static string prodDelID = "Enter the product ID to delete the product";
+    public static string prodDelDenied = "You cannot delete this product as it is already rented.";
+    public static string daysOfRent = "Days of rent are ";
+    public static string remainingAmt = "The remaining amount be be paid is : Rs. ";
+    public static string cate1="1.  Property";
+    public static string cate2="2.  Electronics";
+    public static string cate3="3.  Computer_Accessories";
+    public static string cate4="4.  Audio_Visual";
+    public static string cate5="5.  Security_Systems";
+    public static string cate6="6.  Clothes_Jewellery";
+    public static string cate7="7.  Generator ";
+    public static string cate8="8.  Media_Entertainment_Equipment";
+    public static string cate9="9.  Vehicle";
+    public static string cate10="10. Health_Supplements";
+    public static string cate11="11. Furniture";
+    public static string cate12 = "12. Miscellaneous";
+    public static string userNameErr = "Username should be alphanumeric ,should not be empty and have length should be greater than 5";
+    public static string addressEmpty = "Address cannot be empty";
+    public static string cityIntError = "Integers are not allowed in City name -";
+    public static string onlyAlphabetsallowed = "Only alphabetic characters are allowed";
+    public static string cityLength = "Length of city must be greater than equal to 3 characters.";
+    public static string nameLength = "Name should be greater than 3 characters.Please try again !";
+    public static string nameIntError = "Integers are not allowed in name.";
+    public static string enterPhNo = "Enter Phone Number -> +91 ";
+    public static string PhNoLenError = "Phone number should be of 10 digits and alphabetic charaters are not allowed.";
+    public static string PhNoLenError2 = "Phone number should be of 10 digits";
+    public static string validEmail = "Please enter a valid email address";
+    public static string pswdConditions = "Password should not be less 8 characters and should contain a \n UpperCase , Special Character and at least one Number";
+    public static string chooseRole = "Enter Role type (1. Customer    2. Owner) ->";
+    public static string validRole = "Please choose a valid role";
 
 }                                   
