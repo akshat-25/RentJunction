@@ -1,5 +1,6 @@
 ﻿using commonData;
 using RentJunction.Controller;
+using RentJunction.Models;
 using RentJunction.Views;
 public class UI
 {
@@ -9,7 +10,7 @@ public class UI
         {
             Console.WriteLine(Message.startMenu);
             Menu input = (Menu)CheckValidity.IsValidInput();
-
+            Console.WriteLine();
             switch (input)
                 {
                     case Menu.create_account:
@@ -29,7 +30,7 @@ public class UI
     }
     public static void Register()
     {
-            object user = Commonn.Details();
+            User user = Commonn.Details();
        
             bool flag = AuthManager.Instance.Register(user);
             if (flag)
@@ -50,8 +51,8 @@ public class UI
     {
         Console.WriteLine(Message.enterUserName);
         string username = Console.ReadLine();
-
-        while (!CheckValidity.checkNull(username))
+        Console.WriteLine();
+        while (!CheckValidity.CheckNull(username))
         {
             Console.WriteLine(Message.userNameNotEmpty);
             username = Console.ReadLine();
@@ -61,7 +62,8 @@ public class UI
         string password = CheckValidity.HideCharacter();
         Console.WriteLine();
         Message.Design();
-        while (!CheckValidity.checkNull(password))
+
+        while (!CheckValidity.CheckNull(password))
         {
             Console.WriteLine(Message.passwordNameNotEmpty);
             password = Console.ReadLine();
@@ -77,7 +79,7 @@ public class UI
                 {
                     CustomerUI custUIObj = new CustomerUI();
                     Customer customer = (Customer)entity;
-                    Console.WriteLine($"{customer.FullName} logged in successfully as Customer");
+                    Console.WriteLine(customer.FullName + Message.loginCust);
                     Message.Design();
                     custUIObj.LoginCustomerMenu(customer);
                 }
@@ -85,7 +87,7 @@ public class UI
                 {
                     OwnerUI oui = new OwnerUI();
                     Owner owner = (Owner)entity;
-                    Console.WriteLine($"{owner.FullName} logged in successfully as Owner");
+                    Console.WriteLine(owner.FullName + Message.loginOwner);
                     Message.Design();
                     oui.LoginOwnerMenu(owner);
                 }
@@ -93,7 +95,7 @@ public class UI
                 {
                     AdminUI adm = new AdminUI();
                     Admin admin = (Admin)entity;
-                    Console.WriteLine($"Successfully logged in as ADMIN -> {admin.Username}");
+                    Console.WriteLine(Message.loginAdmin + admin.Username);
                     Message.Design();
                     adm.LoginAdminMenu(admin);
                 }

@@ -25,7 +25,7 @@ public class CheckValidity
         string username = Console.ReadLine().Trim();
         while (isValidUsername == false)
         {
-            if (!checkNull(username) || !Regex.IsMatch(username, hasOnlyAlphaNumeric) || username.Length < 5)
+            if (!CheckNull(username) || !Regex.IsMatch(username, hasOnlyAlphaNumeric) || username.Length < 5)
             {
                 Console.WriteLine(Message.userNameErr);
                 username = Console.ReadLine().Trim();
@@ -37,7 +37,7 @@ public class CheckValidity
         }
         return username;
     }
-    public static bool checkNull(string value)
+    public static bool CheckNull(string value)
     {
         if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
         {
@@ -74,7 +74,7 @@ public class CheckValidity
     }
     public static bool IsValidEmail(string email)
     {
-        bool res = Regex.IsMatch(email, hasEmail, RegexOptions.IgnoreCase) && checkNull(email);
+        bool res = Regex.IsMatch(email, hasEmail, RegexOptions.IgnoreCase) && CheckNull(email);
         return res;
     }
     public static int IsValidInput()
@@ -104,7 +104,7 @@ public class CheckValidity
 
             bool flag = int.TryParse(address, out int resu);
 
-            if (!checkNull(address))
+            if (!CheckNull(address))
             {
                 Console.WriteLine(Message.addressEmpty);
                 address = Console.ReadLine().ToLower().Trim();
@@ -139,7 +139,7 @@ public class CheckValidity
         string name = Console.ReadLine();
         while (!isValidname)
         {
-            if (name.Length < 3 || !checkNull(name))
+            if (name.Length < 3 || !CheckNull(name))
             {
                 Console.WriteLine(Message.nameLength);
                 name = Console.ReadLine().Trim();
@@ -188,7 +188,7 @@ public class CheckValidity
     public static string IsValidEmailReg()
     {
         string email = Console.ReadLine();
-        while (!IsValidEmail(email) || !checkNull(email))
+        while (!IsValidEmail(email) || !CheckNull(email))
         {
             Console.WriteLine(Message.validEmail);
             email = Console.ReadLine().Trim();
@@ -200,7 +200,7 @@ public class CheckValidity
         string password = HideCharacter();
 
 
-        while (IsValidPasswordReg(password) == false || !checkNull(password))
+        while (IsValidPasswordReg(password) == false || !CheckNull(password))
         {
             Console.WriteLine(Message.pswdConditions);
             Console.WriteLine();

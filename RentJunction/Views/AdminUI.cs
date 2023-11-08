@@ -1,9 +1,15 @@
-﻿
-using RentJunction.Controller;
+﻿using RentJunction.Controller;
+using RentJunction.Models;
 
 public class AdminUI
 {
-    AdminController admCtrl = new AdminController();
+    ICustomerController custCtrl;
+    IOwnerController ownerCtrl;
+    public AdminUI() 
+    { 
+       custCtrl = new CustomerController();
+       ownerCtrl = new OwnerController();
+    }
     public void LoginAdminMenu(Admin admin)
     {
         Console.WriteLine(Message.adminMenu);
@@ -49,7 +55,7 @@ public class AdminUI
     public void ViewAllCustomers(Admin admin)
     {
 
-        List<Customer> customers = admCtrl.getCustomer();
+        List<Customer> customers = custCtrl.GetCustomer();
         foreach (var customer in customers)
         {
             Console.WriteLine("-------------------------------------------");
@@ -61,7 +67,7 @@ public class AdminUI
     }
     public void ViewAllOwners(Admin admin)
     {
-        List<Owner> owners = admCtrl.getOwners();
+        List<Owner> owners = ownerCtrl.GetOwnerList();
         Console.WriteLine(Message.custList);
         foreach (var owner in owners)
         {
@@ -77,7 +83,7 @@ public class AdminUI
         Console.WriteLine(Message.custEmail);
         string input = Console.ReadLine();
 
-        while (!CheckValidity.IsValidEmail(input) || !CheckValidity.checkNull(input))
+        while (!CheckValidity.IsValidEmail(input) || !CheckValidity.CheckNull(input))
         {
             Console.WriteLine(Message.invalid);
             input = Console.ReadLine().Trim();
@@ -85,7 +91,7 @@ public class AdminUI
         Console.WriteLine();
         Console.WriteLine();
 
-        List<Customer> customers = admCtrl.getCustomer();
+        List<Customer> customers = custCtrl.GetCustomer();
 
         foreach (var customer in customers)
         {
@@ -95,7 +101,7 @@ public class AdminUI
                 {
                     customers.Remove(customer);
                     Console.WriteLine($"{customer.FullName} Deleted Successfully");
-                    admCtrl.updateDBCust(customers);
+                    custCtrl.UpdateDBCust(customers);
                     break;
                 }
                 else
@@ -112,7 +118,7 @@ public class AdminUI
         ViewAllOwners(admin);
         Console.WriteLine(Message.OwnEmail);
         var input = Console.ReadLine();
-        while (!CheckValidity.IsValidEmail(input) || !CheckValidity.checkNull(input))
+        while (!CheckValidity.IsValidEmail(input) || !CheckValidity.CheckNull(input))
         {
             Console.WriteLine(Message.invalid);
             input = Console.ReadLine().Trim();
@@ -120,7 +126,7 @@ public class AdminUI
         Console.WriteLine();
         Console.WriteLine();
 
-        List<Owner> owners = admCtrl.getOwners();
+        List<Owner> owners = ownerCtrl.GetOwnerList();
 
         foreach (var owner in owners)
         {
@@ -128,7 +134,7 @@ public class AdminUI
             {
                 owners.Remove(owner);
                 Console.WriteLine($"{owner.FullName} Deleted Successfully");
-                admCtrl.UPdateDbOwner(owners);
+                ownerCtrl.UpdateDBOwner(owners);
                 
                 break;
             }

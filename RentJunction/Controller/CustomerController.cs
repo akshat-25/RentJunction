@@ -2,9 +2,9 @@
 
 namespace RentJunction.Models
 {
-    public class CustomerController
+    public class CustomerController : ICustomerController
     {
-        public void chooseCategory()
+        public void ChooseCategory()
         {
             List<string> categories = DBProduct.Instance.chooseCategory();
             foreach (var item in categories)
@@ -13,11 +13,11 @@ namespace RentJunction.Models
             }
 
         }
-        public List<Customer> getCustomer()
+        public List<Customer> GetCustomer()
         {
             return DBCustomer.Instance._customerList;
         }
-        public void updateDBCust(List<Customer> list)
+        public void UpdateDBCust(List<Customer> list)
         {
             DBCustomer.Instance.UpdateDB(Message.customerPath, list);
         }
@@ -37,3 +37,4 @@ namespace RentJunction.Models
 
     }
 }
+    

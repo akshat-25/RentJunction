@@ -1,9 +1,9 @@
 ﻿using RentJunction.Controller;
 using RentJunction.Models;
 
-public class ProductController
+public class ProductController : IProductControllerCust , IProductControllerOwner
 {
-    public List<Product> getProducts(int input, string city)
+    public List<Product> GetProducts(int input, string city)
     {
 
         foreach (var product in DBProduct.Instance.GetProducts(input, city))
@@ -19,15 +19,19 @@ public class ProductController
         }
         return DBProduct.Instance.GetProducts(input, city);
     }
-    public List<Product> getProductsMasterList()
+    public List<Product> GetProductsMasterList()
     {
         return DBProduct.Instance._productList;
     }
-    public void updateDBProds(List<Product> list)
+    public bool AddProductMaster(Product product)
+    {
+        return DBProduct.Instance.AddProductMaster(product);
+    }
+    public void UpdateDBProds(List<Product> list)
     {
         DBProduct.Instance.UpdateDB(Message.productsPath, list);
     }
-    public void viewRentedProd(Customer cust)
+    public void ViewRentedProd(Customer cust)
     {
         foreach (var product in cust.rentedProducts)
         {
@@ -35,11 +39,13 @@ public class ProductController
             Console.WriteLine(Message.disProdId    + product.ProductId);
             Console.WriteLine(Message.disProdName  + product.ProductName);
             Console.WriteLine(Message.disProdDesc  + product.Description);
-            Console.WriteLine(Message.disProdPrice + product.Price + "per day");
+            Console.WriteLine(Message.disProdPrice + product.Price + " per day");
             Console.WriteLine(Message.disProdCate  + Enum.Parse<Category>(product.ProductCategory.ToString()));
-            Console.WriteLine(Message.startDate + product.startDate);
-            Console.WriteLine(Message.endDate + product.endDate);
+            Console.WriteLine(Message.startDate + product.StartDate);
+            Console.WriteLine(Message.endDate + product.EndDate);
         }
     }
+
+
 
 }

@@ -6,12 +6,22 @@ namespace RentJunction.Views
 {
     public class OwnerUI
     {
-        OwnerController ownerCtrl = new OwnerController();
+        OwnerController ownerCtrl;
+        ICustomerController custCtrl;
+        IProductControllerOwner prodCtrl ;
+
+        public OwnerUI()
+        {
+            ownerCtrl = new OwnerController();
+            custCtrl  = new CustomerController();
+            prodCtrl  = new ProductController();
+        }
         public void LoginOwnerMenu(Owner owner)
         {
             Console.WriteLine(Message.ownerMenu);
-
             OwnerMenu input = (OwnerMenu)CheckValidity.IsValidInput();
+            Console.WriteLine(Message.design);
+            Console.WriteLine();
             
             switch (input)
             {
@@ -61,18 +71,20 @@ namespace RentJunction.Views
             Console.WriteLine();
             Console.WriteLine(Message.prodname);
             string nameProd = Console.ReadLine();
-            while (!CheckValidity.checkNull(nameProd))
+            while (!CheckValidity.CheckNull(nameProd))
             {
                 Console.WriteLine(Message.nameEmpty);
                 nameProd = Console.ReadLine();
             }
+            Console.WriteLine();
             Console.WriteLine(Message.prodDesc);
             string descProd = Console.ReadLine();
-            while (!CheckValidity.checkNull(descProd))
+            while (!CheckValidity.CheckNull(descProd))
             {
                 Console.WriteLine(Message.descEmpty);
                 nameProd = Console.ReadLine();
             }
+            Console.WriteLine();
             Console.WriteLine(Message.prodCate);
 
             int categoryProd;
@@ -94,6 +106,7 @@ namespace RentJunction.Views
                     break;
                 }
             }
+            Console.WriteLine();
             Console.WriteLine(Message.prodPrice);
 
             double priceProd;
@@ -119,7 +132,7 @@ namespace RentJunction.Views
             int id = RandomNumberGenerator.GetInt32(0, int.MaxValue);
             while (true)
             {
-                List<Product> prods = ownerCtrl.GetProductList();
+                List<Product> prods = prodCtrl.GetProductsMasterList();
                 if (prods != null && prods.Any((prod) => prod.ProductId == id))
                 {
                     id = RandomNumberGenerator.GetInt32(0, int.MaxValue);
@@ -162,9 +175,9 @@ namespace RentJunction.Views
         }
         public bool AddProducts(Product product, Owner owner)
         {
-            List<Owner> listowner = ownerCtrl.getOwnerList();
+            List<Owner> listowner = ownerCtrl.GetOwnerList();
 
-            if (ownerCtrl.AddProductMaster(product))
+            if (prodCtrl.AddProductMaster(product))
             {
                 if (owner.ListedProducts != null)
                 {
@@ -179,7 +192,7 @@ namespace RentJunction.Views
 
                 int index= DBOwner.Instance._ownerList.FindIndex((obj)=>obj.Username==owner.Username);
                 DBOwner.Instance._ownerList[index] = owner;
-                ownerCtrl.updateDBOwner(listowner);
+                ownerCtrl.UpdateDBOwner(listowner);
                 return true;
             }
 
@@ -214,8 +227,10 @@ namespace RentJunction.Views
             }
             Console.WriteLine(Message.design);
             Console.WriteLine();
-            start:
+            Console.WriteLine();
+        start:
             Console.WriteLine(Message.prodIdUpdate);
+            Console.WriteLine();
             Console.WriteLine();
             int input;
             try
@@ -251,9 +266,9 @@ namespace RentJunction.Views
                 goto start;
             }
 
-            List<Product> MasterListProducts = ownerCtrl.GetProductList();
-            List<Owner> list = ownerCtrl.getOwnerList();
-            List<Customer> CustomerList = ownerCtrl.GetCustomerList();
+            List<Product> MasterListProducts = prodCtrl.GetProductsMasterList();
+            List<Owner> list = ownerCtrl.GetOwnerList();
+            List<Customer> CustomerList = custCtrl.GetCustomer();
 
             bool isRented = CustomerList.Any((cust) => cust.rentedProducts != null && cust.rentedProducts.Any((prod)
                 => prod.ProductId == input));
@@ -287,7 +302,8 @@ namespace RentJunction.Views
                                 case (int)UpdateProductMenu.product_name:
                                     Console.WriteLine(Message.prodUpdateName);
                                     string name = Console.ReadLine();
-                                    while (!CheckValidity.checkNull(name))
+                                    Console.WriteLine();
+                                    while (!CheckValidity.CheckNull(name))
                                     {
                                         Console.WriteLine(Message.nameError);
                                         name = Console.ReadLine();
@@ -299,7 +315,8 @@ namespace RentJunction.Views
                                 case (int)UpdateProductMenu.product_description:
                                     Console.WriteLine(Message.enterNewDesc);
                                     string desc = Console.ReadLine();
-                                    while (!CheckValidity.checkNull(desc) || desc.Length < 10)
+                                    Console.WriteLine();
+                                    while (!CheckValidity.CheckNull(desc) || desc.Length < 10)
                                     {
                                         Console.WriteLine(Message.descError);
                                         desc = Console.ReadLine();
@@ -329,6 +346,7 @@ namespace RentJunction.Views
                                             break;
                                         }
                                     }
+                                    Console.WriteLine();
                                     product.Price = priceProd;
                                     Console.WriteLine(Message.priceChangedSucc);
                                     Console.WriteLine(Message.design);
@@ -363,9 +381,9 @@ namespace RentJunction.Views
                                     goto start2;
                                     break;
                             }
-                            ownerCtrl.updateDBProducts(MasterListProducts);
+                            prodCtrl.UpdateDBProds(MasterListProducts);
                             ownerCtrl.UpdateOwnerList(product, owner);
-                            ownerCtrl.updateDBOwner(list);
+                            ownerCtrl.UpdateDBOwner(list);
                         }
 
                     }
@@ -381,7 +399,7 @@ namespace RentJunction.Views
         }
         public void DeleteListedProducts(Owner owner)
         {
-            List<Owner> list = ownerCtrl.getOwnerList();
+            List<Owner> list = ownerCtrl.GetOwnerList();
             
             ViewListedProducts(owner);
             if (owner.ListedProducts == null)
@@ -390,6 +408,7 @@ namespace RentJunction.Views
             }
         start:
             Console.WriteLine(Message.prodDelID);
+            Console.WriteLine();
             int input;
             try
             {
@@ -424,7 +443,7 @@ namespace RentJunction.Views
                 Console.WriteLine(Message.invalid);
                 goto start;
             }
-            List<Controller.Customer> CustomerList = ownerCtrl.GetCustomerList();
+            List<Controller.Customer> CustomerList = custCtrl.GetCustomer();
             bool isRented = CustomerList.Any((cust) => cust.rentedProducts != null && cust.rentedProducts.Any((prod)
                 => prod.ProductId == input));
 
@@ -445,7 +464,7 @@ namespace RentJunction.Views
                 }
             }
 
-            List<Product> MasterListProducts = ownerCtrl.GetProductList();
+            List<Product> MasterListProducts = prodCtrl.GetProductsMasterList();
             foreach (var product in MasterListProducts)
             {
                 if (product.ProductId.Equals(input))
@@ -454,8 +473,8 @@ namespace RentJunction.Views
                     break;
                 }
             }
-            ownerCtrl.updateDBOwner(list);
-            ownerCtrl.updateDBProducts(MasterListProducts);
+            ownerCtrl.UpdateDBOwner(list);
+            prodCtrl.UpdateDBProds(MasterListProducts);
             Console.WriteLine(Message.prodDelSucc);
         }
     }

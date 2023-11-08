@@ -6,8 +6,14 @@ namespace RentJunction.Views
 {
     public class CustomerUI
     {
-        CustomerController custCtrl = new CustomerController();
-        ProductController  prodCtrl = new ProductController();
+        CustomerController custCtrl;
+        IProductControllerCust  prodCtrl;
+
+        public CustomerUI()
+        {
+            custCtrl = new CustomerController();
+            prodCtrl = new ProductController();
+        }
         public void LoginCustomerMenu(Customer cust)
         {
             Console.WriteLine(Message.custMenu);
@@ -54,11 +60,11 @@ namespace RentJunction.Views
             Console.WriteLine(Message.design);
             Console.WriteLine(Message.chooseCate);
 
-            custCtrl.chooseCategory();
+            custCtrl.ChooseCategory();
 
             int input = CheckValidity.IsValidInput();
             
-            List<Product> res = prodCtrl.getProducts(input, address);
+            List<Product> res = prodCtrl.GetProducts(input, address);
 
             if (res.Count > 0)
             {
@@ -102,6 +108,7 @@ namespace RentJunction.Views
                 RentAProd(res, prodID, cust.rentedProducts, cust);
                 Console.WriteLine();
                 Console.WriteLine(Message.thanksRent);
+                
                 Console.WriteLine();
                 Console.WriteLine(Message.design);
                 LoginCustomerMenu(cust);
@@ -117,7 +124,7 @@ namespace RentJunction.Views
         {
             try
             {
-                prodCtrl.viewRentedProd(cust);
+                prodCtrl.ViewRentedProd(cust);
 
             }
             catch{ Console.WriteLine(Message.noRented); }
@@ -171,7 +178,7 @@ namespace RentJunction.Views
                 goto start1;
             }
 
-            List<Customer> list = custCtrl.getCustomer();
+            List<Customer> list = custCtrl.GetCustomer();
             foreach (var rentprod in cust.rentedProducts)
             {
                 if (prodID.Equals(rentprod.ProductId))
@@ -179,12 +186,12 @@ namespace RentJunction.Views
                     DateTime prevEndDate;
                     DateTime newEndDate;
 
-                    var isValidPrevEndDate = DateTime.TryParse(rentprod.endDate, out prevEndDate);
+                    var isValidPrevEndDate = DateTime.TryParse(rentprod.EndDate, out prevEndDate);
 
                     start:
                     Console.WriteLine(Message.enternewEndDate);
-                    rentprod.endDate = Console.ReadLine();                
-                    var isValidEndDate = DateTime.TryParse(rentprod.endDate, out newEndDate);
+                    rentprod.EndDate = Console.ReadLine();                
+                    var isValidEndDate = DateTime.TryParse(rentprod.EndDate, out newEndDate);
 
                     if(prevEndDate == newEndDate)
                     {
@@ -213,21 +220,22 @@ namespace RentJunction.Views
                     }
 
                     Console.WriteLine(Message.remainingAmt + differenceDays * rentprod.Price);
-                    custCtrl.updateDBCust(list);
+                    custCtrl.UpdateDBCust(list);
                 }
             }
         }
-        public List<RentedProduct> RentAProd(List<Product> Masterlist, int input, List<RentedProduct> rentedlist, Controller.Customer cust)
+        public List<RentedProduct> RentAProd(List<Product> Masterlist, int input, 
+            List<RentedProduct> rentedlist,Customer cust)
         {
-            List<Controller.Customer> listcust = custCtrl.getCustomer();
+            List<Customer> listcust = custCtrl.GetCustomer();
             RentedProduct rentprod = new RentedProduct();
                 
                 DateTime sdt;
                 start:
                 Console.WriteLine(Message.enterStartDate);
-                rentprod.startDate = Console.ReadLine();
+                rentprod.StartDate = Console.ReadLine();
                 Console.WriteLine();
-                var isValidStartDate = DateTime.TryParse(rentprod.startDate, out sdt);
+                var isValidStartDate = DateTime.TryParse(rentprod.StartDate, out sdt);
                 if (sdt < DateTime.Today)
                 {
                     Console.WriteLine(Message.enterValidDate);
@@ -239,9 +247,9 @@ namespace RentJunction.Views
             DateTime edt;
             start2:
             Console.WriteLine(Message.enterEndDate);
-            rentprod.endDate = Console.ReadLine();
+            rentprod.EndDate = Console.ReadLine();
             Console.WriteLine();
-            var isValidEndDate = DateTime.TryParse(rentprod.endDate, out edt);
+            var isValidEndDate = DateTime.TryParse(rentprod.EndDate, out edt);
 
             if(sdt == edt) {
                 Console.WriteLine(Message.startEndDateSame);
@@ -285,14 +293,15 @@ namespace RentJunction.Views
                     rentprod.OwnerNum = product.OwnerNum;
 
                     cust.rentedProducts.Add(rentprod);
-                    custCtrl.updateDBCust(listcust);
-                    List<Product> list = prodCtrl.getProductsMasterList();
+                    custCtrl.UpdateDBCust(listcust);
+                    List<Product> list = prodCtrl.GetProductsMasterList();
                     list.Remove(product);
-                    prodCtrl.updateDBProds(list);
+                    prodCtrl.UpdateDBProds(list);
                     Console.WriteLine();
                     Console.WriteLine(Message.design);
                 }
             }
+            Console.WriteLine("Total Price is " + rentprod.Price * days);
             return rentedlist;
         }
      

@@ -21,8 +21,7 @@ public sealed class DBCustomer : DBHandler
         }
     }
     private DBCustomer(){
-        _customerList = new List<Customer>();
-        
+        _customerList = new List<Customer>();       
         try
         {
             _customerList = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText(Message.customerPath));
@@ -33,8 +32,6 @@ public sealed class DBCustomer : DBHandler
             Console.WriteLine(Message.error);
             UI.StartMenu();
         }
-    
-
     }
 
 }

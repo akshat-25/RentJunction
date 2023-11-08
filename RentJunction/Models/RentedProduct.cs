@@ -4,7 +4,7 @@ namespace RentJunction.Controller
 {
     public class RentedProduct : Product
     {
-        public string startDate { get; set; }
-        public string endDate { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
     }
 }

@@ -7,6 +7,7 @@
         Console.WriteLine();
     }
 
+
     public static string design = "-------------------------------------------";
     public static string reg = "Enter your Name ->";
     public static string city = "Enter Your City ->";
@@ -92,7 +93,7 @@
     public static string ownerPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\OwnerMasterList.json";
     public static string productsPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\ProductMasterList.json";
     public static string adminPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\AdminList.json";
-    public static string errorLoggerPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\ErrorLogger.txt.txt";
+    public static string errorLoggerPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\ErrorLogger.txt";
     public static string prodDelSucc = "Product Deleted Successfully...";
     public static string prodUpdateName = "Enter new name";
     public static string prodDelID = "Enter the product ID to delete the product";
@@ -125,5 +126,8 @@
     public static string pswdConditions = "Password should not be less 8 characters and should contain a \n UpperCase , Special Character and at least one Number";
     public static string chooseRole = "Enter Role type (1. Customer    2. Owner) ->";
     public static string validRole = "Please choose a valid role";
+    public static string loginCust = " logged in successfully as Customer";
+    public static string loginOwner = " logged in successfully as Owner";
+    public static string loginAdmin = " logged in successfully as Admin -> ";
 
 }                                   

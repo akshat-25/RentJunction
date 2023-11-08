@@ -43,9 +43,9 @@
       },
       {
         "ProductId": 4,
-        "ProductName": "Digital Camera",
+        "ProductName": "Nikon Digital Camera",
         "Description": "Professional DSLR camera with multiple lenses",
-        "Price": 1200.0,
+        "Price": 130.0,
         "ProductCategory": 2,
         "OwnerName": "Harsh",
         "OwnerNum": 8989898989,
@@ -55,7 +55,7 @@
         "ProductId": 1903963712,
         "ProductName": "Electric Induction",
         "Description": "It is a prestige product",
-        "Price": 45.0,
+        "Price": 55.0,
         "ProductCategory": 2,
         "OwnerName": "Harsh",
         "OwnerNum": 8989898989,
@@ -144,14 +144,14 @@
         "City": "noida"
       },
       {
-        "ProductId": 29,
-        "ProductName": "Nikon Digital Camera",
-        "Description": "Professional DSLR camera with multiple lenses",
-        "Price": 1200.0,
-        "ProductCategory": 2,
+        "ProductId": 1534967244,
+        "ProductName": "Studio Apartment Sector 137",
+        "Description": "Residential property For rent",
+        "Price": 3000.0,
+        "ProductCategory": 1,
         "OwnerName": "Navpreet",
         "OwnerNum": 7993893999,
-        "City": "jaipur"
+        "City": "noida"
       }
     ],
     "Username": "navpreet123",
@@ -181,6 +181,37 @@
     "Address": "bhopal",
     "PhoneNumber": 6350182500,
     "Email": "mudit@gmail.com",
+    "role": 2
+  },
+  {
+    "ListedProducts": [
+      {
+        "ProductId": 1010767184,
+        "ProductName": "Sofa Set",
+        "Description": "It is a beautiful brown coloured sofa set",
+        "Price": 150.0,
+        "ProductCategory": 11,
+        "OwnerName": "Aastha",
+        "OwnerNum": 9898989898,
+        "City": "bhilwara"
+      }
+    ],
+    "Username": "aastha123",
+    "Password": "Aastha@08",
+    "FullName": "Aastha",
+    "Address": "bhilwara",
+    "PhoneNumber": 9898989898,
+    "Email": "aastha@gmail.com",
+    "role": 2
+  },
+  {
+    "ListedProducts": null,
+    "Username": "vaibhav123",
+    "Password": "Vaibhav@123",
+    "FullName": "Vaibhav",
+    "Address": "jaipur",
+    "PhoneNumber": 8909878906,
+    "Email": "vaibhav@gmail.com",
     "role": 2
   }
 ]

@@ -2,7 +2,7 @@
 
 namespace RentJunction.Models
 {
-    public class OwnerController
+    public class OwnerController : IOwnerController
     {
         public void UpdateOwnerList(Product product, Owner owner)
         {
@@ -17,30 +17,11 @@ namespace RentJunction.Models
                 }
             }
         }
-        public List<Customer> GetCustomerList()
-        {
-            return DBCustomer.Instance._customerList;
-        }
-        public bool AddProductMaster(Product product)
-        {
-            return DBProduct.Instance.AddProductMaster(product);
-        }
-        public List<Product> GetProductList()
-        {
-            return DBProduct.Instance._productList;
-        }
-
-        public void updateDBProducts(List<Product> list)
-        {
-            DBProduct.Instance.UpdateDB(Message.productsPath, list);
-        }
-
-        public void updateDBOwner(List<Owner> list)
+        public void UpdateDBOwner(List<Owner> list)
         {
             DBOwner.Instance.UpdateDB(Message.ownerPath, list);
         }
-
-        public List<Owner> getOwnerList()
+        public List<Owner> GetOwnerList()
         {
             return DBOwner.Instance._ownerList;
         }

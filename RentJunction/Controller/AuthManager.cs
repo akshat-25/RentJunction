@@ -1,8 +1,4 @@
-﻿using RentJunction.Controller;
-using RentJunction.Models;
-using RentJunction.Views;
-
-
+﻿
 public sealed class AuthManager
 {
     private static AuthManager _instance = null;
@@ -22,53 +18,18 @@ public sealed class AuthManager
             return _instance;
         }
     }
-
-    
-     public bool Register(Object entity)
+    public bool Register<T>(T entity) where T : class
     {
-
-       if(entity is Customer)
+        if (DBAuth.Instance.DbRegister(entity))
         {
-            Customer customer = (Customer)entity;
-            if (DBAuth.Instance.IsExists(customer.Username))
-            {
-                Console.WriteLine(Message.usernameExist);
-                return false;
-            }
-
-            if (DBAuth.Instance.DbRegister(customer))
-            {
-                return true;
-            }
-            return false;
+            return true;
         }
 
-       else if(entity is Owner)
-        {
-            Owner owner = (Owner)entity;
-            if (DBAuth.Instance.IsExists(owner.Username))
-            {
-                Console.WriteLine(Message.usernameExist);
-                return false;
-            }
-            if (DBAuth.Instance.DbRegister(owner))
-            {
-                return true;
-            }
-            return false;
-        }
+        Console.WriteLine("User already exist....");
+        return false;
 
-       else
-        {
-            Admin admin = (Admin)entity;
-            if (DBAuth.Instance.DbRegister(admin))
-            {
-                return true;
-            }
-            return false;
-        }
     }
-    
+
     public Object Login(string username, string password)
     {
         var customer = DBAuth.Instance.Login(username,password);    

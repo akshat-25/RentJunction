@@ -1,6 +1,4 @@
-﻿
-
-namespace RentJunction.Views
+﻿namespace RentJunction.Views
 {
     public class HomePage
     {                       

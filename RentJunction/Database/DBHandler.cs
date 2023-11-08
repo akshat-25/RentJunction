@@ -4,7 +4,6 @@ public class DBHandler
 {
     public void UpdateDB<T>(string path, List<T> list)
     {
-      
         try
         {
             var jsonFile = JsonConvert.SerializeObject(list);

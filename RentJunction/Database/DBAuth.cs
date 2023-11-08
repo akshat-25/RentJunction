@@ -1,6 +1,6 @@
 ﻿using RentJunction.Controller;
 
-public class DBAuth
+public class DBAuth : IDBAuth
 {
     private static DBAuth _instance = null;
     private static readonly object _lockObj = new object();
@@ -21,12 +21,13 @@ public class DBAuth
     }
     public bool DbRegister(object entity)
     {
+
         if (entity is Customer)
         {
             Customer customer = (Customer)entity;
             if (IsExists(customer.Username))
             {
-               
+
                 return false;
             }
 
@@ -48,10 +49,14 @@ public class DBAuth
             DBCustomer.Instance.UpdateDB(Message.customerPath, DBCustomer.Instance._customerList);
             return true;
         }
-        else if(entity is Owner)
+        else if (entity is Owner)
         {
             Owner owner = (Owner)entity;
-           
+            if (IsExists(owner.Username))
+            {
+                return false;
+            }
+
             if (DBOwner.Instance._ownerList != null)
             {
                 foreach (var ownerEntity in DBOwner.Instance._ownerList)
@@ -124,4 +129,5 @@ public class DBAuth
     }
 
 
+   
 }

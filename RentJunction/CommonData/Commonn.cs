@@ -38,7 +38,7 @@ namespace commonData
             string password = CheckValidity.IsValidPassword();
            
             Console.WriteLine();
-
+            Console.WriteLine();
             int roletaken = CheckValidity.IsValidRole();
 
             Console.WriteLine();
@@ -55,7 +55,7 @@ namespace commonData
                     role = (Role)roletaken,
                     Username = username
                 };
-
+                //Customer cust = new Customer(name, address, phoneNumber, email, password, roletaken, username);
                 return cust;
             }
             else

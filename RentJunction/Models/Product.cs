@@ -1,6 +1,4 @@
-﻿
-
-namespace RentJunction.Models
+﻿namespace RentJunction.Models
 {
     public class Product
     {
