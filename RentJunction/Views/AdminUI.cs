@@ -145,6 +145,7 @@ public class AdminUI
         }   
     public void AddNewAdmin()
     {
+        AuthManager athManager = new AuthManager();
         Console.WriteLine(Message.username);
         string input = CheckValidity.IsValidUsername();
         
@@ -159,7 +160,7 @@ public class AdminUI
             Password = pass,
         };
 
-        if (AuthManager.Instance.Register(admin))
+        if (athManager.Register(admin))
         {
             Console.WriteLine(Message.adminSucc);
         }

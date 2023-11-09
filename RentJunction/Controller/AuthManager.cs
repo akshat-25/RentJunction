@@ -1,23 +1,9 @@
 ﻿
-public sealed class AuthManager
+public class AuthManager
 {
-    private static AuthManager _instance = null;
-    private static readonly object _lockObj = new object();
-    private AuthManager() { }
-    public static AuthManager Instance
-    {
-        get
-        {
-            lock (_lockObj)
-            {
-                if (_instance == null)
-                {
-                    _instance = new AuthManager();
-                }
-            }
-            return _instance;
-        }
-    }
+  
+ 
+        
     public bool Register<T>(T entity) where T : class
     {
         if (DBAuth.Instance.DbRegister(entity))

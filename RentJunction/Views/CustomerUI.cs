@@ -7,7 +7,7 @@ namespace RentJunction.Views
     public class CustomerUI
     {
         CustomerController custCtrl;
-        IProductControllerCust  prodCtrl;
+        IProductControllerCust prodCtrl;
 
         public CustomerUI()
         {

@@ -85,7 +85,7 @@
     public static string ownerMenu = "Choose an option : \n 1. Add Products for rent \n 2. View your listed Products \n 3. Update your listed Product \n 4. Delete your listed Product \n 5. Logout";
     public static string updateListedProdMenuOptions = "Select Field number to be update \n 1. Product Name\n 2. Product Description\n 3. Product Price\n 4. Product Category";
     public static string startMenu = "----------------Rent Junction - Renting Made Easy----------------\n\n\n Choose an option : \n 1. Create an account\n 2. Login\n 3. Exit App\n";
-    public static string adminMenu = "Choose an option : \n 1. View All Customers\n 2. View All Owners\n 3. Delete a Customer\n 4. Delete a Owner\n 5. Add new Admin\n 6. Logout\"";
+    public static string adminMenu = "Choose an option : \n 1. View All Customers\n 2. View All Owners\n 3. Delete a Customer\n 4. Delete a Owner\n 5. Add new Admin\n 6. Logout\n";
     public static string startDate = "Start Date          - ";
     public static string endDate = "End Date            - ";
     public static string rentDays = "Total days of rent are ";
