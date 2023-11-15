@@ -2,7 +2,7 @@
 
 using RentJunction.Models;
 
-public sealed class DBProduct : DBHandler
+public sealed class DBProduct : DBHandler , IDBHandler
 {
 
     private static DBProduct _instance = null;

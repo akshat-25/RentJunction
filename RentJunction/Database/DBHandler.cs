@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-public class DBHandler
+public class DBHandler : IDBHandler
 {
     public void UpdateDB<T>(string path, List<T> list)
     {

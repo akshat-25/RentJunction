@@ -10,7 +10,7 @@ public sealed class DBCustomer : DBHandler
     {
         get
         {
-            lock (_lockObj) 
+            lock (_lockObj)
             {
                 if (_instance == null)
                 {
