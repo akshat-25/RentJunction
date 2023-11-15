@@ -50,7 +50,7 @@ namespace commonData
                     FullName = name,
                     Address = address,
                     PhoneNumber = phoneNumber,
-                    Email = email,
+                    Email = email,  
                     Password = password,
                     role = (Role)roletaken,
                     Username = username
@@ -74,8 +74,7 @@ namespace commonData
                 return owner;
             }
 
-          
-
+        
         }
     }
 }

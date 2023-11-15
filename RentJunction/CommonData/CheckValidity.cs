@@ -39,7 +39,7 @@ public class CheckValidity
     }
     public static bool CheckNull(string value)
     {
-        if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
+        if (string.IsNullOrWhiteSpace(value))
         {
 
             return false;

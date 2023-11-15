@@ -30,7 +30,7 @@ public sealed class DBOwner : DBHandler
         }
         catch(Exception ex)
         {
-            File.AppendAllText(Message.errorLoggerPath, ex.ToString());
+            File.AppendAllText(Message.errorLoggerPath, ex.ToString() + DateTime.Now);
             Console.WriteLine(Message.error);
             UI.StartMenu();
         }

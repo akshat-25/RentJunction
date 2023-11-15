@@ -30,10 +30,12 @@ public class UI
     }
     public static void Register()
     {
-            AuthManager athManager = new AuthManager();
+            AuthController authManager = new AuthController();
+
             User user = Commonn.Details();
        
-            bool flag = athManager.Register(user);
+            bool flag = authManager.Register(user);
+            
             if (flag)
             {
             Console.WriteLine(Message.regsuccess);
@@ -50,7 +52,7 @@ public class UI
      }
     public static void Login()
     {
-        AuthManager athManager = new AuthManager();
+        AuthController authManager = new AuthController();
 
         Console.WriteLine(Message.enterUserName);
         string username = Console.ReadLine();
@@ -74,7 +76,7 @@ public class UI
 
         try
         {
-            var entity = athManager.Login(username, password);
+            var entity = authManager.Login(username, password);
 
             if (entity != null)
             {

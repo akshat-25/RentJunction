@@ -10,7 +10,7 @@ public sealed class DBCustomer : DBHandler
     {
         get
         {
-            lock (_lockObj)
+            lock (_lockObj) 
             {
                 if (_instance == null)
                 {
@@ -28,7 +28,7 @@ public sealed class DBCustomer : DBHandler
         }
         catch(Exception ex)
         {
-            File.AppendAllText(Message.errorLoggerPath, ex.ToString());
+            File.AppendAllText(Message.errorLoggerPath, ex.ToString() + DateTime.Now);
             Console.WriteLine(Message.error);
             UI.StartMenu();
         }

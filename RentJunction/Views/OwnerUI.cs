@@ -389,7 +389,7 @@ namespace RentJunction.Views
                     }
                     catch(Exception ex)
                     {
-                        File.AppendAllText(Message.errorLoggerPath, ex.ToString());
+                        File.AppendAllText(Message.errorLoggerPath, ex.ToString() + DateTime.Now);
                         Console.WriteLine(Message.invalid);
                         goto start2;
                     }

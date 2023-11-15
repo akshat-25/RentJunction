@@ -1,27 +1,10 @@
-﻿using RentJunction.Controller;
+﻿
+using RentJunction.Controller;
 
-public class DBAuth : IDBAuth
+public class AuthController
 {
-    private static DBAuth _instance = null;
-    private static readonly object _lockObj = new object();
-    private DBAuth() { }
-    public static DBAuth Instance
+    public bool Register(object entity)
     {
-        get
-        {
-            lock (_lockObj)
-            {
-                if (_instance == null)
-                {
-                    _instance = new DBAuth();
-                }
-            }
-            return _instance;
-        }
-    }
-    public bool DbRegister(object entity)
-    {
-
         if (entity is Customer)
         {
             Customer customer = (Customer)entity;
@@ -102,20 +85,7 @@ public class DBAuth : IDBAuth
         }
         return false;
     }
-    public Object Login(string username, string password)
-    {
-        if (DBCustomer.Instance._customerList.FindIndex((cust) => cust.Username == username && cust.Password == password) != -1)
-            return DBCustomer.Instance._customerList[DBCustomer.Instance._customerList.FindIndex((cust) => cust.Username == username && cust.Password == password)];
 
-        else if (DBOwner.Instance._ownerList.FindIndex((own) => own.Username == username && own.Password == password) != -1)
-            return DBOwner.Instance._ownerList[DBOwner.Instance._ownerList.FindIndex((own) => own.Username == username && own.Password == password)];
-
-        else if (DBAdmin.Instance._adminList.FindIndex((adm) => adm.Username == username && adm.Password == password) != -1)
-            return DBAdmin.Instance._adminList[DBAdmin.Instance._adminList.FindIndex((adm) => adm.Username == username && adm.Password == password)];
-
-        else
-            return null;
-    }
     public bool IsExists(string username)
     {
         if (DBCustomer.Instance._customerList.FindIndex((ent) => ent.Username == username) != -1)
@@ -128,6 +98,21 @@ public class DBAuth : IDBAuth
             return false;
     }
 
+ 
 
-   
+    public Object Login(string username, string password)
+    {
+       
+        if (DBCustomer.Instance._customerList.FindIndex((cust) => cust.Username == username && cust.Password == password) != -1)
+            return DBCustomer.Instance._customerList[DBCustomer.Instance._customerList.FindIndex((cust) => cust.Username == username && cust.Password == password)];
+
+        else if (DBOwner.Instance._ownerList.FindIndex((own) => own.Username == username && own.Password == password) != -1)
+            return DBOwner.Instance._ownerList[DBOwner.Instance._ownerList.FindIndex((own) => own.Username == username && own.Password == password)];
+
+        else if (DBAdmin.Instance._adminList.FindIndex((adm) => adm.Username == username && adm.Password == password) != -1)
+            return DBAdmin.Instance._adminList[DBAdmin.Instance._adminList.FindIndex((adm) => adm.Username == username && adm.Password == password)];
+
+        else
+            return null;
+    }
 }

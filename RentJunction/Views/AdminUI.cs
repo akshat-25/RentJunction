@@ -17,7 +17,7 @@ public class AdminUI
         Options input = (Options)CheckValidity.IsValidInput();
         
         Console.WriteLine();
-
+     
         switch (input)
         {
             case Options.view_customer:
@@ -145,7 +145,7 @@ public class AdminUI
         }   
     public void AddNewAdmin()
     {
-        AuthManager athManager = new AuthManager();
+        AuthController athManager = new AuthController();
         Console.WriteLine(Message.username);
         string input = CheckValidity.IsValidUsername();
         
