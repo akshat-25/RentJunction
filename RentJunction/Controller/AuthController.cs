@@ -1,32 +1,33 @@
 ﻿using RentJunction.Controller;
+using RentJunction.Models;
+using RentJunction.Views;
+
 public class AuthController : IAuthController
 {
-    public bool Register(object entity)
+    public bool Register<T>(T user) where T : User
     {
-        if (entity is Customer)
+        if (IsExists(user.Username))
         {
-            Customer customer = (Customer)entity;
+            return false;
+        }
+        if (user is Customer)
+        {
+            Customer customer = user as Customer;
             return RegisterCustomer(customer);
         }
-        else if (entity is Owner)
+        else if (user is Owner)
         {
-            Owner owner = (Owner)entity;
+            Owner owner = user as Owner;
             return RegisterOwner(owner);    
         }
         else
         {
-            Admin admin = (Admin)entity;
+            Admin admin = user as Admin;
             return RegisterAdmin(admin);
         }
     }
-
     private bool RegisterCustomer(Customer customer)
     {
-       
-        if (IsExists(customer.Username))
-        {
-            return false;
-        }
 
         if (DBCustomer.Instance._customerList != null)
         {
@@ -49,11 +50,7 @@ public class AuthController : IAuthController
     private bool RegisterOwner(Owner owner)
     {
       
-        if (IsExists(owner.Username))
-        {
-            return false;
-        }
-
+       
         if (DBOwner.Instance._ownerList != null)
         {
             foreach (var ownerEntity in DBOwner.Instance._ownerList)
@@ -74,13 +71,6 @@ public class AuthController : IAuthController
     }
     private bool RegisterAdmin(Admin admin)
     {
-       
-        if (IsExists(admin.Username))
-        {
-            Console.WriteLine(Strings.usernameExist);
-            return false;
-        }
-
         if (DBAdmin.Instance._adminList != null)
         {
             foreach (var adminEntity in DBAdmin.Instance._adminList)
@@ -99,16 +89,18 @@ public class AuthController : IAuthController
     }
     public bool IsExists(string username)
     {
-        if (DBCustomer.Instance._customerList.FindIndex((ent) => ent.Username == username) != -1)
-            return true;
-        else if (DBOwner.Instance._ownerList.FindIndex((ent) => ent.Username == username) != -1)
-            return true;
-        else if (DBAdmin.Instance._adminList.FindIndex((ent) => ent.Username == username) != -1)
-            return true;
-        else
-            return false;
+        return IsEntityExists(DBCustomer.Instance._customerList, username) ||
+            IsEntityExists(DBOwner.Instance._ownerList, username) ||
+            IsEntityExists(DBAdmin.Instance._adminList, username);
     }
-    public Object Login(string username, string password)
+    private bool IsEntityExists<T>(List<T> userList, string username) where T : User
+    {
+        if (userList.FindIndex((user) => user.Username == username) != -1)
+            return true;
+
+        return false;
+    }
+    public User Login(string username, string password)
     { 
         if (DBCustomer.Instance._customerList.FindIndex((cust) => cust.Username == username && cust.Password == password) != -1)
             return DBCustomer.Instance._customerList[DBCustomer.Instance._customerList.FindIndex((cust) => cust.Username == username && cust.Password == password)];
@@ -122,4 +114,7 @@ public class AuthController : IAuthController
         else
             return null;
     }
+
+    
+
 }

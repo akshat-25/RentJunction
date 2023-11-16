@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 
-using RentJunction.Models;
 public sealed class DBAdmin : DBHandler
 {
     private static DBAdmin _instance = null;

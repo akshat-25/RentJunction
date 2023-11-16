@@ -4,7 +4,6 @@ namespace RentJunction.Models
 {
     public class RequestUserInput
     {
-
         public static User Details()
         {
             Console.WriteLine(Strings.reg);
@@ -38,42 +37,48 @@ namespace RentJunction.Models
 
             Console.WriteLine();
             Console.WriteLine();
-            int roletaken = CheckValidity.IsValidRole();
-
-            Console.WriteLine();
-
-            if (roletaken == (int)Role.Customer)
+            while (true)
             {
-                Customer cust = new Customer
+                int roletaken = CheckValidity.IsValidRole();
+
+                Console.WriteLine();
+
+                if (roletaken == (int)Role.Customer)
                 {
-                    FullName = name,
-                    Address = address,
-                    PhoneNumber = phoneNumber,
-                    Email = email,
-                    Password = password,
-                    Role = (Role)roletaken,
-                    Username = username
-                };
+                    Customer cust = new Customer
+                    {
+                        FullName = name,
+                        Address = address,
+                        PhoneNumber = phoneNumber,
+                        Email = email,
+                        Password = password,
+                        Role = (Role)roletaken,
+                        Username = username
+                    };
 
-                return cust;
-            }
-            else
-            {
-                Owner owner = new Owner
+                    return cust;
+                }
+                else if (roletaken == (int)Role.Owner)
                 {
-                    FullName = name,
-                    Address = address,
-                    PhoneNumber = phoneNumber,
-                    Email = email,
-                    Password = password,
-                    Role = (Role)roletaken,
-                    Username = username
-                };
+                    Owner owner = new Owner
+                    {
+                        FullName = name,
+                        Address = address,
+                        PhoneNumber = phoneNumber,
+                        Email = email,
+                        Password = password,
+                        Role = (Role)roletaken,
+                        Username = username
+                    };
 
-                return owner;
+                    return owner;
+                }
+
+                else
+                {
+                    Console.WriteLine("invalid input ! please try again...");
+                }
             }
-
-
         }
     }
 }

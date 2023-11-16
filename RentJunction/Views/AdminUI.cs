@@ -5,19 +5,19 @@ public class AdminUI
 {
     ICustomerController custCtrl;
     IOwnerController ownerCtrl;
-    public AdminUI() 
-    { 
-       custCtrl = new CustomerController();
-       ownerCtrl = new OwnerController();
+    public AdminUI()
+    {
+        custCtrl = new CustomerController();
+        ownerCtrl = new OwnerController();
     }
     public void LoginAdminMenu(Admin admin)
     {
         Console.WriteLine(Strings.adminMenu);
         Console.WriteLine(Strings.design);
         Options input = (Options)CheckValidity.IsValidInput();
-        
+
         Console.WriteLine();
-     
+
         switch (input)
         {
             case Options.view_customer:
@@ -36,7 +36,7 @@ public class AdminUI
             case Options.delete_owner:
                 DeleteOwner(admin);
                 LoginAdminMenu(admin);
-                break; 
+                break;
             case Options.add_admin:
                 AddNewAdmin();
                 LoginAdminMenu(admin);
@@ -78,7 +78,8 @@ public class AdminUI
             Console.WriteLine($"Email        -   {owner.Email}");
         }
     }
-    public void DeleteCustomer(Admin admin) {
+    public void DeleteCustomer(Admin admin)
+    {
         ViewAllCustomers(admin);
         Console.WriteLine(Strings.custEmail);
         string input = Console.ReadLine();
@@ -114,7 +115,8 @@ public class AdminUI
         Console.WriteLine();
 
     }
-    public void DeleteOwner(Admin admin) {
+    public void DeleteOwner(Admin admin)
+    {
         ViewAllOwners(admin);
         Console.WriteLine(Strings.OwnEmail);
         var input = Console.ReadLine();
@@ -135,44 +137,78 @@ public class AdminUI
                 owners.Remove(owner);
                 Console.WriteLine($"{owner.FullName} Deleted Successfully");
                 ownerCtrl.UpdateDBOwner(owners);
-                
+
                 break;
             }
-            
+
         }
-        
-        
-        }   
+
+
+    }
     public void AddNewAdmin()
     {
-        IAuthController athManager = new AuthController();
-        Console.WriteLine(Strings.username);
-        string input = CheckValidity.IsValidUsername();
-        
+        Console.WriteLine(Strings.reg);
+        string name = CheckValidity.IsValidName();
+
         Console.WriteLine();
 
-        Console.WriteLine(Strings.adminpswd);
-        string pass = CheckValidity.IsValidPassword();
+        Console.WriteLine(Strings.city);
+
+        string address = CheckValidity.IsValidAddress();
+
         Console.WriteLine();
-        Admin admin = new Admin
+
+        Console.WriteLine(Strings.username);
+
+        string username = CheckValidity.IsValidUsername();
+        Console.WriteLine();
+        long phoneNumber = CheckValidity.IsValidPhoneNum();
+
+        Console.WriteLine();
+
+        Console.WriteLine(Strings.email);
+
+        string email = CheckValidity.IsValidEmailReg();
+
+        Console.WriteLine();
+
+        Console.WriteLine(Strings.pswd);
+
+        string password = CheckValidity.IsValidPassword();
+
+        Console.WriteLine();
+        Console.WriteLine();
+
+        Admin newAdmin = new Admin
         {
-            Username = input,
-            Password = pass,
+            FullName = name,
+            Address = address,
+            PhoneNumber = phoneNumber,
+            Email = email,
+            Password = password,
+            Role = Role.Admin,
+            Username = username
         };
 
-        if (athManager.Register(admin))
+        IAuthController authController = new AuthController();
+
+
+        bool flag = authController.Register(newAdmin);
+
+        if (flag)
         {
-            Console.WriteLine(Strings.adminSucc);
+            Console.WriteLine(Strings.regsuccess);
+            Strings.Design();
+            LoginAdminMenu(newAdmin);
         }
         else
         {
-            Console.WriteLine(Strings.somethingWrong);
+            Console.WriteLine(Strings.wrong);
+            Strings.Design();
+            AddNewAdmin();
         }
-        Console.WriteLine();
-        Console.WriteLine(Strings.design);
 
     }
-
 }
 
 
