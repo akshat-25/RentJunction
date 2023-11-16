@@ -19,7 +19,7 @@ namespace RentJunction.Models
         }
         public void UpdateDBOwner(List<Owner> list)
         {
-            DBOwner.Instance.UpdateDB(Message.ownerPath, list);
+            DBOwner.Instance.UpdateDB(Strings.ownerPath, list);
         }
         public List<Owner> GetOwnerList()
         {

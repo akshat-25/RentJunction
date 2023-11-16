@@ -26,12 +26,12 @@ public sealed class DBOwner : DBHandler
 
         try
         {
-            _ownerList = JsonConvert.DeserializeObject<List<Owner>>(File.ReadAllText(Message.ownerPath));
+            _ownerList = JsonConvert.DeserializeObject<List<Owner>>(File.ReadAllText(Strings.ownerPath));
         }
         catch(Exception ex)
         {
-            File.AppendAllText(Message.errorLoggerPath, ex.ToString() + DateTime.Now);
-            Console.WriteLine(Message.error);
+            File.AppendAllText(Strings.errorLoggerPath, ex.ToString() + DateTime.Now);
+            Console.WriteLine(Strings.error);
             UI.StartMenu();
         }
 

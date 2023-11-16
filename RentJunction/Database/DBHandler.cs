@@ -11,8 +11,8 @@ public class DBHandler : IDBHandler
         }
         catch(Exception ex)
         {
-            File.AppendAllText(Message.errorLoggerPath, ex.ToString() + DateTime.Now);
-            Console.WriteLine(Message.error);
+            File.AppendAllText(Strings.errorLoggerPath, ex.ToString() + DateTime.Now);
+            Console.WriteLine(Strings.error);
         }
     }
     

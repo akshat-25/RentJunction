@@ -1,4 +1,4 @@
-﻿public class Message
+﻿public class Strings
 {
     public static void Design()
     {

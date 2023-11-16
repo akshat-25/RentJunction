@@ -24,12 +24,12 @@ public sealed class DBCustomer : DBHandler
         _customerList = new List<Customer>();       
         try
         {
-            _customerList = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText(Message.customerPath));
+            _customerList = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText(Strings.customerPath));
         }
         catch(Exception ex)
         {
-            File.AppendAllText(Message.errorLoggerPath, ex.ToString() + DateTime.Now);
-            Console.WriteLine(Message.error);
+            File.AppendAllText(Strings.errorLoggerPath, ex.ToString() + DateTime.Now);
+            Console.WriteLine(Strings.error);
             UI.StartMenu();
         }
     }

@@ -8,14 +8,14 @@ public class ProductController : IProductControllerCust , IProductControllerOwne
 
         foreach (var product in DBProduct.Instance.GetProducts(input, city))
         {
-            Console.WriteLine(Message.design);
-            Console.WriteLine(Message.disProdId + product.ProductId);
-            Console.WriteLine(Message.disProdName + product.ProductName);
-            Console.WriteLine(Message.disProdDesc + product.Description);
-            Console.WriteLine(Message.disProdPrice + "Rs." + product.Price + " per day");
-            Console.WriteLine(Message.disProdCate + Enum.Parse<Category>(product.ProductCategory.ToString()));
-            Console.WriteLine(Message.disProdOwnName + product.OwnerName);
-            Console.WriteLine(Message.disProdOwnNum + product.OwnerNum);
+            Console.WriteLine(Strings.design);
+            Console.WriteLine(Strings.disProdId + product.ProductId);
+            Console.WriteLine(Strings.disProdName + product.ProductName);
+            Console.WriteLine(Strings.disProdDesc + product.Description);
+            Console.WriteLine(Strings.disProdPrice + "Rs." + product.Price + " per day");
+            Console.WriteLine(Strings.disProdCate + Enum.Parse<Category>(product.ProductCategory.ToString()));
+            Console.WriteLine(Strings.disProdOwnName + product.OwnerName);
+            Console.WriteLine(Strings.disProdOwnNum + product.OwnerNum);
         }
         return DBProduct.Instance.GetProducts(input, city);
     }
@@ -29,20 +29,20 @@ public class ProductController : IProductControllerCust , IProductControllerOwne
     }
     public void UpdateDBProds(List<Product> list)
     {
-        DBProduct.Instance.UpdateDB(Message.productsPath, list);
+        DBProduct.Instance.UpdateDB(Strings.productsPath, list);
     }
     public void ViewRentedProd(Customer cust)
     {
         foreach (var product in cust.rentedProducts)
         {
-            Console.WriteLine(Message.design);
-            Console.WriteLine(Message.disProdId    + product.ProductId);
-            Console.WriteLine(Message.disProdName  + product.ProductName);
-            Console.WriteLine(Message.disProdDesc  + product.Description);
-            Console.WriteLine(Message.disProdPrice + product.Price + " per day");
-            Console.WriteLine(Message.disProdCate  + Enum.Parse<Category>(product.ProductCategory.ToString()));
-            Console.WriteLine(Message.startDate + product.StartDate);
-            Console.WriteLine(Message.endDate + product.EndDate);
+            Console.WriteLine(Strings.design);
+            Console.WriteLine(Strings.disProdId    + product.ProductId);
+            Console.WriteLine(Strings.disProdName  + product.ProductName);
+            Console.WriteLine(Strings.disProdDesc  + product.Description);
+            Console.WriteLine(Strings.disProdPrice + product.Price + " per day");
+            Console.WriteLine(Strings.disProdCate  + Enum.Parse<Category>(product.ProductCategory.ToString()));
+            Console.WriteLine(Strings.startDate + product.StartDate);
+            Console.WriteLine(Strings.endDate + product.EndDate);
         }
     }
 

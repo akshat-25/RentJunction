@@ -16,8 +16,8 @@ namespace RentJunction.Views
         }
         public void LoginCustomerMenu(Customer cust)
         {
-            Console.WriteLine(Message.custMenu);
-            Console.WriteLine(Message.design);
+            Console.WriteLine(Strings.custMenu);
+            Console.WriteLine(Strings.design);
 
             CustomerMenu input = (CustomerMenu)CheckValidity.IsValidInput();
             
@@ -32,7 +32,7 @@ namespace RentJunction.Views
                     break;
                 case CustomerMenu.View_rented_products:
                     ViewRentedProducts(cust);
-                    Message.Design();
+                    Strings.Design();
                     LoginCustomerMenu(cust);
                     break;
                 case CustomerMenu.Extend_rent_period:
@@ -41,13 +41,13 @@ namespace RentJunction.Views
                     LoginCustomerMenu(cust);
                     break;
                 case CustomerMenu.logout:
-                    Console.WriteLine(Message.logoutSucc);
+                    Console.WriteLine(Strings.logoutSucc);
                     cust = null;
                     Console.WriteLine();
                     UI.StartMenu();
                     break ;
                 default:
-                    Message.Design();
+                    Strings.Design();
                     Console.WriteLine();
                     LoginCustomerMenu(cust);
                     break;
@@ -55,10 +55,10 @@ namespace RentJunction.Views
         }
         public void BrowseProducts(Customer cust)
         {
-            Console.WriteLine(Message.entCity);
+            Console.WriteLine(Strings.entCity);
             string address = CheckValidity.IsValidAddress();
-            Console.WriteLine(Message.design);
-            Console.WriteLine(Message.chooseCate);
+            Console.WriteLine(Strings.design);
+            Console.WriteLine(Strings.chooseCate);
 
             custCtrl.ChooseCategory();
 
@@ -68,16 +68,16 @@ namespace RentJunction.Views
 
             if (res.Count > 0)
             {
-                Message.Design();
+                Strings.Design();
                 start:
-                Console.WriteLine(Message.prodIdEnt);
+                Console.WriteLine(Strings.prodIdEnt);
                 int prodID;
                 try
                 {
                     bool flag = int.TryParse(Console.ReadLine() , out prodID);
                     if (!flag)
                     {
-                        Console.WriteLine(Message.invalid);
+                        Console.WriteLine(Strings.invalid);
                         goto start;
                     }
                     else {
@@ -99,24 +99,24 @@ namespace RentJunction.Views
                 }
                 catch
                 {
-                    Console.WriteLine(Message.invalid);
+                    Console.WriteLine(Strings.invalid);
                     goto start;
                 }
                                       
                 Console.WriteLine();
-                Console.WriteLine(Message.design);
+                Console.WriteLine(Strings.design);
                 RentAProd(res, prodID, cust.rentedProducts, cust);
                 Console.WriteLine();
-                Console.WriteLine(Message.thanksRent);
+                Console.WriteLine(Strings.thanksRent);
                 
                 Console.WriteLine();
-                Console.WriteLine(Message.design);
+                Console.WriteLine(Strings.design);
                 LoginCustomerMenu(cust);
             }
 
             else
             {
-                Console.WriteLine(Message.noProdAva);
+                Console.WriteLine(Strings.noProdAva);
                
             }
         }
@@ -127,7 +127,7 @@ namespace RentJunction.Views
                 prodCtrl.ViewRentedProd(cust);
 
             }
-            catch{ Console.WriteLine(Message.noRented); }
+            catch{ Console.WriteLine(Strings.noRented); }
 
          
         }
@@ -140,7 +140,7 @@ namespace RentJunction.Views
             }
             Console.WriteLine();
             start1:
-            Console.WriteLine(Message.entProdId);
+            Console.WriteLine(Strings.entProdId);
 
             int prodID;
 
@@ -150,7 +150,7 @@ namespace RentJunction.Views
                 bool flag = int.TryParse(Console.ReadLine(), out prodID);
                 if (!flag)
                 {
-                    Console.WriteLine(Message.invalid);
+                    Console.WriteLine(Strings.invalid);
                     goto start1;
                 }
                 else
@@ -166,7 +166,7 @@ namespace RentJunction.Views
                     }
                     if (!flag2)
                     {
-                        Console.WriteLine(Message.validId);
+                        Console.WriteLine(Strings.validId);
                         goto start1;
                     }
                 }
@@ -174,7 +174,7 @@ namespace RentJunction.Views
             }
             catch
             {
-                Console.WriteLine(Message.validId);
+                Console.WriteLine(Strings.validId);
                 goto start1;
             }
 
@@ -189,19 +189,19 @@ namespace RentJunction.Views
                     var isValidPrevEndDate = DateTime.TryParse(rentprod.EndDate, out prevEndDate);
 
                     start:
-                    Console.WriteLine(Message.enternewEndDate);
+                    Console.WriteLine(Strings.enternewEndDate);
                     rentprod.EndDate = Console.ReadLine();                
                     var isValidEndDate = DateTime.TryParse(rentprod.EndDate, out newEndDate);
 
                     if(prevEndDate == newEndDate)
                     {
-                        Console.WriteLine(Message.prevDateSame);
+                        Console.WriteLine(Strings.prevDateSame);
                         Console.WriteLine();
                         goto start;
                     }
                     else if(newEndDate < prevEndDate)
                     {
-                        Console.WriteLine(Message.NewDateGreater);
+                        Console.WriteLine(Strings.NewDateGreater);
                         Console.WriteLine();
                         goto start;
                     }
@@ -211,15 +211,15 @@ namespace RentJunction.Views
                     if (isValidEndDate && isValidPrevEndDate)
                     {
 
-                        Console.WriteLine(Message.daysOfRent + differenceDays);
+                        Console.WriteLine(Strings.daysOfRent + differenceDays);
 
                     }
                     else
                     {
-                        Console.WriteLine(Message.invalidDate);
+                        Console.WriteLine(Strings.invalidDate);
                     }
 
-                    Console.WriteLine(Message.remainingAmt + differenceDays * rentprod.Price);
+                    Console.WriteLine(Strings.remainingAmt + differenceDays * rentprod.Price);
                     custCtrl.UpdateDBCust(list);
                 }
             }
@@ -232,13 +232,13 @@ namespace RentJunction.Views
                 
                 DateTime sdt;
                 start:
-                Console.WriteLine(Message.enterStartDate);
+                Console.WriteLine(Strings.enterStartDate);
                 rentprod.StartDate = Console.ReadLine();
                 Console.WriteLine();
                 var isValidStartDate = DateTime.TryParse(rentprod.StartDate, out sdt);
                 if (sdt < DateTime.Today)
                 {
-                    Console.WriteLine(Message.enterValidDate);
+                    Console.WriteLine(Strings.enterValidDate);
                     Console.WriteLine();
                     Console.WriteLine();
                 goto start;
@@ -246,18 +246,18 @@ namespace RentJunction.Views
          
             DateTime edt;
             start2:
-            Console.WriteLine(Message.enterEndDate);
+            Console.WriteLine(Strings.enterEndDate);
             rentprod.EndDate = Console.ReadLine();
             Console.WriteLine();
             var isValidEndDate = DateTime.TryParse(rentprod.EndDate, out edt);
 
             if(sdt == edt) {
-                Console.WriteLine(Message.startEndDateSame);
+                Console.WriteLine(Strings.startEndDateSame);
                 goto start2;
             }
             else if (edt < sdt)
             {
-                Console.WriteLine(Message.enterValidDate);
+                Console.WriteLine(Strings.enterValidDate);
                 goto start2;
             }
 
@@ -267,13 +267,13 @@ namespace RentJunction.Views
             if (isValidEndDate && isValidStartDate)
             {
 
-                Console.WriteLine(Message.rentDays + days);
+                Console.WriteLine(Strings.rentDays + days);
 
             }
 
             else
             {
-                Console.WriteLine(Message.invalidDate);
+                Console.WriteLine(Strings.invalidDate);
             }
             foreach (var product in Masterlist)
             {
@@ -298,7 +298,7 @@ namespace RentJunction.Views
                     list.Remove(product);
                     prodCtrl.UpdateDBProds(list);
                     Console.WriteLine();
-                    Console.WriteLine(Message.design);
+                    Console.WriteLine(Strings.design);
                 }
             }
             Console.WriteLine("Total Price is " + rentprod.Price * days);

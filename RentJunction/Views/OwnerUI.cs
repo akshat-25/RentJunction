@@ -18,9 +18,9 @@ namespace RentJunction.Views
         }
         public void LoginOwnerMenu(Owner owner)
         {
-            Console.WriteLine(Message.ownerMenu);
+            Console.WriteLine(Strings.ownerMenu);
             OwnerMenu input = (OwnerMenu)CheckValidity.IsValidInput();
-            Console.WriteLine(Message.design);
+            Console.WriteLine(Strings.design);
             Console.WriteLine();
             
             switch (input)
@@ -31,7 +31,7 @@ namespace RentJunction.Views
                     break;
                 case OwnerMenu.view_listed_products:
                     ViewListedProducts(owner);
-                    Console.WriteLine(Message.design);
+                    Console.WriteLine(Strings.design);
                     Console.WriteLine();
                     LoginOwnerMenu(owner);
                     break;
@@ -46,14 +46,14 @@ namespace RentJunction.Views
                     LoginOwnerMenu(owner);
                     break;
                 case OwnerMenu.logout:
-                    Console.WriteLine(Message.logoutSuccc);
+                    Console.WriteLine(Strings.logoutSuccc);
                     Console.WriteLine();
                     owner = null;
                     UI.StartMenu();
                     Console.WriteLine();
                     break;
                 default:
-                    Console.WriteLine(Message.invalid);
+                    Console.WriteLine(Strings.invalid);
                     Console.WriteLine();
                     LoginOwnerMenu(owner);
                     break;
@@ -69,23 +69,23 @@ namespace RentJunction.Views
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine(Message.prodname);
+            Console.WriteLine(Strings.prodname);
             string nameProd = Console.ReadLine();
             while (!CheckValidity.CheckNull(nameProd))
             {
-                Console.WriteLine(Message.nameEmpty);
+                Console.WriteLine(Strings.nameEmpty);
                 nameProd = Console.ReadLine();
             }
             Console.WriteLine();
-            Console.WriteLine(Message.prodDesc);
+            Console.WriteLine(Strings.prodDesc);
             string descProd = Console.ReadLine();
             while (!CheckValidity.CheckNull(descProd))
             {
-                Console.WriteLine(Message.descEmpty);
+                Console.WriteLine(Strings.descEmpty);
                 nameProd = Console.ReadLine();
             }
             Console.WriteLine();
-            Console.WriteLine(Message.prodCate);
+            Console.WriteLine(Strings.prodCate);
 
             int categoryProd;
 
@@ -95,7 +95,7 @@ namespace RentJunction.Views
 
                 if (categoryProd < 1 || categoryProd > 12)
                 {
-                    Console.WriteLine(Message.invalid);
+                    Console.WriteLine(Strings.invalid);
                 }
                 else if (flag)
                 {
@@ -107,7 +107,7 @@ namespace RentJunction.Views
                 }
             }
             Console.WriteLine();
-            Console.WriteLine(Message.prodPrice);
+            Console.WriteLine(Strings.prodPrice);
 
             double priceProd;
 
@@ -118,7 +118,7 @@ namespace RentJunction.Views
 
                 if (priceProd <= 0 )
                 {
-                    Console.WriteLine(Message.prodPriceError);
+                    Console.WriteLine(Strings.prodPriceError);
                 }
                 else if(flag)
                 {
@@ -158,18 +158,18 @@ namespace RentJunction.Views
             {
                 if (AddProducts(product,owner))
                 {
-                    Console.WriteLine(Message.prodSucc);
+                    Console.WriteLine(Strings.prodSucc);
                     LoginOwnerMenu(owner);
                 }
                 else
                 {
-                    Console.WriteLine(Message.error);
+                    Console.WriteLine(Strings.error);
                     LoginOwnerMenu(owner);
                 }
             }
             catch
             {
-                Console.WriteLine(Message.error);
+                Console.WriteLine(Strings.error);
                 LoginOwnerMenu(owner);
             }
         }
@@ -204,17 +204,17 @@ namespace RentJunction.Views
             {
                 foreach (Product product in owner.ListedProducts)
                 {
-                    Console.WriteLine(Message.design);
-                    Console.WriteLine(Message.disProdId + product.ProductId);
-                    Console.WriteLine(Message.disProdName + product.ProductName);
-                    Console.WriteLine(Message.disProdDesc + product.Description);
-                    Console.WriteLine(Message.disProdPrice + "Rs." + product.Price + " per day");
-                    Console.WriteLine(Message.disProdCate + Enum.Parse<Category>(product.ProductCategory.ToString()));
+                    Console.WriteLine(Strings.design);
+                    Console.WriteLine(Strings.disProdId + product.ProductId);
+                    Console.WriteLine(Strings.disProdName + product.ProductName);
+                    Console.WriteLine(Strings.disProdDesc + product.Description);
+                    Console.WriteLine(Strings.disProdPrice + "Rs." + product.Price + " per day");
+                    Console.WriteLine(Strings.disProdCate + Enum.Parse<Category>(product.ProductCategory.ToString()));
                 }
             }
             else
             {
-                Console.WriteLine(Message.noProd);
+                Console.WriteLine(Strings.noProd);
             }
         }
         public  void UpdateListedProducts(Owner owner)
@@ -225,11 +225,11 @@ namespace RentJunction.Views
      
                 return;
             }
-            Console.WriteLine(Message.design);
+            Console.WriteLine(Strings.design);
             Console.WriteLine();
             Console.WriteLine();
         start:
-            Console.WriteLine(Message.prodIdUpdate);
+            Console.WriteLine(Strings.prodIdUpdate);
             Console.WriteLine();
             Console.WriteLine();
             int input;
@@ -238,7 +238,7 @@ namespace RentJunction.Views
                 bool flag = int.TryParse(Console.ReadLine(), out input);
                 if (!flag)
                 {
-                    Console.WriteLine(Message.invalid);
+                    Console.WriteLine(Strings.invalid);
                     goto start;
                 }
                 else
@@ -254,7 +254,7 @@ namespace RentJunction.Views
                     }
                     if (!flag2)
                     {
-                        Console.WriteLine(Message.invalid);
+                        Console.WriteLine(Strings.invalid);
                         goto start;
                     }
                 }
@@ -262,7 +262,7 @@ namespace RentJunction.Views
             }
             catch
             {
-                Console.WriteLine(Message.validId);
+                Console.WriteLine(Strings.validId);
                 goto start;
             }
 
@@ -275,7 +275,7 @@ namespace RentJunction.Views
 
             if (isRented)
             {
-                Console.WriteLine(Message.cannotDeleteCust);
+                Console.WriteLine(Strings.cannotDeleteCust);
                 Console.WriteLine();
                 ViewListedProducts(owner);
                 
@@ -285,14 +285,14 @@ namespace RentJunction.Views
                 if (product.ProductId.Equals(input))
                 {
                     start2:
-                    Console.WriteLine(Message.updateListedProdMenuOptions);
+                    Console.WriteLine(Strings.updateListedProdMenuOptions);
                     int opt;
                     try
                     {
                         bool flag = int.TryParse(Console.ReadLine(),out opt);
                         if (!flag)
                         {
-                            Console.WriteLine(Message.invalid);
+                            Console.WriteLine(Strings.invalid);
                             goto start2;
                         }
                         else
@@ -300,33 +300,33 @@ namespace RentJunction.Views
                             switch (opt)
                             {
                                 case (int)UpdateProductMenu.product_name:
-                                    Console.WriteLine(Message.prodUpdateName);
+                                    Console.WriteLine(Strings.prodUpdateName);
                                     string name = Console.ReadLine();
                                     Console.WriteLine();
                                     while (!CheckValidity.CheckNull(name))
                                     {
-                                        Console.WriteLine(Message.nameError);
+                                        Console.WriteLine(Strings.nameError);
                                         name = Console.ReadLine();
                                     }
                                     product.ProductName = name;
-                                    Console.WriteLine(Message.nameChangedSucc);
-                                    Console.WriteLine(Message.design);
+                                    Console.WriteLine(Strings.nameChangedSucc);
+                                    Console.WriteLine(Strings.design);
                                     break;
                                 case (int)UpdateProductMenu.product_description:
-                                    Console.WriteLine(Message.enterNewDesc);
+                                    Console.WriteLine(Strings.enterNewDesc);
                                     string desc = Console.ReadLine();
                                     Console.WriteLine();
                                     while (!CheckValidity.CheckNull(desc) || desc.Length < 10)
                                     {
-                                        Console.WriteLine(Message.descError);
+                                        Console.WriteLine(Strings.descError);
                                         desc = Console.ReadLine();
                                     }
                                     product.Description = desc;
-                                    Console.WriteLine(Message.descChangedSucc);
-                                    Console.WriteLine(Message.design);
+                                    Console.WriteLine(Strings.descChangedSucc);
+                                    Console.WriteLine(Strings.design);
                                     break;
                                 case (int)UpdateProductMenu.product_price:
-                                    Console.WriteLine(Message.enterNewPrice);
+                                    Console.WriteLine(Strings.enterNewPrice);
 
                                     double priceProd;
                                     while (true)
@@ -335,7 +335,7 @@ namespace RentJunction.Views
 
                                         if (priceProd <= 0)
                                         {
-                                            Console.WriteLine(Message.prodPriceError);
+                                            Console.WriteLine(Strings.prodPriceError);
                                         }
                                         else if (flag2)
                                         {
@@ -348,11 +348,11 @@ namespace RentJunction.Views
                                     }
                                     Console.WriteLine();
                                     product.Price = priceProd;
-                                    Console.WriteLine(Message.priceChangedSucc);
-                                    Console.WriteLine(Message.design);
+                                    Console.WriteLine(Strings.priceChangedSucc);
+                                    Console.WriteLine(Strings.design);
                                     break;
                                 case (int)UpdateProductMenu.product_category:
-                                    Console.WriteLine(Message.enterNewCate);
+                                    Console.WriteLine(Strings.enterNewCate);
                                     int categoryProd;
                                     while (true)
                                     {
@@ -360,7 +360,7 @@ namespace RentJunction.Views
 
                                         if (categoryProd < 1 || categoryProd > 12)
                                         {
-                                            Console.WriteLine(Message.invalid);
+                                            Console.WriteLine(Strings.invalid);
                                         }
                                         else if (flag1)
                                         {
@@ -372,12 +372,12 @@ namespace RentJunction.Views
                                         }
                                     }
                                     product.ProductCategory = categoryProd;
-                                    Console.WriteLine(Message.CateChangedSucc);
-                                    Console.WriteLine(Message.design);
+                                    Console.WriteLine(Strings.CateChangedSucc);
+                                    Console.WriteLine(Strings.design);
                                     break;
 
                                 default:
-                                    Console.WriteLine(Message.invalid);
+                                    Console.WriteLine(Strings.invalid);
                                     goto start2;
                                     break;
                             }
@@ -389,8 +389,8 @@ namespace RentJunction.Views
                     }
                     catch(Exception ex)
                     {
-                        File.AppendAllText(Message.errorLoggerPath, ex.ToString() + DateTime.Now);
-                        Console.WriteLine(Message.invalid);
+                        File.AppendAllText(Strings.errorLoggerPath, ex.ToString() + DateTime.Now);
+                        Console.WriteLine(Strings.invalid);
                         goto start2;
                     }
                 }
@@ -407,7 +407,7 @@ namespace RentJunction.Views
                 return;
             }
         start:
-            Console.WriteLine(Message.prodDelID);
+            Console.WriteLine(Strings.prodDelID);
             Console.WriteLine();
             int input;
             try
@@ -415,7 +415,7 @@ namespace RentJunction.Views
                 bool flag = int.TryParse(Console.ReadLine(), out input);
                 if (!flag)
                 {
-                    Console.WriteLine(Message.invalid);
+                    Console.WriteLine(Strings.invalid);
                     goto start;
                 }
                 else
@@ -431,7 +431,7 @@ namespace RentJunction.Views
                     }
                     if (!flag2)
                     {
-                        Console.WriteLine(Message.invalid);
+                        Console.WriteLine(Strings.invalid);
                         goto start;
                     }
                 }
@@ -439,8 +439,8 @@ namespace RentJunction.Views
             }
             catch(Exception ex)
             {
-                File.AppendAllText(Message.errorLoggerPath, ex.ToString());
-                Console.WriteLine(Message.invalid);
+                File.AppendAllText(Strings.errorLoggerPath, ex.ToString());
+                Console.WriteLine(Strings.invalid);
                 goto start;
             }
             List<Controller.Customer> CustomerList = custCtrl.GetCustomer();
@@ -449,7 +449,7 @@ namespace RentJunction.Views
 
             if (isRented)
             {
-                Console.WriteLine(Message.prodDelDenied);
+                Console.WriteLine(Strings.prodDelDenied);
                 Console.WriteLine();
                 ViewListedProducts(owner);
 
@@ -475,7 +475,7 @@ namespace RentJunction.Views
             }
             ownerCtrl.UpdateDBOwner(list);
             prodCtrl.UpdateDBProds(MasterListProducts);
-            Console.WriteLine(Message.prodDelSucc);
+            Console.WriteLine(Strings.prodDelSucc);
         }
     }
 }

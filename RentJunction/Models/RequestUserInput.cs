@@ -1,25 +1,24 @@
 ﻿using RentJunction.Controller;
-using RentJunction.Models;
 
-namespace commonData
+namespace RentJunction.Models
 {
-    public class Commonn
+    public class RequestUserInput
     {
 
         public static User Details()
         {
-            Console.WriteLine(Message.reg);
+            Console.WriteLine(Strings.reg);
             string name = CheckValidity.IsValidName();
 
             Console.WriteLine();
 
-            Console.WriteLine(Message.city);
+            Console.WriteLine(Strings.city);
 
             string address = CheckValidity.IsValidAddress();
 
             Console.WriteLine();
 
-            Console.WriteLine(Message.username);
+            Console.WriteLine(Strings.username);
 
             string username = CheckValidity.IsValidUsername();
             Console.WriteLine();
@@ -27,16 +26,16 @@ namespace commonData
 
             Console.WriteLine();
 
-            Console.WriteLine(Message.email);
+            Console.WriteLine(Strings.email);
 
             string email = CheckValidity.IsValidEmailReg();
 
             Console.WriteLine();
 
-            Console.WriteLine(Message.pswd);
+            Console.WriteLine(Strings.pswd);
 
             string password = CheckValidity.IsValidPassword();
-           
+
             Console.WriteLine();
             Console.WriteLine();
             int roletaken = CheckValidity.IsValidRole();
@@ -50,12 +49,12 @@ namespace commonData
                     FullName = name,
                     Address = address,
                     PhoneNumber = phoneNumber,
-                    Email = email,  
+                    Email = email,
                     Password = password,
-                    role = (Role)roletaken,
+                    Role = (Role)roletaken,
                     Username = username
                 };
-                //Customer cust = new Customer(name, address, phoneNumber, email, password, roletaken, username);
+
                 return cust;
             }
             else
@@ -67,14 +66,14 @@ namespace commonData
                     PhoneNumber = phoneNumber,
                     Email = email,
                     Password = password,
-                    role = (Role)roletaken,
+                    Role = (Role)roletaken,
                     Username = username
                 };
 
                 return owner;
             }
 
-        
+
         }
     }
 }

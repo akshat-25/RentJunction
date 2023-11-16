@@ -27,7 +27,7 @@ public class CheckValidity
         {
             if (!CheckNull(username) || !Regex.IsMatch(username, hasOnlyAlphaNumeric) || username.Length < 5)
             {
-                Console.WriteLine(Message.userNameErr);
+                Console.WriteLine(Strings.userNameErr);
                 username = Console.ReadLine().Trim();
             }
             else
@@ -90,7 +90,7 @@ public class CheckValidity
             }
             else
             {
-                Console.WriteLine(Message.invalid);
+                Console.WriteLine(Strings.invalid);
             }
         }
 
@@ -106,22 +106,22 @@ public class CheckValidity
 
             if (!CheckNull(address))
             {
-                Console.WriteLine(Message.addressEmpty);
+                Console.WriteLine(Strings.addressEmpty);
                 address = Console.ReadLine().ToLower().Trim();
             }
             else if (flag)
             {
-                Console.WriteLine(Message.cityIntError);
+                Console.WriteLine(Strings.cityIntError);
                 address = Console.ReadLine().ToLower().Trim();
             }
             else if (!Regex.IsMatch(address, @"^[a-zA-Z]+$"))
             {
-                Console.WriteLine(Message.onlyAlphabetsallowed);
+                Console.WriteLine(Strings.onlyAlphabetsallowed);
                 address = Console.ReadLine().ToLower().Trim();
             }
             else if (!flag && address.Length < 3)
             {
-                Console.WriteLine(Message.cityLength);
+                Console.WriteLine(Strings.cityLength);
                 address = Console.ReadLine().ToLower().Trim();
             }
             else
@@ -141,17 +141,17 @@ public class CheckValidity
         {
             if (name.Length < 3 || !CheckNull(name))
             {
-                Console.WriteLine(Message.nameLength);
+                Console.WriteLine(Strings.nameLength);
                 name = Console.ReadLine().Trim();
             }
             else if (int.TryParse(name, out int res))
             {
-                Console.WriteLine(Message.nameIntError);
+                Console.WriteLine(Strings.nameIntError);
                 name = Console.ReadLine().Trim();
             }
             else if (!Regex.IsMatch(name, @"^[a-zA-Z]+$"))
             {
-                Console.WriteLine(Message.onlyAlphabetsallowed);
+                Console.WriteLine(Strings.onlyAlphabetsallowed);
                 name = Console.ReadLine().Trim();
             }
             else
@@ -166,7 +166,7 @@ public class CheckValidity
     public static long IsValidPhoneNum()
     {
     start:
-        Console.WriteLine(Message.enterPhNo);
+        Console.WriteLine(Strings.enterPhNo);
         long phoneNumber;
         try
         {
@@ -174,14 +174,14 @@ public class CheckValidity
             string phNo = phoneNumber.ToString();
             if (phNo.Length != 10)
             {
-                Console.WriteLine(Message.PhNoLenError);
+                Console.WriteLine(Strings.PhNoLenError);
                 goto start;
             }
             return phoneNumber;
         }
         catch
         {
-            Console.WriteLine(Message.PhNoLenError2);
+            Console.WriteLine(Strings.PhNoLenError2);
             goto start;
         }
     }
@@ -190,7 +190,7 @@ public class CheckValidity
         string email = Console.ReadLine();
         while (!IsValidEmail(email) || !CheckNull(email))
         {
-            Console.WriteLine(Message.validEmail);
+            Console.WriteLine(Strings.validEmail);
             email = Console.ReadLine().Trim();
         }
         return email;
@@ -202,7 +202,7 @@ public class CheckValidity
 
         while (IsValidPasswordReg(password) == false || !CheckNull(password))
         {
-            Console.WriteLine(Message.pswdConditions);
+            Console.WriteLine(Strings.pswdConditions);
             Console.WriteLine();
             password = Console.ReadLine().Trim();
         }
@@ -212,21 +212,21 @@ public class CheckValidity
     public static int IsValidRole()
     {
     start1:
-        Console.WriteLine(Message.chooseRole);
+        Console.WriteLine(Strings.chooseRole);
         int roletaken;
         try
         {
             roletaken = Convert.ToInt32(Console.ReadLine());
             if (roletaken != (int)Role.Customer && roletaken != (int)Role.Owner)
             {
-                Console.WriteLine(Message.validRole);
+                Console.WriteLine(Strings.validRole);
                 goto start1;
             }
             return roletaken;
         }
         catch
         {
-            Console.WriteLine(Message.validRole);
+            Console.WriteLine(Strings.validRole);
             goto start1;
         }
 

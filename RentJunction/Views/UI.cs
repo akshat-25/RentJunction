@@ -1,5 +1,4 @@
-﻿using commonData;
-using RentJunction.Controller;
+﻿using RentJunction.Controller;
 using RentJunction.Models;
 using RentJunction.Views;
 public class UI
@@ -8,7 +7,7 @@ public class UI
     {
         while (true)
         {
-            Console.WriteLine(Message.startMenu);
+            Console.WriteLine(Strings.startMenu);
             Menu input = (Menu)CheckValidity.IsValidInput();
             Console.WriteLine();
             switch (input)
@@ -23,54 +22,54 @@ public class UI
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine(Message.invalid);
+                        Console.WriteLine(Strings.invalid);
                         break;
                 }
         }
     }
     public static void Register()
     {
-            AuthController authManager = new AuthController();
+            IAuthController authManager = new AuthController();
 
-            User user = Commonn.Details();
+            User user = RequestUserInput.Details();
        
             bool flag = authManager.Register(user);
             
             if (flag)
             {
-            Console.WriteLine(Message.regsuccess);
-            Message.Design();
-            Console.WriteLine(Message.enterCred);
+            Console.WriteLine(Strings.regsuccess);
+            Strings.Design();
+            Console.WriteLine(Strings.enterCred);
             Login();
             }
             else
             {
-            Console.WriteLine(Message.wrong);
-            Message.Design();
+            Console.WriteLine(Strings.wrong);
+            Strings.Design();
             Register();
         }
      }
     public static void Login()
     {
-        AuthController authManager = new AuthController();
+        IAuthController authManager = new AuthController();
 
-        Console.WriteLine(Message.enterUserName);
+        Console.WriteLine(Strings.enterUserName);
         string username = Console.ReadLine();
         Console.WriteLine();
         while (!CheckValidity.CheckNull(username))
         {
-            Console.WriteLine(Message.userNameNotEmpty);
+            Console.WriteLine(Strings.userNameNotEmpty);
             username = Console.ReadLine();
         }
 
-        Console.WriteLine(Message.pswd);
+        Console.WriteLine(Strings.pswd);
         string password = CheckValidity.HideCharacter();
         Console.WriteLine();
-        Message.Design();
+        Strings.Design();
 
         while (!CheckValidity.CheckNull(password))
         {
-            Console.WriteLine(Message.passwordNameNotEmpty);
+            Console.WriteLine(Strings.passwordNameNotEmpty);
             password = Console.ReadLine();
         }
 
@@ -82,44 +81,44 @@ public class UI
             {
                 if (entity is Customer)
                 {
-                    CustomerUI custUIObj = new CustomerUI();
-                    Customer customer = (Customer)entity;
-                    Console.WriteLine(customer.FullName + Message.loginCust);
-                    Message.Design();
+                    var custUIObj = new CustomerUI();
+                    var customer = (Customer)entity;
+                    Console.WriteLine(customer.FullName + Strings.loginCust);
+                    Strings.Design();
                     custUIObj.LoginCustomerMenu(customer);
                 }
                 else if (entity is Owner)
                 {
-                    OwnerUI oui = new OwnerUI();
-                    Owner owner = (Owner)entity;
-                    Console.WriteLine(owner.FullName + Message.loginOwner);
-                    Message.Design();
+                    var oui = new OwnerUI();
+                    var owner = (Owner)entity;
+                    Console.WriteLine(owner.FullName + Strings.loginOwner);
+                    Strings.Design();
                     oui.LoginOwnerMenu(owner);
                 }
                 else if(entity is Admin) 
                 {
-                    AdminUI adm = new AdminUI();
-                    Admin admin = (Admin)entity;
-                    Console.WriteLine(Message.loginAdmin + admin.Username);
-                    Message.Design();
+                    var adm = new AdminUI();
+                    var admin = (Admin)entity;
+                    Console.WriteLine(Strings.loginAdmin + admin.Username);
+                    Strings.Design();
                     adm.LoginAdminMenu(admin);
                 }
                 
             }
             else
             {
-                Console.WriteLine(Message.loginFailed);
-                Message.Design();
+                Console.WriteLine(Strings.loginFailed);
+                Strings.Design();
             }
 
            
         }
         catch(Exception ex)
         {
-            Console.WriteLine(Message.error + ex);
-            Message.Design();
+            Console.WriteLine(Strings.error + ex);
+            Strings.Design();
         }
-       Message.Design();
+       Strings.Design();
     }
 
 }

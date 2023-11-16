@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 
 using RentJunction.Models;
-
 public sealed class DBAdmin : DBHandler
 {
     private static DBAdmin _instance = null;
@@ -28,12 +27,12 @@ public sealed class DBAdmin : DBHandler
 
         try
         {
-            _adminList = JsonConvert.DeserializeObject<List<Admin>>(File.ReadAllText(Message.adminPath));
+            _adminList = JsonConvert.DeserializeObject<List<Admin>>(File.ReadAllText(Strings.adminPath));
         }
         catch(Exception ex) 
         {
-            File.AppendAllText(Message.errorLoggerPath, ex.ToString() + DateTime.Now);
-            Console.WriteLine(Message.error);
+            File.AppendAllText(Strings.errorLoggerPath, ex.ToString() + DateTime.Now);
+            Console.WriteLine(Strings.error);
             UI.StartMenu();
         }
 

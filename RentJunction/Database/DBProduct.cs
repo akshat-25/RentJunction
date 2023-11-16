@@ -29,12 +29,12 @@ public sealed class DBProduct : DBHandler , IDBHandler
 
         try
         {
-            _productList = JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText(Message.productsPath));
+            _productList = JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText(Strings.productsPath));
         }
         catch(Exception ex)
         {
-            Console.WriteLine(Message.error);
-            File.AppendAllText(Message.errorLoggerPath, ex.ToString());
+            Console.WriteLine(Strings.error);
+            File.AppendAllText(Strings.errorLoggerPath, ex.ToString());
             UI.StartMenu();
         }
 
@@ -51,18 +51,18 @@ public sealed class DBProduct : DBHandler , IDBHandler
     {
         if (_productCategoryList.Count == 0)
         {
-            _productCategoryList.Add(Message.cate1);
-            _productCategoryList.Add(Message.cate2);
-            _productCategoryList.Add(Message.cate3);
-            _productCategoryList.Add(Message.cate4);
-            _productCategoryList.Add(Message.cate5);
-            _productCategoryList.Add(Message.cate6);
-            _productCategoryList.Add(Message.cate7);
-            _productCategoryList.Add(Message.cate8);
-            _productCategoryList.Add(Message.cate9);
-            _productCategoryList.Add(Message.cate10);
-            _productCategoryList.Add(Message.cate11);
-            _productCategoryList.Add(Message.cate12);
+            _productCategoryList.Add(Strings.cate1);
+            _productCategoryList.Add(Strings.cate2);
+            _productCategoryList.Add(Strings.cate3);
+            _productCategoryList.Add(Strings.cate4);
+            _productCategoryList.Add(Strings.cate5);
+            _productCategoryList.Add(Strings.cate6);
+            _productCategoryList.Add(Strings.cate7);
+            _productCategoryList.Add(Strings.cate8);
+            _productCategoryList.Add(Strings.cate9);
+            _productCategoryList.Add(Strings.cate10);
+            _productCategoryList.Add(Strings.cate11);
+            _productCategoryList.Add(Strings.cate12);
 
         }
 
@@ -80,7 +80,7 @@ public sealed class DBProduct : DBHandler , IDBHandler
         {
            _productList.Add(product);
         }
-        DBProduct.Instance.UpdateDB(Message.productsPath,_productList);
+        DBProduct.Instance.UpdateDB(Strings.productsPath,_productList);
         return true;
     }
 }

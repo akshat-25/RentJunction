@@ -12,8 +12,8 @@ public class AdminUI
     }
     public void LoginAdminMenu(Admin admin)
     {
-        Console.WriteLine(Message.adminMenu);
-        Console.WriteLine(Message.design);
+        Console.WriteLine(Strings.adminMenu);
+        Console.WriteLine(Strings.design);
         Options input = (Options)CheckValidity.IsValidInput();
         
         Console.WriteLine();
@@ -26,7 +26,7 @@ public class AdminUI
                 break;
             case Options.view_owners:
                 ViewAllOwners(admin);
-                Console.WriteLine(Message.design);
+                Console.WriteLine(Strings.design);
                 LoginAdminMenu(admin);
                 break;
             case Options.delete_customer:
@@ -42,12 +42,12 @@ public class AdminUI
                 LoginAdminMenu(admin);
                 break;
             case Options.logout:
-                Console.WriteLine(Message.logoutSuccc);
+                Console.WriteLine(Strings.logoutSuccc);
                 Console.WriteLine();
                 UI.StartMenu();
                 break;
             default:
-                Console.WriteLine(Message.invalid);
+                Console.WriteLine(Strings.invalid);
                 LoginAdminMenu(admin);
                 break;
         }
@@ -68,10 +68,10 @@ public class AdminUI
     public void ViewAllOwners(Admin admin)
     {
         List<Owner> owners = ownerCtrl.GetOwnerList();
-        Console.WriteLine(Message.custList);
+        Console.WriteLine(Strings.custList);
         foreach (var owner in owners)
         {
-            Console.WriteLine(Message.design);
+            Console.WriteLine(Strings.design);
             Console.WriteLine($"Name         -   {owner.FullName}");
             Console.WriteLine($"Address      -   {owner.Address}");
             Console.WriteLine($"Phone        -   {owner.PhoneNumber}");
@@ -80,12 +80,12 @@ public class AdminUI
     }
     public void DeleteCustomer(Admin admin) {
         ViewAllCustomers(admin);
-        Console.WriteLine(Message.custEmail);
+        Console.WriteLine(Strings.custEmail);
         string input = Console.ReadLine();
 
         while (!CheckValidity.IsValidEmail(input) || !CheckValidity.CheckNull(input))
         {
-            Console.WriteLine(Message.invalid);
+            Console.WriteLine(Strings.invalid);
             input = Console.ReadLine().Trim();
         }
         Console.WriteLine();
@@ -106,7 +106,7 @@ public class AdminUI
                 }
                 else
                 {
-                    Console.WriteLine(Message.cannotDeleteCust);
+                    Console.WriteLine(Strings.cannotDeleteCust);
                 }
             }
         }
@@ -116,11 +116,11 @@ public class AdminUI
     }
     public void DeleteOwner(Admin admin) {
         ViewAllOwners(admin);
-        Console.WriteLine(Message.OwnEmail);
+        Console.WriteLine(Strings.OwnEmail);
         var input = Console.ReadLine();
         while (!CheckValidity.IsValidEmail(input) || !CheckValidity.CheckNull(input))
         {
-            Console.WriteLine(Message.invalid);
+            Console.WriteLine(Strings.invalid);
             input = Console.ReadLine().Trim();
         }
         Console.WriteLine();
@@ -145,13 +145,13 @@ public class AdminUI
         }   
     public void AddNewAdmin()
     {
-        AuthController athManager = new AuthController();
-        Console.WriteLine(Message.username);
+        IAuthController athManager = new AuthController();
+        Console.WriteLine(Strings.username);
         string input = CheckValidity.IsValidUsername();
         
         Console.WriteLine();
 
-        Console.WriteLine(Message.adminpswd);
+        Console.WriteLine(Strings.adminpswd);
         string pass = CheckValidity.IsValidPassword();
         Console.WriteLine();
         Admin admin = new Admin
@@ -162,14 +162,14 @@ public class AdminUI
 
         if (athManager.Register(admin))
         {
-            Console.WriteLine(Message.adminSucc);
+            Console.WriteLine(Strings.adminSucc);
         }
         else
         {
-            Console.WriteLine(Message.somethingWrong);
+            Console.WriteLine(Strings.somethingWrong);
         }
         Console.WriteLine();
-        Console.WriteLine(Message.design);
+        Console.WriteLine(Strings.design);
 
     }
 

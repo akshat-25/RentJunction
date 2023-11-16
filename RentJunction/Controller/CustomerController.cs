@@ -19,7 +19,7 @@ namespace RentJunction.Models
         }
         public void UpdateDBCust(List<Customer> list)
         {
-            DBCustomer.Instance.UpdateDB(Message.customerPath, list);
+            DBCustomer.Instance.UpdateDB(Strings.customerPath, list);
         }
         public void UpdateCustList(Product product, Owner owner)
         {
