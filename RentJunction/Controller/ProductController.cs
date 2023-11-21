@@ -1,51 +1,42 @@
-﻿using RentJunction.Controller;
-using RentJunction.Models;
+﻿using RentJunction.Models;
 
 public class ProductController : IProductControllerCust , IProductControllerOwner
 {
+    public IDBProduct DBProduct { get; set; }
+    public ProductController(IDBProduct DbProduct)
+    {
+        DBProduct = DbProduct;
+    }
     public List<Product> GetProducts(int input, string city)
     {
-
-        foreach (var product in DBProduct.Instance.GetProducts(input, city))
-        {
-            Console.WriteLine(Strings.design);
-            Console.WriteLine(Strings.disProdId + product.ProductId);
-            Console.WriteLine(Strings.disProdName + product.ProductName);
-            Console.WriteLine(Strings.disProdDesc + product.Description);
-            Console.WriteLine(Strings.disProdPrice + "Rs." + product.Price + " per day");
-            Console.WriteLine(Strings.disProdCate + Enum.Parse<Category>(product.ProductCategory.ToString()));
-            Console.WriteLine(Strings.disProdOwnName + product.OwnerName);
-            Console.WriteLine(Strings.disProdOwnNum + product.OwnerNum);
-        }
-        return DBProduct.Instance.GetProducts(input, city);
+        return DBProduct.GetProducts(input, city);
     }
     public List<Product> GetProductsMasterList()
     {
-        return DBProduct.Instance._productList;
+        return DBProduct.ProductList;
+    }
+    public List<string> ChooseCategory()
+    {
+        return DBProduct.chooseCategory();
+        
     }
     public bool AddProductMaster(Product product)
     {
-        return DBProduct.Instance.AddProductMaster(product);
+        return DBProduct.AddProductMaster(product);
     }
     public void UpdateDBProds(List<Product> list)
     {
-        DBProduct.Instance.UpdateDB(Strings.productsPath, list);
+        DBProduct.UpdateDB(Strings.productsPath, list);
     }
-    public void ViewRentedProd(Customer cust)
+    public List<Product> GetListedProductsByOwner(User owner)
     {
-        foreach (var product in cust.rentedProducts)
-        {
-            Console.WriteLine(Strings.design);
-            Console.WriteLine(Strings.disProdId    + product.ProductId);
-            Console.WriteLine(Strings.disProdName  + product.ProductName);
-            Console.WriteLine(Strings.disProdDesc  + product.Description);
-            Console.WriteLine(Strings.disProdPrice + product.Price + " per day");
-            Console.WriteLine(Strings.disProdCate  + Enum.Parse<Category>(product.ProductCategory.ToString()));
-            Console.WriteLine(Strings.startDate + product.StartDate);
-            Console.WriteLine(Strings.endDate + product.EndDate);
-        }
+        List<Product> products = GetProductsMasterList();
+        return products.FindAll((product) => product.OwnerID == owner.UserID.ToString());
     }
-
-
+    public List<Product> GetRentedProductsByCustomer(User customer)
+    {
+        List<Product> products = GetProductsMasterList();
+        return products.FindAll((product) => product.CustomerID == customer.UserID.ToString());
+    }
 
 }

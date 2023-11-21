@@ -1,0 +1,82 @@
+[
+  {
+    "UserID": "1d124e9f",
+    "FullName": "Akshat",
+    "City": "noida",
+    "PhoneNumber": 9784918600,
+    "Username": "akshat123",
+    "Email": "akshat@gmail.com",
+    "Password": "Akshat@123",
+    "Role": 2
+  },
+  {
+    "UserID": "8709fd38",
+    "FullName": "harsh",
+    "City": "jaipur",
+    "PhoneNumber": 8907867890,
+    "Username": "harsh123",
+    "Email": "harsh@gmail.com",
+    "Password": "Harsh@123",
+    "Role": 1
+  },
+  {
+    "UserID": "5709fd38",
+    "FullName": "admin",
+    "City": "jaipur",
+    "PhoneNumber": 8207867890,
+    "Username": "admin123",
+    "Email": "admin@gmail.com",
+    "Password": "Admin@123",
+    "Role": 3
+  },
+  {
+    "UserID": "00d4f647",
+    "FullName": "adminqwerty",
+    "City": "noida",
+    "PhoneNumber": 1233211234,
+    "Username": "admin111",
+    "Email": "admin12@gmail.com",
+    "Password": "Admin@111",
+    "Role": 3
+  },
+  {
+    "UserID": "25b864ee",
+    "FullName": "ayush",
+    "City": "kota",
+    "PhoneNumber": 9089089089,
+    "Username": "ayush123",
+    "Email": "ayush@gmail.com",
+    "Password": "Ayush@123",
+    "Role": 1
+  },
+  {
+    "UserID": "eab713ec",
+    "FullName": "sdjkf",
+    "City": "lksdjf",
+    "PhoneNumber": 9823759837,
+    "Username": "fhskdhf123",
+    "Email": "kjdsfhks@gmail.com",
+    "Password": "Ajsjsj@123",
+    "Role": 2
+  },
+  {
+    "UserID": "f28a29da",
+    "FullName": "fjdgljn",
+    "City": "dslkfnslkf",
+    "PhoneNumber": 5984389570,
+    "Username": "ldflksdf123",
+    "Email": "kjfhgjhdf@lfgkl.com",
+    "Password": "",
+    "Role": 1
+  },
+  {
+    "UserID": "a49374c2",
+    "FullName": "qwert",
+    "City": "qwefg",
+    "PhoneNumber": 1234567890,
+    "Username": "asdf234",
+    "Email": "qoqoqo@gmail.com",
+    "Password": "",
+    "Role": 2
+  }
+]

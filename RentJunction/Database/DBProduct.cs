@@ -1,20 +1,20 @@
 ﻿using Newtonsoft.Json;
-
 using RentJunction.Models;
 
-public sealed class DBProduct : DBHandler , IDBHandler
+public sealed class DBProduct : DBHandler, IDBProduct
 {
-
     private static DBProduct _instance = null;
+
     private static readonly object _lockObj = new object();
-    public List<Product> _productList { get; set; }
+    public List<Product> ProductList { get; set; }
+
     public List<string> _productCategoryList = new List<string>();
     public static DBProduct Instance
     {
         get
         {
-            lock (_lockObj)
-            {
+            lock (_lockObj)            {
+
                 if (_instance == null)
                 {
                     _instance = new DBProduct();
@@ -25,28 +25,27 @@ public sealed class DBProduct : DBHandler , IDBHandler
     }
     private DBProduct()
     {
-        _productList = new List<Product>();
+        ProductList = new List<Product>();
 
         try
         {
-            _productList = JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText(Strings.productsPath));
+            ProductList = JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText(Strings.productsPath));
         }
         catch(Exception ex)
         {
             Console.WriteLine(Strings.error);
             File.AppendAllText(Strings.errorLoggerPath, ex.ToString());
-            UI.StartMenu();
+            return;
         }
 
     }
 
     public List<Product> GetProducts(int input, string city)
     {
-        List<Product> filteredProd = _productList.FindAll((product) => (product.ProductCategory == input)
+        List<Product> filteredProd = ProductList.FindAll((product) => (product.ProductCategory == input)
         && (product.City == city));
         return filteredProd;
     }
-
     public List<string> chooseCategory()
     {
         if (_productCategoryList.Count == 0)
@@ -67,20 +66,11 @@ public sealed class DBProduct : DBHandler , IDBHandler
         }
 
         return _productCategoryList;
-
-
     }
     public bool AddProductMaster(Product product)
     {
-        if (_productList != null)
-        {
-            _productList.Add(product);
-        }
-        else
-        {
-           _productList.Add(product);
-        }
-        DBProduct.Instance.UpdateDB(Strings.productsPath,_productList);
+        ProductList.Add(product);  
+        DBProduct.Instance.UpdateDB(Strings.productsPath, ProductList);
         return true;
     }
 }

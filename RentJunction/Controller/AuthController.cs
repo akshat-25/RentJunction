@@ -1,120 +1,94 @@
-﻿using RentJunction.Controller;
-using RentJunction.Models;
+﻿using RentJunction.Models;
 using RentJunction.Views;
 
 public class AuthController : IAuthController
 {
-    public bool Register<T>(T user) where T : User
+    public IDBUsers DBusers { get; set; }
+    public AuthController(IDBUsers DBusers) { 
+         this.DBusers = DBusers;
+    }
+    public bool Register(User user)
     {
         if (IsExists(user.Username))
         {
             return false;
         }
-        if (user is Customer)
-        {
-            Customer customer = user as Customer;
-            return RegisterCustomer(customer);
-        }
-        else if (user is Owner)
-        {
-            Owner owner = user as Owner;
-            return RegisterOwner(owner);    
-        }
-        else
-        {
-            Admin admin = user as Admin;
-            return RegisterAdmin(admin);
-        }
-    }
-    private bool RegisterCustomer(Customer customer)
-    {
 
-        if (DBCustomer.Instance._customerList != null)
+        if (DBusers.UserList != null)
         {
-            foreach (var customerEntity in DBCustomer.Instance._customerList)
+            foreach (var localUser in DBusers.UserList)
             {
-                if (customerEntity.Email == customer.Email)
+                if (localUser.Email == user.Email)
                 {
                     Console.WriteLine(Strings.emailExist);
                     return false;
                 }
             }
-            DBCustomer.Instance._customerList.Add(customer);
-            DBCustomer.Instance.UpdateDB(Strings.customerPath, DBCustomer.Instance._customerList);
+            DBusers.UserList.Add(user);
+            DBusers.UpdateDB(Strings.userPath, DBusers.UserList);
             return true;
         }
-        DBCustomer.Instance._customerList.Add(customer);
-        DBCustomer.Instance.UpdateDB(Strings.customerPath, DBCustomer.Instance._customerList);
+        DBusers.UserList.Add(user);
+        DBusers.UpdateDB(Strings.userPath, DBusers.UserList);
         return true;
+
     }
-    private bool RegisterOwner(Owner owner)
+    private bool IsExists(string username)
     {
-      
-       
-        if (DBOwner.Instance._ownerList != null)
-        {
-            foreach (var ownerEntity in DBOwner.Instance._ownerList)
-            {
-                if (ownerEntity.Email == owner.Email)
-                {
-                    Console.WriteLine(Strings.emailExist);
-                    return false;
-                }
-            }
-            DBOwner.Instance._ownerList.Add(owner);
-            DBOwner.Instance.UpdateDB(Strings.ownerPath, DBOwner.Instance._ownerList);
-            return true;
-        }
-        DBOwner.Instance._ownerList.Add(owner);
-        DBOwner.Instance.UpdateDB(Strings.ownerPath, DBOwner.Instance._ownerList);
-        return true;
-    }
-    private bool RegisterAdmin(Admin admin)
-    {
-        if (DBAdmin.Instance._adminList != null)
-        {
-            foreach (var adminEntity in DBAdmin.Instance._adminList)
-            {
-                if (adminEntity.Username == admin.Username)
-                {
-                    Console.WriteLine(Strings.usernameExist);
-                    return false;
-                }
-            }
-            DBAdmin.Instance._adminList.Add(admin);
-            DBAdmin.Instance.UpdateDB(Strings.adminPath, DBAdmin.Instance._adminList);
-            return true;
-        }
-        return false;
-    }
-    public bool IsExists(string username)
-    {
-        return IsEntityExists(DBCustomer.Instance._customerList, username) ||
-            IsEntityExists(DBOwner.Instance._ownerList, username) ||
-            IsEntityExists(DBAdmin.Instance._adminList, username);
-    }
-    private bool IsEntityExists<T>(List<T> userList, string username) where T : User
-    {
-        if (userList.FindIndex((user) => user.Username == username) != -1)
+        if (DBusers.UserList.FindIndex((user) => user.Username == username) != -1)
             return true;
 
         return false;
     }
-    public User Login(string username, string password)
-    { 
-        if (DBCustomer.Instance._customerList.FindIndex((cust) => cust.Username == username && cust.Password == password) != -1)
-            return DBCustomer.Instance._customerList[DBCustomer.Instance._customerList.FindIndex((cust) => cust.Username == username && cust.Password == password)];
-
-        else if (DBOwner.Instance._ownerList.FindIndex((own) => own.Username == username && own.Password == password) != -1)
-            return DBOwner.Instance._ownerList[DBOwner.Instance._ownerList.FindIndex((own) => own.Username == username && own.Password == password)];
-
-        else if (DBAdmin.Instance._adminList.FindIndex((adm) => adm.Username == username && adm.Password == password) != -1)
-            return DBAdmin.Instance._adminList[DBAdmin.Instance._adminList.FindIndex((adm) => adm.Username == username && adm.Password == password)];
+    private User Login(string username, string password)
+    {
+        var isValidUser = DBusers.UserList.FindIndex((cust) => cust.Username == username && cust.Password == password);
+        if ( isValidUser != -1)
+            return DBusers.UserList[isValidUser];
 
         else
             return null;
     }
+    public bool GetUserUI(string username, string password)
+    {
+        var user = Login(username, password);
 
-    
+        if (user != null)
+        {
+            if (user.Role.Equals(Role.Customer))
+            {
+                var custUIObj = new CustomerUI(new CustomerController(DBUsers.Instance), new ProductController(DBProduct.Instance));
+               
+                custUIObj.LoginCustomerMenu(user);
+
+                return true;
+            }
+            else if (user.Role.Equals(Role.Owner))
+            {
+                var ownerUIObj = new OwnerUI(new OwnerController(DBUsers.Instance), new CustomerController(DBUsers.Instance), new ProductController(DBProduct.Instance));
+                
+                ownerUIObj.LoginOwnerMenu(user);
+
+                return true;
+            }
+            else if (user.Role.Equals(Role.Admin))
+            {
+                var adminUIObj = new AdminUI(new CustomerController(DBUsers.Instance), new OwnerController(DBUsers.Instance), new UserController(DBUsers.Instance));
+                
+                adminUIObj.LoginAdminMenu(user);
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+        else
+        {
+            return false;
+        }
+    }
 
 }

@@ -1,16 +1,42 @@
-﻿using RentJunction.Controller;
-using RentJunction.Models;
+﻿using RentJunction.Models;
 using RentJunction.Views;
+
 public class UI
 {
-    public static void StartMenu()
+    public IAuthController AuthController { get; set; }
+    public UserController UserController { get; set; }
+    public UI(IAuthController authController, UserController userController)
+    {
+        AuthController = authController;
+        UserController = userController;
+    }
+
+    public  void StartMenu()
     {
         while (true)
         {
             Console.WriteLine(Strings.startMenu);
-            Menu input = (Menu)CheckValidity.IsValidInput();
+
+            var input = Console.ReadLine();
+            bool isValidInput;
+
+            while (true)
+            {
+                isValidInput = CheckValidity.IsValidInput(input);
+                if (!isValidInput)
+                {
+                    Console.WriteLine(Strings.invalid);
+                    input = Console.ReadLine();
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            Menu option = Enum.Parse<Menu>(input);
             Console.WriteLine();
-            switch (input)
+            switch (option)
                 {
                     case Menu.create_account:
                         Register();
@@ -27,32 +53,49 @@ public class UI
                 }
         }
     }
-    public static void Register()
+    public void Register()
     {
-            IAuthController authManager = new AuthController();
-
-            User user = RequestUserInput.Details();
-       
-            bool flag = authManager.Register(user);
+            List<User> userList = UserController.GetUserMasterList();
+            User userEntity = RequestUserInput.Details(userList);
             
-            if (flag)
+            Console.WriteLine(Strings.chooseRole);
+            int roleTaken = Convert.ToInt32(Console.ReadLine());
+            
+            bool isValidRole;
+
+            while (true)
             {
-            Console.WriteLine(Strings.regsuccess);
-            Strings.Design();
-            Console.WriteLine(Strings.enterCred);
-            Login();
+            isValidRole = CheckValidity.IsValidRole(roleTaken);
+            if (isValidRole)
+            {
+                break;
+            }
+
+            else
+            {
+                roleTaken = Convert.ToInt32(Console.ReadLine());
+            }
+              
+            }
+            User user =  RoleHelper.RoleSetter(userEntity, roleTaken);
+            bool isValidUser = AuthController.Register(user);
+            
+            if (isValidUser)
+            {
+                Console.WriteLine(Strings.regsuccess);
+                Strings.Design();
+                Console.WriteLine(Strings.enterCred);
+                Login();
             }
             else
             {
-            Console.WriteLine(Strings.wrong);
-            Strings.Design();
-            Register();
+                Console.WriteLine(Strings.wrong);
+                Strings.Design();
+                Register();
         }
      }
-    public static void Login()
+    public void Login()
     {
-        IAuthController authManager = new AuthController();
-
         Console.WriteLine(Strings.enterUserName);
         string username = Console.ReadLine();
         Console.WriteLine();
@@ -75,50 +118,18 @@ public class UI
 
         try
         {
-            var entity = authManager.Login(username, password);
-
-            if (entity != null)
-            {
-                if (entity is Customer)
-                {
-                    var custUIObj = new CustomerUI();
-                    var customer = (Customer)entity;
-                    Console.WriteLine(customer.FullName + Strings.loginCust);
-                    Strings.Design();
-                    custUIObj.LoginCustomerMenu(customer);
-                }
-                else if (entity is Owner)
-                {
-                    var oui = new OwnerUI();
-                    var owner = (Owner)entity;
-                    Console.WriteLine(owner.FullName + Strings.loginOwner);
-                    Strings.Design();
-                    oui.LoginOwnerMenu(owner);
-                }
-                else if(entity is Admin) 
-                {
-                    var adm = new AdminUI();
-                    var admin = (Admin)entity;
-                    Console.WriteLine(Strings.loginAdmin + admin.Username);
-                    Strings.Design();
-                    adm.LoginAdminMenu(admin);
-                }
-                
-            }
-            else
-            {
+            bool isLoginSuccess = AuthController.GetUserUI(username, password);
+            if (!isLoginSuccess) {
                 Console.WriteLine(Strings.loginFailed);
-                Strings.Design();
             }
-
-           
         }
         catch(Exception ex)
         {
-            Console.WriteLine(Strings.error + ex);
-            Strings.Design();
+            File.AppendAllText(Strings.errorLoggerPath, ex.ToString() + DateTime.Now);
+            Console.WriteLine("User Not Found!!");
         }
-       Strings.Design();
+       
+        Strings.Design();
     }
 
 }

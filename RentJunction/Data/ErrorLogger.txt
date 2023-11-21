@@ -1,0 +1,7 @@
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at ProductController.UpdateDBProds(List`1 list) in C:\Users\aparakh\source\repos\RentJunction\RentJunction\Controller\ProductController.cs:line 50
+   at RentJunction.Views.OwnerUI.UpdateListedProducts(User owner) in C:\Users\aparakh\source\repos\RentJunction\RentJunction\Views\OwnerUI.cs:line 39211/19/2023 6:52:45 PMSystem.NullReferenceException: Object reference not set to an instance of an object.
+   at ProductController.UpdateDBProds(List`1 list) in C:\Users\aparakh\source\repos\RentJunction\RentJunction\Controller\ProductController.cs:line 50
+   at RentJunction.Views.OwnerUI.UpdateListedProducts(User owner) in C:\Users\aparakh\source\repos\RentJunction\RentJunction\Views\OwnerUI.cs:line 39411/19/2023 9:00:38 PMSystem.NullReferenceException: Object reference not set to an instance of an object.
+   at ProductController.UpdateDBProds(List`1 list) in C:\Users\aparakh\source\repos\RentJunction\RentJunction\Controller\ProductController.cs:line 50
+   at RentJunction.Views.OwnerUI.UpdateListedProducts(User owner) in C:\Users\aparakh\source\repos\RentJunction\RentJunction\Views\OwnerUI.cs:line 39411/19/2023 9:07:57 PM

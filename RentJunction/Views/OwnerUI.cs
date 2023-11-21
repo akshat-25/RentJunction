@@ -1,29 +1,48 @@
-﻿using RentJunction.Controller;
-using RentJunction.Models;
+﻿using RentJunction.Models;
 using System.Security.Cryptography;
 
 namespace RentJunction.Views
 {
     public class OwnerUI
     {
-        OwnerController ownerCtrl;
-        ICustomerController custCtrl;
-        IProductControllerOwner prodCtrl ;
-
-        public OwnerUI()
+        public OwnerController OwnerController { get; set; }
+        public ICustomerController CustomerController { get; set; }
+        public IProductControllerOwner ProductController { get; set; } 
+       
+        public List<Product> ListedProducts;
+        public OwnerUI(OwnerController ownerController, ICustomerController customerController, IProductControllerOwner productController)
         {
-            ownerCtrl = new OwnerController();
-            custCtrl  = new CustomerController();
-            prodCtrl  = new ProductController();
+            OwnerController = ownerController;
+            CustomerController = customerController;
+            ProductController = productController;
         }
-        public void LoginOwnerMenu(Owner owner)
+        public void LoginOwnerMenu(User owner)
         {
+            Console.WriteLine(owner.FullName + Strings.loginOwner);
+            Strings.Design();
+            ListedProducts = ProductController.GetListedProductsByOwner(owner);
             Console.WriteLine(Strings.ownerMenu);
-            OwnerMenu input = (OwnerMenu)CheckValidity.IsValidInput();
+            var input = Console.ReadLine();
+            var isValidInput = CheckValidity.IsValidInput(input);
+
+            while (true)
+            {
+                if (!isValidInput)
+                {
+                    Console.WriteLine(Strings.invalid);
+                    input = Console.ReadLine();
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            OwnerMenu option = Enum.Parse<OwnerMenu>(input);
             Console.WriteLine(Strings.design);
             Console.WriteLine();
             
-            switch (input)
+            switch (option)
             {
                 case OwnerMenu.add_product:
                     AddProduct(owner);
@@ -49,9 +68,8 @@ namespace RentJunction.Views
                     Console.WriteLine(Strings.logoutSuccc);
                     Console.WriteLine();
                     owner = null;
-                    UI.StartMenu();
-                    Console.WriteLine();
-                    break;
+                    return;
+
                 default:
                     Console.WriteLine(Strings.invalid);
                     Console.WriteLine();
@@ -59,7 +77,7 @@ namespace RentJunction.Views
                     break;
             }
         }
-        public void AddProduct(Owner owner)
+        public void AddProduct(User owner)
         {
             List<string> categories = DBProduct.Instance.chooseCategory();
             foreach (var category in categories)
@@ -87,13 +105,13 @@ namespace RentJunction.Views
             Console.WriteLine();
             Console.WriteLine(Strings.prodCate);
 
-            int categoryProd;
+            int categoryProduct;
 
             while (true)
             {
-                bool flag = int.TryParse(Console.ReadLine(), out categoryProd);
+                bool flag = int.TryParse(Console.ReadLine(), out categoryProduct);
 
-                if (categoryProd < 1 || categoryProd > 12)
+                if (categoryProduct < 1 || categoryProduct > 12)
                 {
                     Console.WriteLine(Strings.invalid);
                 }
@@ -130,10 +148,10 @@ namespace RentJunction.Views
                 }
             }
             int id = RandomNumberGenerator.GetInt32(0, int.MaxValue);
+            List<Product> productList = ProductController.GetProductsMasterList();
             while (true)
             {
-                List<Product> prods = prodCtrl.GetProductsMasterList();
-                if (prods != null && prods.Any((prod) => prod.ProductId == id))
+                if (productList != null && productList.Any((prod) => prod.ProductId == id))
                 {
                     id = RandomNumberGenerator.GetInt32(0, int.MaxValue);
                 }
@@ -149,14 +167,14 @@ namespace RentJunction.Views
                 ProductName = nameProd,
                 Description = descProd,
                 Price = priceProd,
+                OwnerID = owner.UserID.ToString(),
                 OwnerName = owner.FullName,
-                OwnerNum = owner.PhoneNumber,
-                ProductCategory = categoryProd,
-                City = owner.Address
+                ProductCategory = categoryProduct,
+                City = owner.City
             };
             try
             {
-                if (AddProducts(product,owner))
+                if (AddProducts(product,productList))
                 {
                     Console.WriteLine(Strings.prodSucc);
                     LoginOwnerMenu(owner);
@@ -173,36 +191,28 @@ namespace RentJunction.Views
                 LoginOwnerMenu(owner);
             }
         }
-        public bool AddProducts(Product product, Owner owner)
+        public bool AddProducts(Product product, List<Product> productList)
         {
-            List<Owner> listowner = ownerCtrl.GetOwnerList();
-
-            if (prodCtrl.AddProductMaster(product))
+            if(productList != null)
             {
-                if (owner.ListedProducts != null)
-                {
-                    owner.ListedProducts.Add(product);
-                }
-
-                else
-                {
-                    owner.ListedProducts = new List<Product>();
-                    owner.ListedProducts.Add(product);
-                }
-
-                int index= DBOwner.Instance._ownerList.FindIndex((obj)=>obj.Username==owner.Username);
-                DBOwner.Instance._ownerList[index] = owner;
-                ownerCtrl.UpdateDBOwner(listowner);
-                return true;
+                productList.Add(product);
+                
+            }
+            else
+            {
+                productList = new List<Product>();
+                productList.Add(product);
             }
 
-            return false;
+            ProductController.UpdateDBProds(productList);
+            return true;
         }
-        public void ViewListedProducts(Owner owner)
+        public void ViewListedProducts(User owner)
         {
-            if (owner.ListedProducts  !=  null)
+            Console.WriteLine();
+            if (ListedProducts  !=  null)
             {
-                foreach (Product product in owner.ListedProducts)
+                foreach (Product product in ListedProducts)
                 {
                     Console.WriteLine(Strings.design);
                     Console.WriteLine(Strings.disProdId + product.ProductId);
@@ -217,192 +227,165 @@ namespace RentJunction.Views
                 Console.WriteLine(Strings.noProd);
             }
         }
-        public  void UpdateListedProducts(Owner owner)
+        public void UpdateListedProducts(User owner)
         {
-            ViewListedProducts(owner);
+            var productAvailable = ListedProducts.Any((product) => product.OwnerID.Equals(owner.UserID));
 
-            if(owner.ListedProducts  == null ) {
-     
+            if (!productAvailable)
+            {
+                Console.WriteLine(Strings.noProd);
+                Console.WriteLine(Strings.design);
                 return;
             }
-            Console.WriteLine(Strings.design);
+
+            ViewListedProducts(owner);
+
             Console.WriteLine();
-            Console.WriteLine();
-        start:
             Console.WriteLine(Strings.prodIdUpdate);
             Console.WriteLine();
             Console.WriteLine();
-            int input;
-            try
+
+            var productId = Console.ReadLine();
+            bool isValidInput;
+
+            while (true)
             {
-                bool flag = int.TryParse(Console.ReadLine(), out input);
-                if (!flag)
+                isValidInput = CheckValidity.IsValidInput(productId);
+
+                if (!isValidInput)
                 {
-                    Console.WriteLine(Strings.invalid);
-                    goto start;
+                    productId = Console.ReadLine();
                 }
                 else
                 {
-                    bool flag2 = false;
-                    foreach (var prod in owner.ListedProducts)
+                    break;
+                }
+            }
+
+            Console.WriteLine(productId);
+
+            Product updateProduct = ListedProducts.Find((product) => product.ProductId == Convert.ToInt32(productId));
+
+            if (updateProduct.CustomerID != null)
+            {
+                Console.WriteLine(Strings.cannotUpdateProd);
+                return;
+            }
+
+            Console.WriteLine(Strings.updateListedProdMenuOptions);
+
+            var input = Console.ReadLine();
+            bool isValidOption;
+
+            while (true)
+            {
+                isValidOption = CheckValidity.IsValidInput(input);
+
+                if (!isValidOption)
+                {
+                    input = Console.ReadLine();
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            UpdateProductMenu option = Enum.Parse<UpdateProductMenu>(input);
+
+            Console.WriteLine();
+
+            switch (option)
+            {
+                case UpdateProductMenu.product_name:
+                    Console.WriteLine(Strings.prodUpdateName);
+                    string name = Console.ReadLine();
+                    Console.WriteLine();
+                    while (!CheckValidity.CheckNull(name))
                     {
-                        if (prod.ProductId.Equals(input))
+                        Console.WriteLine(Strings.nameError);
+                        name = Console.ReadLine();
+                    }
+                    updateProduct.ProductName = name;
+                    Console.WriteLine(Strings.nameChangedSucc);
+                    Console.WriteLine(Strings.design);
+                    break;
+                case UpdateProductMenu.product_description:
+                    Console.WriteLine(Strings.enterNewDesc);
+                    string desc = Console.ReadLine();
+                    Console.WriteLine();
+                    while (!CheckValidity.CheckNull(desc) || desc.Length < 10)
+                    {
+                        Console.WriteLine(Strings.descError);
+                        desc = Console.ReadLine();
+                    }
+                    updateProduct.Description = desc;
+                    Console.WriteLine(Strings.descChangedSucc);
+                    Console.WriteLine(Strings.design);
+                    break;
+                case UpdateProductMenu.product_price:
+                    Console.WriteLine(Strings.enterNewPrice);
+                    double priceProd;
+                    while (true)
+                    {
+                        bool isValidPrice = double.TryParse(Console.ReadLine(), out priceProd);
+
+                        if (priceProd <= 0)
                         {
-                            flag2 = true;
+                            Console.WriteLine(Strings.prodPriceError);
+                        }
+
+                        else
+                        {
                             break;
                         }
                     }
-                    if (!flag2)
+                    Console.WriteLine();
+                    updateProduct.Price = priceProd;
+                    Console.WriteLine(Strings.priceChangedSucc);
+                    Console.WriteLine(Strings.design);
+                    break;
+
+                case UpdateProductMenu.product_category:
+                    Console.WriteLine(Strings.enterNewCate);
+                    int categoryProd;
+                    while (true)
                     {
-                        Console.WriteLine(Strings.invalid);
-                        goto start;
-                    }
-                }
+                        bool isValidCategory = int.TryParse(Console.ReadLine(), out categoryProd);
 
-            }
-            catch
-            {
-                Console.WriteLine(Strings.validId);
-                goto start;
-            }
-
-            List<Product> MasterListProducts = prodCtrl.GetProductsMasterList();
-            List<Owner> list = ownerCtrl.GetOwnerList();
-            List<Customer> CustomerList = custCtrl.GetCustomer();
-
-            bool isRented = CustomerList.Any((cust) => cust.rentedProducts != null && cust.rentedProducts.Any((prod)
-                => prod.ProductId == input));
-
-            if (isRented)
-            {
-                Console.WriteLine(Strings.cannotDeleteCust);
-                Console.WriteLine();
-                ViewListedProducts(owner);
-                
-            }
-            foreach (var product in MasterListProducts)
-            {
-                if (product.ProductId.Equals(input))
-                {
-                    start2:
-                    Console.WriteLine(Strings.updateListedProdMenuOptions);
-                    int opt;
-                    try
-                    {
-                        bool flag = int.TryParse(Console.ReadLine(),out opt);
-                        if (!flag)
+                        if (categoryProd < 1 || categoryProd > 12)
                         {
                             Console.WriteLine(Strings.invalid);
-                            goto start2;
                         }
+
                         else
                         {
-                            switch (opt)
-                            {
-                                case (int)UpdateProductMenu.product_name:
-                                    Console.WriteLine(Strings.prodUpdateName);
-                                    string name = Console.ReadLine();
-                                    Console.WriteLine();
-                                    while (!CheckValidity.CheckNull(name))
-                                    {
-                                        Console.WriteLine(Strings.nameError);
-                                        name = Console.ReadLine();
-                                    }
-                                    product.ProductName = name;
-                                    Console.WriteLine(Strings.nameChangedSucc);
-                                    Console.WriteLine(Strings.design);
-                                    break;
-                                case (int)UpdateProductMenu.product_description:
-                                    Console.WriteLine(Strings.enterNewDesc);
-                                    string desc = Console.ReadLine();
-                                    Console.WriteLine();
-                                    while (!CheckValidity.CheckNull(desc) || desc.Length < 10)
-                                    {
-                                        Console.WriteLine(Strings.descError);
-                                        desc = Console.ReadLine();
-                                    }
-                                    product.Description = desc;
-                                    Console.WriteLine(Strings.descChangedSucc);
-                                    Console.WriteLine(Strings.design);
-                                    break;
-                                case (int)UpdateProductMenu.product_price:
-                                    Console.WriteLine(Strings.enterNewPrice);
-
-                                    double priceProd;
-                                    while (true)
-                                    {
-                                        bool flag2 = double.TryParse(Console.ReadLine(), out priceProd);
-
-                                        if (priceProd <= 0)
-                                        {
-                                            Console.WriteLine(Strings.prodPriceError);
-                                        }
-                                        else if (flag2)
-                                        {
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
-                                    }
-                                    Console.WriteLine();
-                                    product.Price = priceProd;
-                                    Console.WriteLine(Strings.priceChangedSucc);
-                                    Console.WriteLine(Strings.design);
-                                    break;
-                                case (int)UpdateProductMenu.product_category:
-                                    Console.WriteLine(Strings.enterNewCate);
-                                    int categoryProd;
-                                    while (true)
-                                    {
-                                        bool flag1 = int.TryParse(Console.ReadLine(), out categoryProd);
-
-                                        if (categoryProd < 1 || categoryProd > 12)
-                                        {
-                                            Console.WriteLine(Strings.invalid);
-                                        }
-                                        else if (flag1)
-                                        {
-                                            break;
-                                        }
-                                        else
-                                        {
-                                            break;
-                                        }
-                                    }
-                                    product.ProductCategory = categoryProd;
-                                    Console.WriteLine(Strings.CateChangedSucc);
-                                    Console.WriteLine(Strings.design);
-                                    break;
-
-                                default:
-                                    Console.WriteLine(Strings.invalid);
-                                    goto start2;
-                                    break;
-                            }
-                            prodCtrl.UpdateDBProds(MasterListProducts);
-                            ownerCtrl.UpdateOwnerList(product, owner);
-                            ownerCtrl.UpdateDBOwner(list);
+                            break;
                         }
+                    }
+                    updateProduct.ProductCategory = categoryProd;
+                    Console.WriteLine(Strings.CateChangedSucc);
+                    Console.WriteLine(Strings.design);
+                    break;
 
-                    }
-                    catch(Exception ex)
-                    {
-                        File.AppendAllText(Strings.errorLoggerPath, ex.ToString() + DateTime.Now);
-                        Console.WriteLine(Strings.invalid);
-                        goto start2;
-                    }
-                }
+                default:
+                    Console.WriteLine(Strings.invalid);
+                    break;
+
+
             }
+            List<Product> productMasterList = ProductController.GetProductsMasterList();
+            int index = productMasterList.FindIndex((product) => product.ProductId.Equals(updateProduct.ProductId));
+            productMasterList[index] = updateProduct;
+            ProductController.UpdateDBProds(productMasterList);
 
         }
-        public void DeleteListedProducts(Owner owner)
+        public void DeleteListedProducts(User owner)
         {
-            List<Owner> list = ownerCtrl.GetOwnerList();
+            List<User> list = OwnerController.GetOwnerList();
             
             ViewListedProducts(owner);
-            if (owner.ListedProducts == null)
+            if (ListedProducts == null)
             {
                 return;
             }
@@ -421,7 +404,7 @@ namespace RentJunction.Views
                 else
                 {
                     bool flag2 = false;
-                    foreach (var prod in owner.ListedProducts)
+                    foreach (var prod in ListedProducts)
                     {
                         if (prod.ProductId.Equals(input))
                         {
@@ -443,11 +426,10 @@ namespace RentJunction.Views
                 Console.WriteLine(Strings.invalid);
                 goto start;
             }
-            List<Controller.Customer> CustomerList = custCtrl.GetCustomer();
-            bool isRented = CustomerList.Any((cust) => cust.rentedProducts != null && cust.rentedProducts.Any((prod)
-                => prod.ProductId == input));
-
-            if (isRented)
+            List<User> CustomerList = CustomerController.GetCustomer();
+            List<Product> MasterListProducts = ProductController.GetProductsMasterList();
+            Product isRented = MasterListProducts.Find((product) => product.ProductId == input && product.StartDate != null);
+            if (isRented != null)
             {
                 Console.WriteLine(Strings.prodDelDenied);
                 Console.WriteLine();
@@ -455,16 +437,15 @@ namespace RentJunction.Views
 
             }
 
-            foreach (var product in owner.ListedProducts)
+            foreach (var product in ListedProducts)
             {
                 if (product.ProductId.Equals(input))
                 {
-                    owner.ListedProducts.Remove(product);
+                    ListedProducts.Remove(product);
                     break;
                 }
             }
 
-            List<Product> MasterListProducts = prodCtrl.GetProductsMasterList();
             foreach (var product in MasterListProducts)
             {
                 if (product.ProductId.Equals(input))
@@ -473,8 +454,8 @@ namespace RentJunction.Views
                     break;
                 }
             }
-            ownerCtrl.UpdateDBOwner(list);
-            prodCtrl.UpdateDBProds(MasterListProducts);
+            
+            ProductController.UpdateDBProds(MasterListProducts);
             Console.WriteLine(Strings.prodDelSucc);
         }
     }

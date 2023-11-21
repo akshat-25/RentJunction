@@ -1,84 +1,154 @@
-﻿using RentJunction.Controller;
-
-namespace RentJunction.Models
+﻿namespace RentJunction.Models
 {
     public class RequestUserInput
     {
-        public static User Details()
+        public static string GenerateUniqueId()
+        {
+            Guid guid = Guid.NewGuid();
+            string randomComponent = guid.ToString("N").Substring(0, 8); 
+
+            string uniqueId = randomComponent;
+
+            return uniqueId;
+        }
+        public static User Details(List<User> userList)
         {
             Console.WriteLine(Strings.reg);
-            string name = CheckValidity.IsValidName();
-
+            string name = Console.ReadLine();
+            bool isValidName;
+            while (true)
+            {
+                isValidName = CheckValidity.IsValidName(name);
+                if (!isValidName)
+                {
+                    name = Console.ReadLine();
+                }
+                else
+                {
+                    break;
+                }
+            }
             Console.WriteLine();
 
             Console.WriteLine(Strings.city);
+            string city = Console.ReadLine();
+            bool isValidCity;
 
-            string address = CheckValidity.IsValidAddress();
-
+            while (true)
+            {
+                isValidCity = CheckValidity.IsValidAddress(city);
+                if (isValidCity)
+                {
+                    break;
+                }
+                else
+                {
+                    city = Console.ReadLine();
+                }
+            }
             Console.WriteLine();
 
             Console.WriteLine(Strings.username);
 
-            string username = CheckValidity.IsValidUsername();
+            string username = Console.ReadLine();
+            bool isValidUsername;
+
+            while (true)
+            {
+                isValidUsername = CheckValidity.IsValidUsername(username);
+
+                if (isValidUsername)
+                {
+                    break;
+                }
+                else
+                {
+                    username = Console.ReadLine();
+                }
+            }
             Console.WriteLine();
-            long phoneNumber = CheckValidity.IsValidPhoneNum();
+            Console.WriteLine(Strings.enterPhNo);
+            long phoneNumber = Convert.ToInt64(Console.ReadLine());
+            bool isValidPhoneNumber;
+            while (true)
+            {
+                 isValidPhoneNumber = CheckValidity.IsValidPhoneNum(phoneNumber);
+                if (isValidPhoneNumber)
+                {
+                    break;
+                }
+                else
+                {
+                    phoneNumber = Convert.ToInt64(Console.ReadLine()); 
+                }
+            }
 
             Console.WriteLine();
 
             Console.WriteLine(Strings.email);
 
-            string email = CheckValidity.IsValidEmailReg();
-
+            string email = Console.ReadLine();
+            bool isValidEmail;
+            while (true)
+            {
+                isValidEmail = CheckValidity.IsValidEmail(email); 
+                if (isValidEmail)
+                {
+                    break;
+                }
+                else
+                {
+                    email = Console.ReadLine();
+                }
+            }
             Console.WriteLine();
 
             Console.WriteLine(Strings.pswd);
 
-            string password = CheckValidity.IsValidPassword();
+            string password = CheckValidity.HideCharacter();
+            bool isValidPassword;
 
-            Console.WriteLine();
-            Console.WriteLine();
             while (true)
             {
-                int roletaken = CheckValidity.IsValidRole();
-
-                Console.WriteLine();
-
-                if (roletaken == (int)Role.Customer)
+                isValidPassword = CheckValidity.IsValidPassword(password);
+                if (isValidPassword)
                 {
-                    Customer cust = new Customer
-                    {
-                        FullName = name,
-                        Address = address,
-                        PhoneNumber = phoneNumber,
-                        Email = email,
-                        Password = password,
-                        Role = (Role)roletaken,
-                        Username = username
-                    };
-
-                    return cust;
+                    break;
                 }
-                else if (roletaken == (int)Role.Owner)
-                {
-                    Owner owner = new Owner
-                    {
-                        FullName = name,
-                        Address = address,
-                        PhoneNumber = phoneNumber,
-                        Email = email,
-                        Password = password,
-                        Role = (Role)roletaken,
-                        Username = username
-                    };
-
-                    return owner;
-                }
-
                 else
                 {
-                    Console.WriteLine("invalid input ! please try again...");
+                    password = Console.ReadLine();
                 }
             }
+            Console.WriteLine();
+            Console.WriteLine();
+
+            string Id = GenerateUniqueId();
+            while (true)
+            {
+                if (userList != null && userList.Any((user) => user.UserID == Id))
+                {
+                    Id = GenerateUniqueId();
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            var user = new User
+            {
+                UserID = Id,
+                FullName = name,
+                City = city,
+                Email = email,
+                PhoneNumber = phoneNumber,
+                Password = password,
+                Username = username
+            };
+
+            return user;
+            
         }
     }
 }

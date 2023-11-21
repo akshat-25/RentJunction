@@ -45,8 +45,8 @@
     public static string loginFailed = "Login failed. Please check your credentials.";
     public static string logoutSuccc = "Logout Successful!!!";
     public static string custList = "The owners list is as follows ->";
-    public static string custEmail = "Enter the Email of the customer you want to delete from the list -";
-    public static string OwnEmail = "Enter the Email of the owner you want to delete from the list -";
+    public static string custID = "Enter the ID of the customer you want to delete from the list -";
+    public static string OwnerID = "Enter the ID of the owner you want to delete from the list -";
     public static string cannotDeleteCust = "Cannot delete the customer as he has rented some products.";
     public static string cannotUpdateProd = "Cannot update the product as he it is rented.";
     public static string somethingWrong = "Something went wrong";
@@ -89,10 +89,8 @@
     public static string startDate = "Start Date          - ";
     public static string endDate = "End Date            - ";
     public static string rentDays = "Total days of rent are ";
-    public static string customerPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\CustomerMasterList.json";
-    public static string ownerPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\OwnerMasterList.json";
+    public static string userPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\UserMasterList.json";
     public static string productsPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\ProductMasterList.json";
-    public static string adminPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\AdminList.json";
     public static string errorLoggerPath = @"C:\Users\aparakh\source\repos\RentJunction\RentJunction\Data\ErrorLogger.txt";
     public static string prodDelSucc = "Product Deleted Successfully...";
     public static string prodUpdateName = "Enter new name";

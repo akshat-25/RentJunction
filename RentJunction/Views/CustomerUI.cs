@@ -1,72 +1,129 @@
-﻿using RentJunction.Controller;
-using RentJunction.Models;
-
+﻿using RentJunction.Models;
 
 namespace RentJunction.Views
 {
+
     public class CustomerUI
     {
-        CustomerController custCtrl;
-        IProductControllerCust prodCtrl;
+        public CustomerController CustomerController { get; set; }  
+        public IProductControllerCust ProductController { get; set; }
 
-        public CustomerUI()
+        public List<Product> GetProductsRentedByCustomer;
+        public CustomerUI(CustomerController customerController, IProductControllerCust productController)
         {
-            custCtrl = new CustomerController();
-            prodCtrl = new ProductController();
+           
+            CustomerController = customerController;
+            ProductController = productController;
         }
-        public void LoginCustomerMenu(Customer cust)
+        public void LoginCustomerMenu(User customer)
         {
+            Console.WriteLine(customer.FullName + Strings.loginCust);
+            Strings.Design();
             Console.WriteLine(Strings.custMenu);
             Console.WriteLine(Strings.design);
+            GetProductsRentedByCustomer = ProductController.GetRentedProductsByCustomer(customer);
 
-            CustomerMenu input = (CustomerMenu)CheckValidity.IsValidInput();
-            
+
+            var input = Console.ReadLine();
+            bool isValidInput;
+
+            while (true)
+            {
+                isValidInput = CheckValidity.IsValidInput(input);
+
+                if (!isValidInput)
+                {
+                    Console.WriteLine(Strings.invalid);
+                    input = Console.ReadLine();
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            CustomerMenu option = Enum.Parse<CustomerMenu>(input);
+
             Console.WriteLine();
 
-            switch (input)
+            switch (option)
             {
                 case CustomerMenu.BrowseProducts:
-                    BrowseProducts(cust);
+                    BrowseProducts(customer);
                     Console.WriteLine();
-                    LoginCustomerMenu(cust);
+                    LoginCustomerMenu(customer);
                     break;
                 case CustomerMenu.View_rented_products:
-                    ViewRentedProducts(cust);
+                    ViewProducts();
                     Strings.Design();
-                    LoginCustomerMenu(cust);
+                    LoginCustomerMenu(customer);
                     break;
                 case CustomerMenu.Extend_rent_period:
-                    ExtendRentPeriod(cust);
+                    ExtendRentPeriod();
                     Console.WriteLine();
-                    LoginCustomerMenu(cust);
+                    LoginCustomerMenu(customer);
                     break;
                 case CustomerMenu.logout:
                     Console.WriteLine(Strings.logoutSucc);
-                    cust = null;
+                    customer = null;
                     Console.WriteLine();
-                    UI.StartMenu();
-                    break ;
+                    return;
                 default:
                     Strings.Design();
                     Console.WriteLine();
-                    LoginCustomerMenu(cust);
+                    LoginCustomerMenu(customer);
                     break;
             }
         }
-        public void BrowseProducts(Customer cust)
+        public void BrowseProducts(User customer)
         {
             Console.WriteLine(Strings.entCity);
-            string address = CheckValidity.IsValidAddress();
+
+            string address  = Console.ReadLine();
+            bool isValidAddress;
+
+            while (true)
+            {
+                isValidAddress = CheckValidity.IsValidAddress(address);
+                if (isValidAddress)
+                {
+                    break;
+                }
+                else
+                {
+                    address = Console.ReadLine();
+                }
+            }
+
             Console.WriteLine(Strings.design);
             Console.WriteLine(Strings.chooseCate);
 
-            custCtrl.ChooseCategory();
+            List<string> categories = ProductController.ChooseCategory();
 
-            int input = CheckValidity.IsValidInput();
-            
-            List<Product> res = prodCtrl.GetProducts(input, address);
+            foreach (var item in categories)
+            {
+                Console.WriteLine(item);
+            }
 
-            if (res.Count > 0)
+            var input = Console.ReadLine();
+            var isValidInput = CheckValidity.IsValidInput(input);
+
+            while (true)
+            {
+                if (!isValidInput)
+                {
+                    input = Console.ReadLine();
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+
+            List<Product> productList = ProductController.GetProducts(Convert.ToInt32(input), address);
+
+            if (productList.Count > 0)
             {
                 Strings.Design();
                 start:
@@ -74,17 +131,17 @@ namespace RentJunction.Views
                 int prodID;
                 try
                 {
-                    bool flag = int.TryParse(Console.ReadLine() , out prodID);
-                    if (!flag)
+                    bool isValidId = int.TryParse(Console.ReadLine() , out prodID);
+                    if (!isValidId)
                     {
                         Console.WriteLine(Strings.invalid);
                         goto start;
                     }
                     else {
                       bool flag2 = false; 
-                     foreach(var prod in res)
+                     foreach(var product in productList)
                         {
-                            if (prod.ProductId.Equals(prodID))
+                            if (product.ProductId.Equals(prodID))
                             {
                                 flag2 = true;
                                 break;
@@ -105,13 +162,13 @@ namespace RentJunction.Views
                                       
                 Console.WriteLine();
                 Console.WriteLine(Strings.design);
-                RentAProd(res, prodID, cust.rentedProducts, cust);
+                RentAProd(productList,prodID, customer);
                 Console.WriteLine();
                 Console.WriteLine(Strings.thanksRent);
                 
                 Console.WriteLine();
                 Console.WriteLine(Strings.design);
-                LoginCustomerMenu(cust);
+                LoginCustomerMenu(customer);
             }
 
             else
@@ -120,24 +177,28 @@ namespace RentJunction.Views
                
             }
         }
-        public void ViewRentedProducts(Customer cust)
+        public void ViewProducts()
         {
-            try
+            foreach (var product in GetProductsRentedByCustomer)
             {
-                prodCtrl.ViewRentedProd(cust);
-
+                Console.WriteLine(Strings.design);
+                Console.WriteLine(Strings.disProdId + product.ProductId);
+                Console.WriteLine(Strings.disProdName + product.ProductName);
+                Console.WriteLine(Strings.disProdDesc + product.Description);
+                Console.WriteLine(Strings.disProdPrice + product.Price + " per day");
+                Console.WriteLine(Strings.disProdCate + Enum.Parse<Category>(product.ProductCategory.ToString()));
+                Console.WriteLine(Strings.startDate + product.StartDate);
+                Console.WriteLine(Strings.endDate + product.EndDate);
             }
-            catch{ Console.WriteLine(Strings.noRented); }
 
-         
+
         }
-        public void ExtendRentPeriod(Customer cust)
+        public void ExtendRentPeriod()
         {
-            ViewRentedProducts(cust);
-            if(cust.rentedProducts == null) {
-             
-                return;
-            }
+            ViewProducts();
+            if(GetProductsRentedByCustomer == null) 
+            return;
+            
             Console.WriteLine();
             start1:
             Console.WriteLine(Strings.entProdId);
@@ -147,8 +208,8 @@ namespace RentJunction.Views
             try
             {
 
-                bool flag = int.TryParse(Console.ReadLine(), out prodID);
-                if (!flag)
+                bool isValidId = int.TryParse(Console.ReadLine(), out prodID);
+                if (!isValidId)
                 {
                     Console.WriteLine(Strings.invalid);
                     goto start1;
@@ -156,7 +217,7 @@ namespace RentJunction.Views
                 else
                 {
                     bool flag2 = false;
-                    foreach (var prod in cust.rentedProducts)
+                    foreach (var prod in GetProductsRentedByCustomer)
                     {
                         if (prod.ProductId.Equals(prodID))
                         {
@@ -170,7 +231,6 @@ namespace RentJunction.Views
                         goto start1;
                     }
                 }
-
             }
             catch
             {
@@ -178,131 +238,122 @@ namespace RentJunction.Views
                 goto start1;
             }
 
-            List<Customer> list = custCtrl.GetCustomer();
-            foreach (var rentprod in cust.rentedProducts)
+            List<Product> products = ProductController.GetProductsMasterList();
+            Product rentedProduct = products.Find((product) => product.ProductId.Equals(prodID));
+            
+            DateTime prevEndDate;
+            DateTime newEndDate;
+
+            var isValidPrevEndDate = DateTime.TryParse(rentedProduct.EndDate, out prevEndDate);
+
+            Console.WriteLine(Strings.enternewEndDate);
+            rentedProduct.EndDate = Console.ReadLine();
+            var isValidEndDate = DateTime.TryParse(rentedProduct.EndDate, out newEndDate);
+
+            while (true)
             {
-                if (prodID.Equals(rentprod.ProductId))
-                {                   
-                    DateTime prevEndDate;
-                    DateTime newEndDate;
-
-                    var isValidPrevEndDate = DateTime.TryParse(rentprod.EndDate, out prevEndDate);
-
-                    start:
-                    Console.WriteLine(Strings.enternewEndDate);
-                    rentprod.EndDate = Console.ReadLine();                
-                    var isValidEndDate = DateTime.TryParse(rentprod.EndDate, out newEndDate);
-
-                    if(prevEndDate == newEndDate)
-                    {
-                        Console.WriteLine(Strings.prevDateSame);
-                        Console.WriteLine();
-                        goto start;
-                    }
-                    else if(newEndDate < prevEndDate)
-                    {
-                        Console.WriteLine(Strings.NewDateGreater);
-                        Console.WriteLine();
-                        goto start;
-                    }
-                    int differenceDays;
-                    differenceDays = newEndDate.Subtract(prevEndDate).Days;
-
-                    if (isValidEndDate && isValidPrevEndDate)
-                    {
-
-                        Console.WriteLine(Strings.daysOfRent + differenceDays);
-
-                    }
-                    else
-                    {
-                        Console.WriteLine(Strings.invalidDate);
-                    }
-
-                    Console.WriteLine(Strings.remainingAmt + differenceDays * rentprod.Price);
-                    custCtrl.UpdateDBCust(list);
+                if(prevEndDate < newEndDate)
+                {
+                    break;
+                }
+                if (prevEndDate == newEndDate)
+                {
+                    Console.WriteLine(Strings.prevDateSame);
+                    Console.WriteLine();
+                  
+                }
+                else if (newEndDate < prevEndDate)
+                {
+                    Console.WriteLine(Strings.NewDateGreater);
+                    Console.WriteLine();
+                   
                 }
             }
+
+            int differenceDays;
+            differenceDays = newEndDate.Subtract(prevEndDate).Days;
+
+            if (isValidEndDate && isValidPrevEndDate)
+            {
+
+                Console.WriteLine(Strings.daysOfRent + differenceDays);
+
+            }
+            else
+            {
+                Console.WriteLine(Strings.invalidDate);
+            }
+
+            Console.WriteLine(Strings.remainingAmt + differenceDays * rentedProduct.Price);
+            ProductController.UpdateDBProds(products);
         }
-        public List<RentedProduct> RentAProd(List<Product> Masterlist, int input, 
-            List<RentedProduct> rentedlist,Customer cust)
-        {
-            List<Customer> listcust = custCtrl.GetCustomer();
-            RentedProduct rentprod = new RentedProduct();
-                
-                DateTime sdt;
-                start:
-                Console.WriteLine(Strings.enterStartDate);
-                rentprod.StartDate = Console.ReadLine();
-                Console.WriteLine();
-                var isValidStartDate = DateTime.TryParse(rentprod.StartDate, out sdt);
-                if (sdt < DateTime.Today)
+        public void RentAProd(List<Product> productList,int productId,User customer)
+        {     
+            Product rentProduct = productList.Find((product) => product.ProductId == productId);   
+           
+            DateTime sdt;
+            Console.WriteLine(Strings.enterStartDate);
+            rentProduct.StartDate = Console.ReadLine();
+            Console.WriteLine();
+            bool isValidStartDate;
+            while (true)
+            {  
+                isValidStartDate = DateTime.TryParse(rentProduct.StartDate, out sdt);
+                if (!(sdt < DateTime.Today))
+                {
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    break;
+                }
+                else
                 {
                     Console.WriteLine(Strings.enterValidDate);
-                    Console.WriteLine();
-                    Console.WriteLine();
-                goto start;
+                    rentProduct.StartDate = Console.ReadLine();
                 }
-         
+            }     
             DateTime edt;
-            start2:
             Console.WriteLine(Strings.enterEndDate);
-            rentprod.EndDate = Console.ReadLine();
+            rentProduct.EndDate = Console.ReadLine();
             Console.WriteLine();
-            var isValidEndDate = DateTime.TryParse(rentprod.EndDate, out edt);
-
-            if(sdt == edt) {
-                Console.WriteLine(Strings.startEndDateSame);
-                goto start2;
-            }
-            else if (edt < sdt)
+            bool isValidEndDate;
+            while (true)
             {
-                Console.WriteLine(Strings.enterValidDate);
-                goto start2;
+                isValidEndDate = DateTime.TryParse(rentProduct.EndDate, out edt);
+                if (edt > sdt)
+                {
+                    break;
+                }
+                else if (sdt == edt)
+                {
+                    Console.WriteLine(Strings.startEndDateSame);
+                    
+                }
+                else
+                {
+                    Console.WriteLine(Strings.enterValidDate);
+                   
+                }
             }
-
             int days;
             days = edt.Subtract(sdt).Days;
 
             if (isValidEndDate && isValidStartDate)
             {
-
                 Console.WriteLine(Strings.rentDays + days);
-
+                Console.WriteLine(Strings.design);
             }
 
             else
             {
                 Console.WriteLine(Strings.invalidDate);
             }
-            foreach (var product in Masterlist)
-            {
-                if (input.Equals(product.ProductId))
-                {
-                    if (cust.rentedProducts == null)
-                    {
-                        cust.rentedProducts = new List<RentedProduct>();
-                    }
 
-                    rentprod.ProductName = product.ProductName;
-                    rentprod.ProductId = product.ProductId;
-                    rentprod.Price = product.Price;
-                    rentprod.ProductCategory = product.ProductCategory;
-                    rentprod.Description = product.Description;
-                    rentprod.OwnerName = product.OwnerName;
-                    rentprod.OwnerNum = product.OwnerNum;
-
-                    cust.rentedProducts.Add(rentprod);
-                    custCtrl.UpdateDBCust(listcust);
-                    List<Product> list = prodCtrl.GetProductsMasterList();
-                    list.Remove(product);
-                    prodCtrl.UpdateDBProds(list);
-                    Console.WriteLine();
-                    Console.WriteLine(Strings.design);
-                }
-            }
-            Console.WriteLine("Total Price is " + rentprod.Price * days);
-            return rentedlist;
+            rentProduct.CustomerID = customer.UserID;
+            List<Product> productMasterList = ProductController.GetProductsMasterList();
+            int index = productMasterList.FindIndex((product) => product.ProductId.Equals(productId));
+            productMasterList[index] = rentProduct;
+            ProductController.UpdateDBProds(productMasterList);
+            Console.WriteLine("Total Price is " + rentProduct.Price * days);
         }
      
     }

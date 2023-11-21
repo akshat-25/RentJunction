@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
-using RentJunction.Controller;
+using RentJunction.Models;
 
-public sealed class DBOwner : DBHandler
+public sealed class DBUsers : DBHandler , IDBUsers
 {
-    private static DBOwner _instance = null;
+    private static DBUsers _instance = null;
     private static readonly object _lockObj = new object();
-    public List<Owner> _ownerList { get; set; }
-    public static DBOwner Instance
+    public List<User> UserList { get; set; }
+    public static DBUsers Instance
     {
         get
         {
@@ -14,27 +14,24 @@ public sealed class DBOwner : DBHandler
             {
                 if (_instance == null)
                 {
-                    _instance = new DBOwner();
+                    _instance = new DBUsers();
                 }
             }
             return _instance;
         }
     }
-    private DBOwner()
-    {
-        _ownerList = new List<Owner>();
-
+    private DBUsers(){
+        UserList = new List<User>();       
         try
         {
-            _ownerList = JsonConvert.DeserializeObject<List<Owner>>(File.ReadAllText(Strings.ownerPath));
+            UserList = JsonConvert.DeserializeObject<List<User>>(File.ReadAllText(Strings.userPath));
         }
         catch(Exception ex)
         {
             File.AppendAllText(Strings.errorLoggerPath, ex.ToString() + DateTime.Now);
             Console.WriteLine(Strings.error);
-            UI.StartMenu();
+            return;
         }
-
     }
 
 }

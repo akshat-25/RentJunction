@@ -1,39 +1,19 @@
-﻿using RentJunction.Controller;
-
+﻿
 namespace RentJunction.Models
 {
     public class CustomerController : ICustomerController
     {
-        public void ChooseCategory()
+        public IDBUsers DBUsers { get; set; }
+        public CustomerController(IDBUsers DBusers)
         {
-            List<string> categories = DBProduct.Instance.chooseCategory();
-            foreach (var item in categories)
-            {
-                Console.WriteLine(item);
-            }
+            DBUsers = DBusers;
+        }
+        public List<User> GetCustomer()
+        {   
+            List<User> userList = DBUsers.UserList;
 
-        }
-        public List<Customer> GetCustomer()
-        {
-            return DBCustomer.Instance._customerList;
-        }
-        public void UpdateDBCust(List<Customer> list)
-        {
-            DBCustomer.Instance.UpdateDB(Strings.customerPath, list);
-        }
-        public void UpdateCustList(Product product, Owner owner)
-        {
-            foreach (var productUpdate in owner.ListedProducts)
-            {
-                if (productUpdate.ProductId.Equals(product.ProductId))
-                {
-                    productUpdate.ProductName = product.ProductName;
-                    productUpdate.Description = product.Description;
-                    productUpdate.Price = product.Price;
-                    productUpdate.ProductCategory = product.ProductCategory;
-                }
-            }
-        }
+            return userList.FindAll((user) => user.Role == Role.Customer);
+        }     
     }
 }
     

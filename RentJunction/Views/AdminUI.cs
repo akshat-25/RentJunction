@@ -1,40 +1,60 @@
-﻿using RentJunction.Controller;
+﻿
 using RentJunction.Models;
-
 public class AdminUI
 {
-    ICustomerController custCtrl;
-    IOwnerController ownerCtrl;
-    public AdminUI()
+    public ICustomerController CustomerController { get; set; }
+    public IOwnerController OwnerController { get; set; }
+    public UserController UserController { get; set; }
+    public AdminUI(ICustomerController customerController, IOwnerController ownerController, UserController userController)
     {
-        custCtrl = new CustomerController();
-        ownerCtrl = new OwnerController();
+        CustomerController = customerController;
+        OwnerController = ownerController;
+        UserController = userController;
     }
-    public void LoginAdminMenu(Admin admin)
+    public void LoginAdminMenu(User admin)
     {
+        Console.WriteLine(Strings.loginAdmin + admin.Username);
+        Strings.Design();
         Console.WriteLine(Strings.adminMenu);
         Console.WriteLine(Strings.design);
-        Options input = (Options)CheckValidity.IsValidInput();
 
+        var input = Console.ReadLine();
+        var isValidInput = CheckValidity.IsValidInput(input);
+
+        while (true)
+        {
+            if (!isValidInput)
+            {
+                input = Console.ReadLine();
+                Console.WriteLine(Strings.invalid);
+            }
+            else
+            {
+                break;
+            }
+        }
+        
+        Options option = Enum.Parse<Options>(input);
+        
         Console.WriteLine();
 
-        switch (input)
+        switch (option)
         {
             case Options.view_customer:
-                ViewAllCustomers(admin);
+                ViewAllCustomers();
                 LoginAdminMenu(admin);
                 break;
             case Options.view_owners:
-                ViewAllOwners(admin);
+                ViewAllOwners();
                 Console.WriteLine(Strings.design);
                 LoginAdminMenu(admin);
                 break;
             case Options.delete_customer:
-                DeleteCustomer(admin);
+                DeleteCustomer();
                 LoginAdminMenu(admin);
                 break;
             case Options.delete_owner:
-                DeleteOwner(admin);
+                DeleteOwner();
                 LoginAdminMenu(admin);
                 break;
             case Options.add_admin:
@@ -44,154 +64,92 @@ public class AdminUI
             case Options.logout:
                 Console.WriteLine(Strings.logoutSuccc);
                 Console.WriteLine();
-                UI.StartMenu();
-                break;
+                return;
             default:
                 Console.WriteLine(Strings.invalid);
                 LoginAdminMenu(admin);
                 break;
         }
     }
-    public void ViewAllCustomers(Admin admin)
+    public void ViewAllCustomers()
     {
-
-        List<Customer> customers = custCtrl.GetCustomer();
+        List<User> customers = CustomerController.GetCustomer();
         foreach (var customer in customers)
         {
-            Console.WriteLine("-------------------------------------------");
+            Console.WriteLine(Strings.design);
+            Console.WriteLine($"CustomerID   -   {customer.UserID}");
             Console.WriteLine($"Name         -   {customer.FullName}");
-            Console.WriteLine($"Address      -   {customer.Address}");
+            Console.WriteLine($"Address      -   {customer.City}");
             Console.WriteLine($"Phone        -   {customer.PhoneNumber}");
             Console.WriteLine($"Email        -   {customer.Email}");
         }
     }
-    public void ViewAllOwners(Admin admin)
+    public void ViewAllOwners()
     {
-        List<Owner> owners = ownerCtrl.GetOwnerList();
+        List<User> owners = OwnerController.GetOwnerList();
         Console.WriteLine(Strings.custList);
         foreach (var owner in owners)
         {
             Console.WriteLine(Strings.design);
+            Console.WriteLine($"OwnerID      -   {owner.UserID}");
             Console.WriteLine($"Name         -   {owner.FullName}");
-            Console.WriteLine($"Address      -   {owner.Address}");
+            Console.WriteLine($"City         -   {owner.City}");
             Console.WriteLine($"Phone        -   {owner.PhoneNumber}");
             Console.WriteLine($"Email        -   {owner.Email}");
         }
     }
-    public void DeleteCustomer(Admin admin)
+    public void DeleteCustomer()
     {
-        ViewAllCustomers(admin);
-        Console.WriteLine(Strings.custEmail);
-        string input = Console.ReadLine();
+        ViewAllCustomers();
+        Console.WriteLine(Strings.custID);
+        string customerId = Console.ReadLine();
 
-        while (!CheckValidity.IsValidEmail(input) || !CheckValidity.CheckNull(input))
+        while (!CheckValidity.CheckNull(customerId))
         {
             Console.WriteLine(Strings.invalid);
-            input = Console.ReadLine().Trim();
+            customerId = Console.ReadLine().Trim();
         }
         Console.WriteLine();
         Console.WriteLine();
 
-        List<Customer> customers = custCtrl.GetCustomer();
-
-        foreach (var customer in customers)
-        {
-            if (customer.Email.Equals(input))
-            {
-                if (customer.rentedProducts == null)
-                {
-                    customers.Remove(customer);
-                    Console.WriteLine($"{customer.FullName} Deleted Successfully");
-                    custCtrl.UpdateDBCust(customers);
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine(Strings.cannotDeleteCust);
-                }
-            }
-        }
+        List<User> userList = UserController.GetUserMasterList();
+        var indexOfCustomer = userList.FindIndex((customer) => customer.UserID.Equals(customerId));
+        userList.RemoveAt(indexOfCustomer);
+        UserController.UpdateDBUser(userList);  
+        Console.WriteLine("Deleted Successfully");
         Console.WriteLine();
         Console.WriteLine();
-
     }
-    public void DeleteOwner(Admin admin)
+    public void DeleteOwner()
     {
-        ViewAllOwners(admin);
-        Console.WriteLine(Strings.OwnEmail);
-        var input = Console.ReadLine();
-        while (!CheckValidity.IsValidEmail(input) || !CheckValidity.CheckNull(input))
+        ViewAllOwners();
+   
+        Console.WriteLine(Strings.OwnerID);
+        string ownerId = Console.ReadLine();
+
+        while (!CheckValidity.CheckNull(ownerId))
         {
             Console.WriteLine(Strings.invalid);
-            input = Console.ReadLine().Trim();
+            ownerId = Console.ReadLine().Trim();
         }
         Console.WriteLine();
         Console.WriteLine();
 
-        List<Owner> owners = ownerCtrl.GetOwnerList();
-
-        foreach (var owner in owners)
-        {
-            if (owner.Email.Equals(input))
-            {
-                owners.Remove(owner);
-                Console.WriteLine($"{owner.FullName} Deleted Successfully");
-                ownerCtrl.UpdateDBOwner(owners);
-
-                break;
-            }
-
-        }
+        List<User> userList = UserController.GetUserMasterList();
+        var indexOfOwner = userList.FindIndex((owner) => owner.UserID.Equals(ownerId));
+        userList.RemoveAt(indexOfOwner);
+        UserController.UpdateDBUser(userList);
+        Console.WriteLine("Deleted Successfully");
+        Console.WriteLine();
+        Console.WriteLine();
 
 
     }
     public void AddNewAdmin()
     {
-        Console.WriteLine(Strings.reg);
-        string name = CheckValidity.IsValidName();
-
-        Console.WriteLine();
-
-        Console.WriteLine(Strings.city);
-
-        string address = CheckValidity.IsValidAddress();
-
-        Console.WriteLine();
-
-        Console.WriteLine(Strings.username);
-
-        string username = CheckValidity.IsValidUsername();
-        Console.WriteLine();
-        long phoneNumber = CheckValidity.IsValidPhoneNum();
-
-        Console.WriteLine();
-
-        Console.WriteLine(Strings.email);
-
-        string email = CheckValidity.IsValidEmailReg();
-
-        Console.WriteLine();
-
-        Console.WriteLine(Strings.pswd);
-
-        string password = CheckValidity.IsValidPassword();
-
-        Console.WriteLine();
-        Console.WriteLine();
-
-        Admin newAdmin = new Admin
-        {
-            FullName = name,
-            Address = address,
-            PhoneNumber = phoneNumber,
-            Email = email,
-            Password = password,
-            Role = Role.Admin,
-            Username = username
-        };
-
-        IAuthController authController = new AuthController();
-
+        User newAdmin = RequestUserInput.Details(UserController.GetUserMasterList());
+        newAdmin = RoleHelper.RoleSetter(newAdmin, (int)Role.Admin);
+        IAuthController authController = new AuthController(DBUsers.Instance);
 
         bool flag = authController.Register(newAdmin);
 
@@ -210,6 +168,3 @@ public class AdminUI
 
     }
 }
-
-
-
