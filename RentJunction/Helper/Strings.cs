@@ -41,7 +41,7 @@
     public static string startEndDateSame = "End date and Start Date cannot be same.";
     public static string enterUserName = "Enter your username ->";
     public static string userNameNotEmpty = "Username cannot be empty. Please try again...";
-    public static string passwordNameNotEmpty = "Password cannot be empty. Please try again...";
+    public static string passwordNameNotEmpty = "Password length must be greater than or equal to 8 and the password must contain at least 1 Upper Character , 1 Lower character,a number and a special character ";
     public static string loginFailed = "Login failed. Please check your credentials.";
     public static string logoutSuccc = "Logout Successful!!!";
     public static string custList = "The owners list is as follows ->";
@@ -111,7 +111,7 @@
     public static string cate11="11. Furniture";
     public static string cate12 = "12. Miscellaneous";
     public static string userNameErr = "Username should be alphanumeric ,should not be empty and have length should be greater than 5";
-    public static string addressEmpty = "Address cannot be empty";
+    public static string addressEmpty = "City cannot be empty";
     public static string cityIntError = "Integers are not allowed in City name -";
     public static string onlyAlphabetsallowed = "Only alphabetic characters are allowed";
     public static string cityLength = "Length of city must be greater than equal to 3 characters.";
@@ -127,5 +127,7 @@
     public static string loginCust = " logged in successfully as Customer";
     public static string loginOwner = " logged in successfully as Owner";
     public static string loginAdmin = " logged in successfully as Admin -> ";
+    public static string ownerName = " Owner Name ";
+    public static string productCity = "City ";
 
 }                                   

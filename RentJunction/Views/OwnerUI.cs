@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 
 namespace RentJunction.Views
 {
-    public class OwnerUI
+    public class OwnerUI : IOwnerUI
     {
         public OwnerController OwnerController { get; set; }
         public ICustomerController CustomerController { get; set; }
@@ -68,7 +68,7 @@ namespace RentJunction.Views
                     Console.WriteLine(Strings.logoutSuccc);
                     Console.WriteLine();
                     owner = null;
-                    return;
+                    break;
 
                 default:
                     Console.WriteLine(Strings.invalid);
@@ -209,9 +209,15 @@ namespace RentJunction.Views
         }
         public void ViewListedProducts(User owner)
         {
-            Console.WriteLine();
-            if (ListedProducts  !=  null)
+              Console.WriteLine();
+            var productAvailable = ListedProducts.Any((product) => product.OwnerID.Equals(owner.UserID));
+
+            if (!productAvailable)
             {
+                Console.WriteLine(Strings.noProd);
+                Console.WriteLine(Strings.design);
+                return;
+            }
                 foreach (Product product in ListedProducts)
                 {
                     Console.WriteLine(Strings.design);
@@ -221,11 +227,8 @@ namespace RentJunction.Views
                     Console.WriteLine(Strings.disProdPrice + "Rs." + product.Price + " per day");
                     Console.WriteLine(Strings.disProdCate + Enum.Parse<Category>(product.ProductCategory.ToString()));
                 }
-            }
-            else
-            {
-                Console.WriteLine(Strings.noProd);
-            }
+            
+            
         }
         public void UpdateListedProducts(User owner)
         {
@@ -382,14 +385,16 @@ namespace RentJunction.Views
         }
         public void DeleteListedProducts(User owner)
         {
-            List<User> list = OwnerController.GetOwnerList();
-            
-            ViewListedProducts(owner);
-            if (ListedProducts == null)
+            var productAvailable = ListedProducts.Any((product) => product.OwnerID.Equals(owner.UserID));
+
+            if (!productAvailable)
             {
+                Console.WriteLine(Strings.noProd);
+                Console.WriteLine(Strings.design);
                 return;
             }
-        start:
+            ViewListedProducts(owner);
+            start:
             Console.WriteLine(Strings.prodDelID);
             Console.WriteLine();
             int input;

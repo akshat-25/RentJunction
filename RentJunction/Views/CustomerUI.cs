@@ -3,7 +3,7 @@
 namespace RentJunction.Views
 {
 
-    public class CustomerUI
+    public class CustomerUI : ICustomerUI
     {
         public CustomerController CustomerController { get; set; }  
         public IProductControllerCust ProductController { get; set; }
@@ -25,6 +25,7 @@ namespace RentJunction.Views
 
 
             var input = Console.ReadLine();
+
             bool isValidInput;
 
             while (true)
@@ -33,7 +34,6 @@ namespace RentJunction.Views
 
                 if (!isValidInput)
                 {
-                    Console.WriteLine(Strings.invalid);
                     input = Console.ReadLine();
                 }
                 else
@@ -67,7 +67,7 @@ namespace RentJunction.Views
                     Console.WriteLine(Strings.logoutSucc);
                     customer = null;
                     Console.WriteLine();
-                    return;
+                    break;
                 default:
                     Strings.Design();
                     Console.WriteLine();
@@ -79,7 +79,7 @@ namespace RentJunction.Views
         {
             Console.WriteLine(Strings.entCity);
 
-            string address  = Console.ReadLine();
+            string address  = Console.ReadLine().ToLower();
             bool isValidAddress;
 
             while (true)
@@ -121,10 +121,23 @@ namespace RentJunction.Views
             }
 
 
-            List<Product> productList = ProductController.GetProducts(Convert.ToInt32(input), address);
+            List<Product> productList = ProductController.GetProducts(Convert.ToInt32(input), address).FindAll((obj)=>obj.CustomerID!=null&&obj.CustomerID.Length==0);
 
             if (productList.Count > 0)
             {
+                foreach (var product in productList)
+                {
+                    
+                        Console.WriteLine(Strings.design);
+                        Console.WriteLine(Strings.disProdId + product.ProductId);
+                        Console.WriteLine(Strings.disProdName + product.ProductName);
+                        Console.WriteLine(Strings.disProdDesc + product.Description);
+                        Console.WriteLine(Strings.disProdPrice + product.Price + " per day");
+                        Console.WriteLine(Strings.disProdCate + Enum.Parse<Category>(product.ProductCategory.ToString()));
+                        Console.WriteLine(Strings.disProdOwnName + product.OwnerName);
+                    
+                }
+             
                 Strings.Design();
                 start:
                 Console.WriteLine(Strings.prodIdEnt);
@@ -248,11 +261,12 @@ namespace RentJunction.Views
 
             Console.WriteLine(Strings.enternewEndDate);
             rentedProduct.EndDate = Console.ReadLine();
-            var isValidEndDate = DateTime.TryParse(rentedProduct.EndDate, out newEndDate);
+            bool isValidEndDate;
 
             while (true)
             {
-                if(prevEndDate < newEndDate)
+                isValidEndDate = DateTime.TryParse(rentedProduct.EndDate, out newEndDate);
+                if (prevEndDate < newEndDate)
                 {
                     break;
                 }
@@ -260,12 +274,14 @@ namespace RentJunction.Views
                 {
                     Console.WriteLine(Strings.prevDateSame);
                     Console.WriteLine();
-                  
+                    rentedProduct.EndDate = Console.ReadLine();
+
                 }
                 else if (newEndDate < prevEndDate)
                 {
                     Console.WriteLine(Strings.NewDateGreater);
                     Console.WriteLine();
+                    rentedProduct.EndDate = Console.ReadLine();
                    
                 }
             }
@@ -326,12 +342,12 @@ namespace RentJunction.Views
                 else if (sdt == edt)
                 {
                     Console.WriteLine(Strings.startEndDateSame);
-                    
+                    rentProduct.EndDate = Console.ReadLine();
                 }
                 else
                 {
                     Console.WriteLine(Strings.enterValidDate);
-                   
+                    rentProduct.EndDate = Console.ReadLine();
                 }
             }
             int days;

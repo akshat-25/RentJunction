@@ -1,8 +1,5 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography;
+﻿using System.Net;
 using System.Text.RegularExpressions;
-
-
 
 public class CheckValidity
 {
@@ -88,8 +85,11 @@ public class CheckValidity
     }
     public static bool IsValidInput(string input)
     {
-        if (string.IsNullOrWhiteSpace(input)) 
-        return false;
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            Console.WriteLine(Strings.invalid);
+            return false;
+        }
         int isValid;
 
         bool flag = int.TryParse(input, out isValid);
@@ -107,7 +107,7 @@ public class CheckValidity
     }
     public static bool IsValidAddress(string address)
     {
-        address = address.ToLower().Trim();
+        address = address.Trim();
         int resu;
         bool flag = int.TryParse(address, out resu);
       
@@ -160,10 +160,16 @@ public class CheckValidity
             return true;
         }
     }
-    public static bool IsValidPhoneNum(long phoneNumber)
+    public static bool IsValidPhoneNum(string phoneNumber)
     {
-        string phNo = phoneNumber.ToString();
-        if (phNo.Length != 10)
+        if (!CheckNull(phoneNumber))
+        {
+            Console.WriteLine(Strings.PhNoLenError);
+            return false;
+        }
+        long res;
+        bool flag = long.TryParse(phoneNumber, out res);
+        if (phoneNumber.Length != 10 || !flag)
         {
             Console.WriteLine(Strings.PhNoLenError);
             return false;
@@ -175,24 +181,40 @@ public class CheckValidity
     }
     public static bool IsValidPassword(string password)
     {
-        var isValidated = Regex.IsMatch(password, hasLowerChar) && Regex.IsMatch(password, hasNumber) &&
-            Regex.IsMatch(password, hasUpperChar) && Regex.IsMatch(password, hasSymbols) && Regex.IsMatch(password, hasMiniChars);
 
-        if (!CheckNull(password) || isValidated)
+        if(string.IsNullOrEmpty(password))
         {
+            return false;
+        }
+        var isValidated = Regex.IsMatch(password, hasLowerChar) && Regex.IsMatch(password, hasNumber) &&
+        Regex.IsMatch(password, hasUpperChar) && Regex.IsMatch(password, hasSymbols) && Regex.IsMatch(password, hasMiniChars);
+
+        if(isValidated) {
             return true;
         }
 
         return false;
 
     }
-    public static bool IsValidRole(int roleTaken)
+    public static bool IsValidRole(string input)
     {
-        if (roleTaken != (int)Role.Owner && roleTaken != (int)Role.Customer)
-        {
+        if (string.IsNullOrWhiteSpace(input))
             return false;
+
+        int isValid;
+
+        bool flag = int.TryParse(input, out isValid);
+
+        if (flag)
+        {
+            if (isValid != (int)Role.Owner && isValid != (int)Role.Customer)
+            {
+                return false;
+            }
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 }

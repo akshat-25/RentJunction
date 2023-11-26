@@ -1,6 +1,7 @@
 ﻿
+using RentJunction.Helper;
 using RentJunction.Models;
-public class AdminUI
+public class AdminUI : IAdminUI
 {
     public ICustomerController CustomerController { get; set; }
     public IOwnerController OwnerController { get; set; }
@@ -34,8 +35,7 @@ public class AdminUI
             }
         }
         
-        Options option = Enum.Parse<Options>(input);
-        
+        Options option = Enum.Parse<Options>(input);       
         Console.WriteLine();
 
         switch (option)
@@ -165,6 +165,5 @@ public class AdminUI
             Strings.Design();
             AddNewAdmin();
         }
-
     }
 }

@@ -32,20 +32,6 @@ namespace RentJunction.Tests
             Assert.IsTrue(result);
         
         }
-        [TestMethod]
-
-        public void GetUserUI_ValidUserUI_ReturnTrue()
-        {
-            Mock<IDBUsers> mockDBUser = new Mock<IDBUsers>();
-
-            mockDBUser.Setup((user) => user.UserList).Returns(DummyData.dummyUserList);
-
-            IAuthController authController = new AuthController(mockDBUser.Object);
-
-            bool result = authController.GetUserUI("user123", "User@1234");
-
-            Assert.IsTrue(result);
-
-        }
+        
     }
 }

@@ -1,27 +1,29 @@
-﻿namespace RentJunction.Models
+﻿using RentJunction.Models;
+
+namespace RentJunction.Helper
 {
     public class RequestUserInput
     {
         public static string GenerateUniqueId()
         {
             Guid guid = Guid.NewGuid();
-            string randomComponent = guid.ToString("N").Substring(0, 8); 
+            string randomComponent = guid.ToString("N").Substring(0, 8);
 
             string uniqueId = randomComponent;
 
             return uniqueId;
         }
-        public static User Details(List<User> userList)
+        public static User Details()
         {
             Console.WriteLine(Strings.reg);
-            string name = Console.ReadLine();
+            string name = Console.ReadLine().Trim();
             bool isValidName;
             while (true)
             {
                 isValidName = CheckValidity.IsValidName(name);
                 if (!isValidName)
                 {
-                    name = Console.ReadLine();
+                    name = Console.ReadLine().Trim();
                 }
                 else
                 {
@@ -31,7 +33,7 @@
             Console.WriteLine();
 
             Console.WriteLine(Strings.city);
-            string city = Console.ReadLine();
+            string city = Console.ReadLine().ToLower();
             bool isValidCity;
 
             while (true)
@@ -68,18 +70,18 @@
             }
             Console.WriteLine();
             Console.WriteLine(Strings.enterPhNo);
-            long phoneNumber = Convert.ToInt64(Console.ReadLine());
+            string phoneNumber = Console.ReadLine();
             bool isValidPhoneNumber;
             while (true)
             {
-                 isValidPhoneNumber = CheckValidity.IsValidPhoneNum(phoneNumber);
+                isValidPhoneNumber = CheckValidity.IsValidPhoneNum(phoneNumber);
                 if (isValidPhoneNumber)
                 {
                     break;
                 }
                 else
                 {
-                    phoneNumber = Convert.ToInt64(Console.ReadLine()); 
+                    phoneNumber = Console.ReadLine();
                 }
             }
 
@@ -89,15 +91,17 @@
 
             string email = Console.ReadLine();
             bool isValidEmail;
+
             while (true)
             {
-                isValidEmail = CheckValidity.IsValidEmail(email); 
+                isValidEmail = CheckValidity.IsValidEmail(email);
                 if (isValidEmail)
                 {
                     break;
                 }
                 else
                 {
+                    Console.WriteLine(Strings.validEmail);
                     email = Console.ReadLine();
                 }
             }
@@ -106,6 +110,7 @@
             Console.WriteLine(Strings.pswd);
 
             string password = CheckValidity.HideCharacter();
+
             bool isValidPassword;
 
             while (true)
@@ -117,24 +122,25 @@
                 }
                 else
                 {
-                    password = Console.ReadLine();
+                    Console.WriteLine(Strings.passwordNameNotEmpty);
+                    password = CheckValidity.HideCharacter();
                 }
             }
             Console.WriteLine();
             Console.WriteLine();
 
             string Id = GenerateUniqueId();
-            while (true)
-            {
-                if (userList != null && userList.Any((user) => user.UserID == Id))
-                {
-                    Id = GenerateUniqueId();
-                }
-                else
-                {
-                    break;
-                }
-            }
+            //while (true)
+            //{
+            //    if (userList != null && userList.Any((user) => user.UserID == Id))
+            //    {
+            //        Id = GenerateUniqueId();
+            //    }
+            //    else
+            //    {
+            //        break;
+            //    }
+            //}
 
             var user = new User
             {
@@ -142,13 +148,13 @@
                 FullName = name,
                 City = city,
                 Email = email,
-                PhoneNumber = phoneNumber,
+                PhoneNumber = Convert.ToInt64(phoneNumber),
                 Password = password,
                 Username = username
             };
 
             return user;
-            
+
         }
     }
 }

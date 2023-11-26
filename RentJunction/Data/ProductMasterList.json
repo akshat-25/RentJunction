@@ -12,5 +12,17 @@
     "StartDate": "11/17/2023",
     "EndDate": "11/28/2023"
   },
- 
+  {
+    "ProductId": 296523471,
+    "ProductName": "Dell Laptop",
+    "Description": "Intel I7 11th generation laptop",
+    "Price": 123.0,
+    "ProductCategory": 2,
+    "OwnerID": "c38c448d",
+    "CustomerID": "36cc218c",
+    "OwnerName": "Mudit",
+    "City": "bhopal",
+    "StartDate": "11/22/2023",
+    "EndDate": "11/24/2023"
+  }
 ]

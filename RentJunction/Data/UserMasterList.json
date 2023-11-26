@@ -30,53 +30,43 @@
     "Role": 3
   },
   {
-    "UserID": "00d4f647",
-    "FullName": "adminqwerty",
-    "City": "noida",
-    "PhoneNumber": 1233211234,
-    "Username": "admin111",
-    "Email": "admin12@gmail.com",
-    "Password": "Admin@111",
-    "Role": 3
-  },
-  {
-    "UserID": "25b864ee",
-    "FullName": "ayush",
-    "City": "kota",
+    "UserID": "36cc218c",
+    "FullName": "Ayush",
+    "City": "Kota",
     "PhoneNumber": 9089089089,
     "Username": "ayush123",
-    "Email": "ayush@gmail.com",
+    "Email": "ayush123@gmail.com",
     "Password": "Ayush@123",
     "Role": 1
   },
   {
-    "UserID": "eab713ec",
-    "FullName": "sdjkf",
-    "City": "lksdjf",
-    "PhoneNumber": 9823759837,
-    "Username": "fhskdhf123",
-    "Email": "kjdsfhks@gmail.com",
-    "Password": "Ajsjsj@123",
+    "UserID": "c38c448d",
+    "FullName": "Mudit",
+    "City": "Bhopal",
+    "PhoneNumber": 6787897890,
+    "Username": "mudit123",
+    "Email": "mudit@gmail.com",
+    "Password": "Mudit@123",
     "Role": 2
   },
   {
-    "UserID": "f28a29da",
-    "FullName": "fjdgljn",
-    "City": "dslkfnslkf",
-    "PhoneNumber": 5984389570,
-    "Username": "ldflksdf123",
-    "Email": "kjfhgjhdf@lfgkl.com",
-    "Password": "",
-    "Role": 1
+    "UserID": "415cfec6",
+    "FullName": "mvkasnv",
+    "City": "koa",
+    "PhoneNumber": 9636653732,
+    "Username": "ajhjab234",
+    "Email": "ayush@gmail.com",
+    "Password": "msavknl@12A",
+    "Role": 2
   },
   {
-    "UserID": "a49374c2",
-    "FullName": "qwert",
-    "City": "qwefg",
+    "UserID": "4d5d0c83",
+    "FullName": "adminnnnnnn",
+    "City": "akakakaka",
     "PhoneNumber": 1234567890,
-    "Username": "asdf234",
-    "Email": "qoqoqo@gmail.com",
-    "Password": "",
-    "Role": 2
+    "Username": "admin098",
+    "Email": "asdfg@gmail.com",
+    "Password": "Admin@123",
+    "Role": 3
   }
 ]

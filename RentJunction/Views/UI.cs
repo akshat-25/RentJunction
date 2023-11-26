@@ -1,14 +1,13 @@
-﻿using RentJunction.Models;
+﻿using RentJunction.Helper;
+using RentJunction.Models;
 using RentJunction.Views;
 
 public class UI
 {
     public IAuthController AuthController { get; set; }
-    public UserController UserController { get; set; }
-    public UI(IAuthController authController, UserController userController)
+    public UI(IAuthController authController)
     {
         AuthController = authController;
-        UserController = userController;
     }
 
     public  void StartMenu()
@@ -25,7 +24,6 @@ public class UI
                 isValidInput = CheckValidity.IsValidInput(input);
                 if (!isValidInput)
                 {
-                    Console.WriteLine(Strings.invalid);
                     input = Console.ReadLine();
                 }
                 else
@@ -55,17 +53,17 @@ public class UI
     }
     public void Register()
     {
-            List<User> userList = UserController.GetUserMasterList();
-            User userEntity = RequestUserInput.Details(userList);
+            //List<User> userList = UserController.GetUserMasterList();
+            User userEntity = RequestUserInput.Details();
             
             Console.WriteLine(Strings.chooseRole);
-            int roleTaken = Convert.ToInt32(Console.ReadLine());
-            
+
+            var roleTaken = Console.ReadLine();
             bool isValidRole;
 
             while (true)
             {
-            isValidRole = CheckValidity.IsValidRole(roleTaken);
+                isValidRole = CheckValidity.IsValidRole(roleTaken);
             if (isValidRole)
             {
                 break;
@@ -73,11 +71,12 @@ public class UI
 
             else
             {
-                roleTaken = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine(Strings.validRole);
+                roleTaken = Console.ReadLine();
             }
               
             }
-            User user =  RoleHelper.RoleSetter(userEntity, roleTaken);
+            User user =  RoleHelper.RoleSetter(userEntity, Convert.ToInt32(roleTaken));
             bool isValidUser = AuthController.Register(user);
             
             if (isValidUser)
@@ -113,7 +112,7 @@ public class UI
         while (!CheckValidity.CheckNull(password))
         {
             Console.WriteLine(Strings.passwordNameNotEmpty);
-            password = Console.ReadLine();
+            password = CheckValidity.HideCharacter();
         }
 
         try

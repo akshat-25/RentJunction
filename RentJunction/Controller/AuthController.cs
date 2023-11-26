@@ -57,7 +57,7 @@ public class AuthController : IAuthController
         {
             if (user.Role.Equals(Role.Customer))
             {
-                var custUIObj = new CustomerUI(new CustomerController(DBUsers.Instance), new ProductController(DBProduct.Instance));
+                ICustomerUI custUIObj = new CustomerUI(new CustomerController(DBUsers.Instance), new ProductController(DBProduct.Instance));
                
                 custUIObj.LoginCustomerMenu(user);
 
@@ -65,7 +65,7 @@ public class AuthController : IAuthController
             }
             else if (user.Role.Equals(Role.Owner))
             {
-                var ownerUIObj = new OwnerUI(new OwnerController(DBUsers.Instance), new CustomerController(DBUsers.Instance), new ProductController(DBProduct.Instance));
+                IOwnerUI ownerUIObj = new OwnerUI(new OwnerController(DBUsers.Instance), new CustomerController(DBUsers.Instance), new ProductController(DBProduct.Instance));
                 
                 ownerUIObj.LoginOwnerMenu(user);
 
@@ -73,7 +73,7 @@ public class AuthController : IAuthController
             }
             else if (user.Role.Equals(Role.Admin))
             {
-                var adminUIObj = new AdminUI(new CustomerController(DBUsers.Instance), new OwnerController(DBUsers.Instance), new UserController(DBUsers.Instance));
+                IAdminUI adminUIObj = new AdminUI(new CustomerController(DBUsers.Instance), new OwnerController(DBUsers.Instance), new UserController(DBUsers.Instance));
                 
                 adminUIObj.LoginAdminMenu(user);
 

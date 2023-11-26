@@ -53,7 +53,7 @@ namespace RentJunction.Tests
         [TestMethod]
         public void IsValidPhoneNum_ValidPhoneNumber_ReturnTrue()
         {
-            var phoneNumber = 9192934959;
+            var phoneNumber = "8818181818";
 
             bool result = CheckValidity.IsValidPhoneNum(phoneNumber);
 
@@ -202,7 +202,7 @@ namespace RentJunction.Tests
         {
             var input = (int)Role.Owner;
 
-            bool result = CheckValidity.IsValidRole(input);
+            bool result = CheckValidity.IsValidRole(input.ToString());
 
             Assert.IsTrue(result);
         }
@@ -212,7 +212,7 @@ namespace RentJunction.Tests
         {
             var input = 11;
 
-            bool result = CheckValidity.IsValidRole(input);
+            bool result = CheckValidity.IsValidRole(input.ToString());
 
             Assert.IsFalse(result);
         }
@@ -248,7 +248,7 @@ namespace RentJunction.Tests
         {
             var input = (int)Role.Customer;
 
-            bool result = CheckValidity.IsValidRole(input); 
+            bool result = CheckValidity.IsValidRole(input.ToString()); 
 
             Assert.IsTrue(result);
         }
@@ -258,7 +258,7 @@ namespace RentJunction.Tests
         {
             int input = 5;
 
-            bool result = CheckValidity.IsValidRole(input); 
+            bool result = CheckValidity.IsValidRole(input.ToString()); 
 
             Assert.IsFalse(result);
         }

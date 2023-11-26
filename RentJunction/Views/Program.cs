@@ -4,7 +4,7 @@
     {
         public static void Main()
         {
-            UI ui = new UI(new AuthController(DBUsers.Instance), new UserController(DBUsers.Instance));
+            UI ui = new UI(new AuthController(DBUsers.Instance));
             ui.StartMenu();
         }
     }
